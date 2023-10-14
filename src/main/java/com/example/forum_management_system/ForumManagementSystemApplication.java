@@ -10,4 +10,6 @@ public class ForumManagementSystemApplication {
 		SpringApplication.run(ForumManagementSystemApplication.class, args);
 	}
 
+
+	
 }
