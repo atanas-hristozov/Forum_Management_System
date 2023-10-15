@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class CommentRepositoryImpl implements CommentRepository{
     private final SessionFactory sessionFactory;
     @Autowired
@@ -26,16 +27,29 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     @Override
     public void create(Comment comment) {
-
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.persist(comment);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public void update(Comment comment) {
-
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.merge(comment);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
-    public void delete(Comment comment) {
-
+    public void delete(int id) {
+        Comment commentToDelete = get(id);
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            session.remove(commentToDelete);
+            session.getTransaction().commit();
+        }
     }
 }

@@ -8,5 +8,5 @@ public interface CommentRepository {
     Comment get(int id);
     void create(Comment comment);
     void update(Comment comment);
-    void delete(Comment comment);
+    void delete(int id);
 }
