@@ -11,12 +11,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final CommentRepository commentRepository;
 
 
     public UserServiceImpl(UserRepository userRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
     }
 
     @Override
