@@ -5,15 +5,18 @@ import com.example.forum_management_system.Models.User;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AuthenticationHelper {
 
     public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
     private final UserService userService;
 
-
+    @Autowired
     public AuthenticationHelper(UserService userService) {
         this.userService = userService;
     }
