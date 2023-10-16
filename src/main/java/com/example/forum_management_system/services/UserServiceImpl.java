@@ -3,6 +3,7 @@ package com.example.forum_management_system.services;
 import com.example.forum_management_system.Models.User;
 import com.example.forum_management_system.repositories.CommentRepository;
 import com.example.forum_management_system.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
-
-    public UserServiceImpl(UserRepository userRepository, CommentRepository commentRepository) {
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

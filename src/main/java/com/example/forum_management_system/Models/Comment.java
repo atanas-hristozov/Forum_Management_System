@@ -15,9 +15,11 @@ public class Comment {
     @NotNull(message = "text can't be empty!")
     private String text;
 
+    @ManyToOne
+    @JoinColumn(name = "author")
     private User author;
 
-    public Comment(){
+    public Comment() {
     }
 
 
