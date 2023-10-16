@@ -5,8 +5,9 @@ import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class CommentRepositoryImpl implements CommentRepository{
     private final SessionFactory sessionFactory;
     @Autowired
