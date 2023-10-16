@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 public class User {

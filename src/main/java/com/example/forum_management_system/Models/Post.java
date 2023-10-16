@@ -1,19 +1,22 @@
 package com.example.forum_management_system.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
+@Entity
+@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "created_by")
     private User creator;
     @Column(name = "title")
     @Size(min=16, max=64, message = "Title length should be between 16 and 64")
@@ -21,7 +24,6 @@ public class Post {
     @Column(name = "content")
     @Size(min=32, max=8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
-    private List<Comment> comments;
     @Positive
     @Column(name = "likes")
     private int likes = 0;
@@ -30,7 +32,6 @@ public class Post {
     private int dislikes = 0;
 
     public Post(){
-
     }
 
     public int getId() {
@@ -63,14 +64,6 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 
     public int getLikes() {
