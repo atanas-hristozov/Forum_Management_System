@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -14,22 +16,24 @@ public class Post {
     private int id;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "user_id")
     private User creator;
     @Column(name = "title")
-    @Size(min=16, max=64, message = "Title length should be between 16 and 64")
+    @Size(min = 16, max = 64, message = "Title length should be between 16 and 64")
     private String title;
     @Column(name = "content")
-    @Size(min=32, max=8192, message = "The content must be between 32 symbols and 8192 symbols.")
+    @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
     @Positive
-    @Column(name = "likes")
+    @Column(name = "like")
     private int likes = 0;
     @Positive
-    @Column(name = "dislikes")
+    @Column(name = "dislike")
     private int dislikes = 0;
+    @Column(name = "timestamp_created")
+    private Timestamp timestamp;
 
-    public Post(){
+    public Post() {
     }
 
     public int getId() {
@@ -78,5 +82,13 @@ public class Post {
 
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }
