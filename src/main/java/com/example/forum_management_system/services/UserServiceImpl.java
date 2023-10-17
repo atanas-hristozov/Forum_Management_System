@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public User getByName(String username) {
         return userRepository.getByName(username);
     }
+
+    @Override
+    public int showUsersCount() {
+        return userRepository.getAll().size();
+    }
 }
