@@ -1,4 +1,4 @@
-package com.example.forum_management_system.Models;
+package com.example.forum_management_system.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +9,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
+@SecondaryTable(name = "admins_phone_numbers",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 public class User {
 
     @Id
@@ -16,12 +18,12 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name="first_Name")
-    @Size(min=4, max=32, message = "First name must be between 4 and 32 symbols.")
+    @Column(name = "first_name")
+    @Size(min = 4, max = 32, message = "First name must be between 4 and 32 symbols.")
 
     private String firstName;
-    @Column(name = "last_Name")
-    @Size(min=4, max=32, message = "Last name must be between 4 and 32 symbols.")
+    @Column(name = "last_name")
+    @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
 
     @NotNull
@@ -40,12 +42,11 @@ public class User {
 
     @Column(name = "isAdmin")
     private boolean isAdmin;
-
-    @Column(name = "phoneNumber")
+    @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
 
 
-    public User(){
+    public User() {
     }
 
     public String getFirstName() {
@@ -104,11 +105,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 

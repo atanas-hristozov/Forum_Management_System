@@ -1,9 +1,6 @@
 package com.example.forum_management_system.repositories;
 
-import com.example.forum_management_system.Models.Post;
-import com.example.forum_management_system.exceptions.EntityNotFoundException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.example.forum_management_system.models.Post;
 
 import java.util.List;
 

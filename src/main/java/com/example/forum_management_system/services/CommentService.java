@@ -1,7 +1,7 @@
 package com.example.forum_management_system.services;
 
-import com.example.forum_management_system.Models.Comment;
-import com.example.forum_management_system.Models.User;
+import com.example.forum_management_system.models.Comment;
+import com.example.forum_management_system.models.User;
 
 public interface CommentService {
 

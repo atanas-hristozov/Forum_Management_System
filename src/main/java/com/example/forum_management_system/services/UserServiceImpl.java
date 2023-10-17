@@ -1,7 +1,6 @@
 package com.example.forum_management_system.services;
 
-import com.example.forum_management_system.Models.User;
-import com.example.forum_management_system.repositories.CommentRepository;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByName(String username) {
         return userRepository.getByName(username);
+    }
+
+    @Override
+    public int showUsersCount() {
+        return userRepository.getAll().size();
     }
 }

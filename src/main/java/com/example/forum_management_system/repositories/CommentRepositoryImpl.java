@@ -1,6 +1,6 @@
 package com.example.forum_management_system.repositories;
 
-import com.example.forum_management_system.Models.Comment;
+import com.example.forum_management_system.models.Comment;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

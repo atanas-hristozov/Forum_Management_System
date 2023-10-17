@@ -1,7 +1,7 @@
 package com.example.forum_management_system.controllers;
 
-import com.example.forum_management_system.Models.Post;
-import com.example.forum_management_system.Models.User;
+import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;

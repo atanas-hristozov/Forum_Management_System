@@ -1,7 +1,7 @@
 
 package com.example.forum_management_system.helpers;
 
-import com.example.forum_management_system.Models.User;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.services.UserService;
