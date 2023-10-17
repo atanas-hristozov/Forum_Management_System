@@ -1,9 +1,8 @@
-package com.example.forum_management_system.Models;
+package com.example.forum_management_system.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.SecondaryRow;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.Objects;
@@ -19,11 +18,11 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "first_Name")
+    @Column(name = "first_name")
     @Size(min = 4, max = 32, message = "First name must be between 4 and 32 symbols.")
 
     private String firstName;
-    @Column(name = "last_Name")
+    @Column(name = "last_name")
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
 
@@ -43,7 +42,6 @@ public class User {
 
     @Column(name = "isAdmin")
     private boolean isAdmin;
-
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
 

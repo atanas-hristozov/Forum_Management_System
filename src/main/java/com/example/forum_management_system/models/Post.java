@@ -1,11 +1,9 @@
-package com.example.forum_management_system.Models;
+package com.example.forum_management_system.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-
-import java.util.List;
 
 @Entity
 @Table(name = "posts")

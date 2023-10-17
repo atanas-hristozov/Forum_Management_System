@@ -1,6 +1,6 @@
 package com.example.forum_management_system.services;
 
-import com.example.forum_management_system.Models.User;
+import com.example.forum_management_system.models.User;
 
 import java.util.List;
 

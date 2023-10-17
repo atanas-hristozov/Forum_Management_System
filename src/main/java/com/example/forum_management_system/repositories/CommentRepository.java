@@ -1,7 +1,6 @@
 package com.example.forum_management_system.repositories;
 
-import com.example.forum_management_system.Models.Comment;
-import org.springframework.stereotype.Repository;
+import com.example.forum_management_system.models.Comment;
 
 
 public interface CommentRepository {
