@@ -16,6 +16,11 @@ public class Comment {
     private String text;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post_id;
+
+
+    @ManyToOne
     @JoinColumn(name = "author")
     private User author;
 
@@ -37,6 +42,14 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Post getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(Post post_id) {
+        this.post_id = post_id;
     }
 
     public User getAuthor() {
