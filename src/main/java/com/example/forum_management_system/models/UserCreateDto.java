@@ -14,14 +14,11 @@ public class UserCreateDto {
     private String lastName;
     @NotNull
     @UniqueElements
-    @Column(name = "email")
     private String email;
     @UniqueElements
     @NotNull(message = "Username can't be empty!")
-    @Column(name = "username")
     private String username;
     @NotNull(message = "Password can't be empty!")
-    @Column(name = "password")
     private String password;
 
     public UserCreateDto(){

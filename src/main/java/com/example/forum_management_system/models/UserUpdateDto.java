@@ -15,10 +15,8 @@ public class UserUpdateDto {
     private String lastName;
     @NotNull
     @UniqueElements
-    @Column(name = "email")
     private String email;
     @NotNull(message = "Password can't be empty!")
-    @Column(name = "password")
     private String password;
 
 
