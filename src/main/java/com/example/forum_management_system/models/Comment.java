@@ -21,7 +21,7 @@ public class Comment {
 
 
     @ManyToOne
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "author_id")
     private User author;
 
     public Comment() {
