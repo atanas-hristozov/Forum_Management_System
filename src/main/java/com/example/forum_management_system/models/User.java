@@ -24,21 +24,17 @@ public class User {
     @Column(name = "last_name")
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
-
     @NotNull
     @UniqueElements
     @Column(name = "email")
     private String email;
-
     @UniqueElements
     @NotNull(message = "Username can't be empty!")
     @Column(name = "username")
     private String username;
-
     @NotNull(message = "Password can't be empty!")
     @Column(name = "password")
     private String password;
-
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "is_banned")

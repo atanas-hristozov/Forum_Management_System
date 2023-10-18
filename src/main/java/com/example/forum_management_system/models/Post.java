@@ -25,10 +25,10 @@ public class Post {
     @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
     @Positive
-    @Column(name = "like")
+    @Column(name = "likes")
     private int likes = 0;
     @Positive
-    @Column(name = "dislike")
+    @Column(name = "dislikes")
     private int dislikes = 0;
     @Column(name = "timestamp_created")
     private Timestamp timestamp;

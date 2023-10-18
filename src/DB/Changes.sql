@@ -32,8 +32,8 @@ create table posts
         primary key,
     title             varchar(255) not null,
     content           text         not null,
-    `like`            int          null,
-    dislike           int          null,
+    likes             int          null,
+    dislikes          int          null,
     user_id           int          not null,
     timestamp_created timestamp    not null,
     constraint posts_users_id
@@ -42,13 +42,13 @@ create table posts
 
 create table comments
 (
-    id      int auto_increment
+    id        int auto_increment
         primary key,
-    text    text not null,
-    post_id int  null,
-    author  int  not null,
+    text      text not null,
+    post_id   int  null,
+    author_id int  not null,
     constraint comments_post_id_fk
         foreign key (post_id) references posts (id),
     constraint comments_users_id_fk
-        foreign key (author) references users (id)
+        foreign key (author_id) references users (id)
 );
