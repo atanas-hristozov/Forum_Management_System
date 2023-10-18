@@ -1,4 +1,4 @@
-package com.example.forum_management_system.Models;
+package com.example.forum_management_system.models;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;

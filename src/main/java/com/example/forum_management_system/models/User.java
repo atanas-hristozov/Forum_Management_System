@@ -1,5 +1,7 @@
 package com.example.forum_management_system.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -32,13 +34,16 @@ public class User {
     @NotNull(message = "Username can't be empty!")
     @Column(name = "username")
     private String username;
+    @JsonIgnore
     @NotNull(message = "Password can't be empty!")
     @Column(name = "password")
     private String password;
+
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "is_banned")
     private boolean isBanned;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
 

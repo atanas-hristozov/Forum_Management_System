@@ -10,6 +10,9 @@ public interface UserService {
     User getById(int id);
     User getByName (String username);
     int showUsersCount();
+    void create(User user);
+    void update(User user);
+    void delete(int id, User user);
 
 
 

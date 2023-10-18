@@ -1,7 +1,7 @@
 package com.example.forum_management_system.controllers;
 
 import com.example.forum_management_system.models.Comment;
-import com.example.forum_management_system.Models.CommentDto;
+import com.example.forum_management_system.models.CommentDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
