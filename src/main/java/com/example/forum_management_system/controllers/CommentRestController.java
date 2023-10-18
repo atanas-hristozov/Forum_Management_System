@@ -1,18 +1,14 @@
 package com.example.forum_management_system.controllers;
 
-import com.example.forum_management_system.Models.Comment;
-import com.example.forum_management_system.Models.CommentDto;
-import com.example.forum_management_system.Models.User;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
+import com.example.forum_management_system.models.Comment;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.CommentService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/api/comments")
