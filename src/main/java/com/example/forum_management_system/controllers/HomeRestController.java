@@ -27,8 +27,8 @@ public class HomeRestController {
         return userService.showUsersCount();
     }
 
-   /* @GetMapping()
-    public int showPostsCount(@RequestHeader HttpHeaders httpHeaders) {
+   /* @GetMapping
+    public int showPostsCount() {
         return postService.showUsersCount();
     }*/
 }

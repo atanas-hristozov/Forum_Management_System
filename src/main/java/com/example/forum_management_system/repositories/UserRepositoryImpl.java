@@ -1,7 +1,8 @@
 package com.example.forum_management_system.repositories;
 
-import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.models.FilterOptions;
+import com.example.forum_management_system.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +19,43 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+   /* @Override
+    public List<User> getAll(FilterOptions filterOptions) {
+        try (Session session = sessionFactory.openSession()) {
+
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterOptions.getUsername().ifPresent(value -> {
+                filters.add("username like :username");
+                params.put("username", String.format("%%%s%%", value));
+            });
+
+            filterOptions.getEmail().ifPresent(value -> {
+                filters.add("email like email");
+                params.put("email", value);
+            });
+
+            filterOptions.getFirstName().ifPresent(value -> {
+                filters.add("first_Name like:firstName");
+                params.put("firstName", value);
+            });
+
+            StringBuilder queryString = new StringBuilder("from Beer");
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+
+        }
+    }*/
+
+    @Override
+    public List<User> getAll(FilterOptions filterOptions) {
+        return null;
     }
 
     @Override
@@ -71,4 +109,15 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
     }
+
+    @Override
+    public void delete(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.remove(user);
+            session.getTransaction().commit();
+        }
+    }
+
+
 }

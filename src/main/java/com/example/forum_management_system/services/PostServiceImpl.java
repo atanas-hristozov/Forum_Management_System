@@ -11,23 +11,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     @Autowired
-    public PostServiceImpl (PostRepository postRepository){
+    public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
+    @Override
     public List<Post> get() {
         return postRepository.getAll();
     }
 
+    @Override
     public Post get(int id) {
         return postRepository.getById(id);
     }
 
+    @Override
     public void create(Post post, User user) {
         boolean duplicateExists = true;
         try {
@@ -37,13 +40,14 @@ public class PostServiceImpl implements PostService{
         }
 
         if (duplicateExists) {
-            throw new EntityDuplicateException("Beer", "name", post.getTitle());
+            throw new EntityDuplicateException("Post", "name", post.getTitle());
         }
 
         post.setCreator(user);
         postRepository.create(post);
     }
 
+    @Override
     public void update(Post post, User user) {
 
         boolean duplicateExists = true;
@@ -63,6 +67,7 @@ public class PostServiceImpl implements PostService{
         postRepository.update(post);
     }
 
+    @Override
     public void delete(int id) {
         postRepository.delete(id);
     }
