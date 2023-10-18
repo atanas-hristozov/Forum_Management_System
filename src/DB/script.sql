@@ -17,7 +17,7 @@ create table posts
         primary key,
     title   varchar(255) not null,
     content text         not null,
-    `like`  int null,
+    like  int null,
     dislike int null,
     user_id int          not null,
     constraint posts_users_id
