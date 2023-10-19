@@ -6,6 +6,7 @@ import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.UserCreateDto;
+import com.example.forum_management_system.models.UserUpdateDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +63,47 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-@PostMapping
+
+    @PostMapping
     public User create(@Valid @RequestBody UserCreateDto userCreateDto) {
         User user = userMapper.fromUserCreateDto(userCreateDto);
         userService.create(user);
         return user;
-
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            if (user.getId() != id) {
+                throw new AuthorizationException(ERROR_MESSAGE);
+            }
+            userService.delete(user);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    public void update(@RequestHeader HttpHeaders headers,
+                       @RequestBody UserUpdateDto userUpdateDto,
+                       @PathVariable int id) {
+        try {
+            User loggedUser = authenticationHelper.tryGetUser(headers);
+            if (loggedUser.getId() != id) {
+                throw new AuthorizationException(ERROR_MESSAGE);
+            }
+            User user = userMapper.fromUserUpdateDto(id, userUpdateDto);
+            userService.update(user);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
 
     private static void checkAccessPermissions(int targetUserId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
