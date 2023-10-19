@@ -1,6 +1,8 @@
 package com.example.forum_management_system.controllers;
 
+import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
@@ -21,10 +23,12 @@ public class PostRestController {
 
     private PostService postService;
     private AuthenticationHelper authenticationHelper;
+    private PostMapper postMapper;
 
-    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper) {
+    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
+        this.postMapper = postMapper;
     }
 
     @GetMapping
@@ -42,9 +46,10 @@ public class PostRestController {
     }
 
     @PostMapping
-    public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody Post post) {
+    public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromDto(postDto);
             postService.create(post, user);
             return post;
         } catch (EntityNotFoundException e) {
@@ -57,9 +62,10 @@ public class PostRestController {
     }
 
     @PutMapping("/{id}")
-    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody Post post) {
+    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromDto(id, postDto);
             postService.update(post, user);
             return post;
         } catch (EntityNotFoundException e) {
