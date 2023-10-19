@@ -1,6 +1,7 @@
 package com.example.forum_management_system.services;
 
 
+import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.models.Comment;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.repositories.CommentRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+    public static final String ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT = "Only admin or comment author can delete it!";
     private final CommentRepository repository;
     @Autowired
     public CommentServiceImpl(CommentRepository repository) {
@@ -28,13 +30,18 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Comment comment, User user) {
-        //Fot the user we need to write a method if he is logged-in, so he can write comments
         repository.update(comment);
     }
 
     @Override
     public void delete(int id, User user) {
-        //Fot the user we need to write a method if he is the author, so he can delete the comment
+        checkIfUserIsAuthorOrAdmin(id, user);
         repository.delete(id);
+    }
+    private void checkIfUserIsAuthorOrAdmin(int commentId, User user){
+        Comment comment = repository.get(commentId);
+        if (!(user.isAdmin() || comment.getAuthor().equals(user))){
+            throw new AuthorizationException(ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT);
+        }
     }
 }
