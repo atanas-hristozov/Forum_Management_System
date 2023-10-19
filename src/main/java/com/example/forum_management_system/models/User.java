@@ -46,6 +46,10 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
+    @Column(name = "liked")
+    private boolean liked;
+    @Column(name = "disliked")
+    private boolean disliked;
 
 
     public User() {
@@ -121,6 +125,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public boolean isDisliked() {
+        return disliked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setDisliked(boolean liked) {
+        this.liked = liked;
     }
 
     @Override

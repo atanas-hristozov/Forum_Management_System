@@ -1,8 +1,11 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.User;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public interface PostRepository {
 
@@ -12,4 +15,6 @@ public interface PostRepository {
     void create(Post post);
     void update(Post post);
     void delete(int id);
+    Set<Object> likeEntity(int id, User user);
+    Set<Object> dislikeEntity(int id, User user);
 }

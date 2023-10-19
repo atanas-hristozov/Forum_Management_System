@@ -5,6 +5,7 @@ import com.example.forum_management_system.models.User;
 
 
 import java.util.List;
+import java.util.Set;
 
 public interface PostService {
 
@@ -17,4 +18,9 @@ public interface PostService {
     void update(Post post, User user);
 
     void delete(int id);
+
+    Set<Object> likeEntity(int id, User user);
+
+
+    Set<Object>  dislikeEntity(int id, User user);
 }
