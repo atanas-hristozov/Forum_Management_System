@@ -27,13 +27,11 @@ public class PostRestController {
     private PostService postService;
     private AuthenticationHelper authenticationHelper;
     private PostMapper postMapper;
-    private UserService userService;
 
-    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, UserService userService) {
+    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper = postMapper;
-        this.userService = userService;
     }
 
     @GetMapping
