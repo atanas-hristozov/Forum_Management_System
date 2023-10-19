@@ -12,8 +12,7 @@ public interface UserService {
     int showUsersCount();
     void create(User user);
     void update(User user);
-    void delete(int id, User user);
-
-
+    void delete(User user);
+    void updateToAdmin(User user);
 
 }

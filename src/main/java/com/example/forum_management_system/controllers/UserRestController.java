@@ -1,16 +1,17 @@
 package com.example.forum_management_system.controllers;
 
+import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.User;
+import com.example.forum_management_system.models.UserCreateDto;
 import com.example.forum_management_system.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserRestController {
 
+    public static final String ERROR_MESSAGE = "You are not authorized to browse user information.";
 
     private final UserService userService;
     private final UserMapper userMapper;
@@ -32,12 +34,46 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public User get(@PathVariable int id){
+    public User get(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
+            User loggedUser = authenticationHelper.tryGetUser(headers);
+            checkAccessPermissions(id, loggedUser);
+
             return userService.getById(id);
-        } catch (EntityNotFoundException e){
+
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
+    @GetMapping
+    public List<User> getAll(@RequestHeader HttpHeaders headers) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            if (!user.isAdmin()) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
+            }
+
+            return userService.getAll();
+
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+@PostMapping
+    public User create(@Valid @RequestBody UserCreateDto userCreateDto) {
+        User user = userMapper.fromUserCreateDto(userCreateDto);
+        userService.create(user);
+        return user;
+
+    }
+
+
+    private static void checkAccessPermissions(int targetUserId, User executingUser) {
+        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
 }

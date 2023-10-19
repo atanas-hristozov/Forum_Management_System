@@ -1,6 +1,5 @@
 package com.example.forum_management_system.services;
 
-import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.User;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    public static final String INVALID_AUTHENTICATION = "Invalid authentication!";
 
     private final UserRepository userRepository;
 
@@ -44,51 +42,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-        boolean duplicateExists = true;
+        boolean usernameExists = true;
         try {
             userRepository.getByName(user.getUsername());
         } catch (EntityNotFoundException e) {
-            duplicateExists = false;
+            usernameExists = false;
         }
 
-        if (duplicateExists) {
+        if (usernameExists) {
             throw new EntityDuplicateException("User", "username", user.getUsername());
         }
-
+        user.setAdmin(false);
+        user.setBanned(false);
         userRepository.create(user);
     }
 
     @Override
     public void update(User user) {
-        boolean duplicateExists = true;
-        try {
-            User existingUsername = userRepository.getByName(user.getUsername());
-            if (existingUsername.getId() == user.getId()) {
-                duplicateExists = false;
-            }
-        } catch (EntityNotFoundException e) {
-            duplicateExists = false;
-        }
-
-        if (duplicateExists) {
-            throw new EntityDuplicateException("User", "username", user.getUsername());
-        }
-
         userRepository.update(user);
     }
 
     @Override
-    public void delete(int id, User user) {
-        if (user.getId() != id)
-            throw new AuthorizationException(INVALID_AUTHENTICATION);
-
-        userRepository.delete(user);
+    public void delete(User user) {
+            userRepository.delete(user);
     }
 
-    private boolean isAdmin(User user){
-        if (!user.isAdmin())
-            throw new AuthorizationException(INVALID_AUTHENTICATION);
-
-        return true;
+    @Override
+    public void updateToAdmin(User user) {
+       userRepository.update(user);
     }
 }
