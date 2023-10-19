@@ -19,6 +19,8 @@ public class UserUpdateDto {
     @NotNull(message = "Password can't be empty!")
     private String password;
 
+    public UserUpdateDto() {
+    }
 
     public String getFirstName() {
         return firstName;

@@ -1,10 +1,23 @@
 package com.example.forum_management_system.models;
 
-import jakarta.persistence.Column;
+import java.util.Optional;
 
-public class UserRightsDto {
+public class AdminRightsDto {
     private boolean isAdmin;
     private boolean isBanned;
+    private String phoneNumber;
+
+
+    public AdminRightsDto() {
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -21,4 +34,7 @@ public class UserRightsDto {
     public void setBanned(boolean banned) {
         isBanned = banned;
     }
+
+
 }
+

@@ -2,7 +2,7 @@ package com.example.forum_management_system.helpers;
 
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.UserCreateDto;
-import com.example.forum_management_system.models.UserRightsDto;
+import com.example.forum_management_system.models.AdminRightsDto;
 import com.example.forum_management_system.models.UserUpdateDto;
 import com.example.forum_management_system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +40,13 @@ public class UserMapper {
         return user;
     }
 
-    public User fromUserRightsDto(int id, UserRightsDto dto){
+    public User fromAdminRightsDto(int id, AdminRightsDto dto){
         User user = userService.getById(id);
         user.setAdmin(dto.isAdmin());
         user.setBanned(dto.isBanned());
-
+        if (dto.getPhoneNumber()!= null) {
+            user.setPhoneNumber(dto.getPhoneNumber());
+        }
         return user;
     }
 }

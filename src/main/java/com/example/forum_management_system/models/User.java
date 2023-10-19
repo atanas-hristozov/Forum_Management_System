@@ -46,8 +46,10 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name = "liked")
     private boolean liked;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(name = "disliked")
     private boolean disliked;
 
@@ -131,16 +133,16 @@ public class User {
         return liked;
     }
 
-    public boolean isDisliked() {
-        return disliked;
-    }
-
     public void setLiked(boolean liked) {
         this.liked = liked;
     }
 
-    public void setDisliked(boolean liked) {
-        this.liked = liked;
+    public boolean isDisliked() {
+        return disliked;
+    }
+
+    public void setDisliked(boolean disliked) {
+        this.disliked = disliked;
     }
 
     @Override
