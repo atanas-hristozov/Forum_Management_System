@@ -87,6 +87,7 @@ public class UserRestController {
         }
     }
 
+    @PutMapping("/{id}")
     public void update(@RequestHeader HttpHeaders headers,
                        @RequestBody UserUpdateDto userUpdateDto,
                        @PathVariable int id) {
