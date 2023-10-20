@@ -15,8 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/posts/{postId}/comments")
 public class CommentRestController {
     public static final String YOU_HAVE_TO_LOG_IN_FIRST = "You have to log in first.";
     private final CommentService service;
@@ -29,8 +31,12 @@ public class CommentRestController {
         this.authenticationHelper = authenticationHelper;
     }
 
+    @GetMapping
+    public List<Comment> getAllFromPost(@PathVariable int postId){
+        return service.getAllCommentsFromPost(postId);
+    }
     @GetMapping("/{id}")
-    public Comment get(@PathVariable int id){
+    public Comment get(@PathVariable int postId, @PathVariable int id){
         try{
             return service.get(id);
         } catch (EntityNotFoundException e){

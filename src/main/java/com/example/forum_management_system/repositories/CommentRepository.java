@@ -2,8 +2,12 @@ package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.models.Comment;
 
+import java.util.List;
+
 
 public interface CommentRepository {
+    List<Comment> getAllCommentsFromPost(int postId);
+    List<Comment> getAll();
     Comment get(int id);
     void create(Comment comment);
     void update(Comment comment);

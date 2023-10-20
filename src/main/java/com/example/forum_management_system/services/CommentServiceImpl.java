@@ -3,10 +3,14 @@ package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.models.Comment;
+import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.repositories.CommentRepository;
+import com.example.forum_management_system.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -38,6 +42,17 @@ public class CommentServiceImpl implements CommentService {
         checkIfUserIsAuthorOrAdmin(id, user);
         repository.delete(id);
     }
+
+    @Override
+    public List<Comment> getAllCommentsFromPost(int postId) {
+        return repository.getAllCommentsFromPost(postId);
+    }
+
+    @Override
+    public List<Comment> getAll() {
+        return null;
+    }
+
     private void checkIfUserIsAuthorOrAdmin(int commentId, User user){
         Comment comment = repository.get(commentId);
         if (!(user.isAdmin() || comment.getAuthor().equals(user))){
