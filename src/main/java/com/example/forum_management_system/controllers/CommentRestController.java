@@ -5,10 +5,12 @@ import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.helpers.CommentMapper;
 import com.example.forum_management_system.models.Comment;
 import com.example.forum_management_system.models.CommentDto;
+import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.services.CommentService;
+import com.example.forum_management_system.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,11 +25,13 @@ public class CommentRestController {
     public static final String YOU_HAVE_TO_LOG_IN_FIRST = "You have to log in first.";
     private final CommentService service;
     private final CommentMapper commentMapper;
+    private final PostService postService;
     private final AuthenticationHelper authenticationHelper;
 
-    public CommentRestController(CommentService service, CommentMapper commentMapper, AuthenticationHelper authenticationHelper) {
+    public CommentRestController(CommentService service, CommentMapper commentMapper, PostService postService, AuthenticationHelper authenticationHelper) {
         this.service = service;
         this.commentMapper = commentMapper;
+        this.postService = postService;
         this.authenticationHelper = authenticationHelper;
     }
 
@@ -36,7 +40,7 @@ public class CommentRestController {
         return service.getAllCommentsFromPost(postId);
     }
     @GetMapping("/{id}")
-    public Comment get(@PathVariable int postId, @PathVariable int id){
+    public Comment get(@PathVariable int id){
         try{
             return service.get(id);
         } catch (EntityNotFoundException e){
@@ -44,11 +48,12 @@ public class CommentRestController {
         }
     }
     @PostMapping
-    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto){
+    public Comment create(@RequestHeader HttpHeaders headers, @PathVariable int postId, @Valid @RequestBody CommentDto commentDto){
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Post post = postService.get(postId);
             Comment comment = commentMapper.fromDto(commentDto);
-            service.create(comment, user);
+            service.create(comment, post, user);
             return comment;
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -58,12 +63,14 @@ public class CommentRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
     @PutMapping("/{id}")
-    public Comment update(@RequestHeader HttpHeaders headers,@PathVariable int id, @Valid @RequestBody CommentDto commentDto){
+    public Comment update(@RequestHeader HttpHeaders headers,@PathVariable int postId, @PathVariable int id, @Valid @RequestBody CommentDto commentDto){
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Post post = postService.get(postId);
             Comment comment = commentMapper.fromDto(id, commentDto);
-            service.create(comment, user);
+            service.create(comment,post, user);
             return comment;
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

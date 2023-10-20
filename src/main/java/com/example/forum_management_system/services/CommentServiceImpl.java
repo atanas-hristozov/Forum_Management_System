@@ -27,13 +27,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void create(Comment comment, User user) {
+    public void create(Comment comment, Post post, User user) {
+        comment.setPost_id(post);
         comment.setAuthor(user);
         repository.create(comment);
     }
 
     @Override
-    public void update(Comment comment, User user) {
+    public void update(Comment comment,Post post, User user) {
+        comment.setPost_id(post);
+        comment.setAuthor(user);
         repository.update(comment);
     }
 

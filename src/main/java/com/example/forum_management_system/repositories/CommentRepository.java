@@ -1,6 +1,7 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.models.Comment;
+import com.example.forum_management_system.models.User;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface CommentRepository {
     void create(Comment comment);
     void update(Comment comment);
     void delete(int id);
+    User getAuthor(int authorId);
 }
