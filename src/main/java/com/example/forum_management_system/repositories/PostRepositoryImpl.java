@@ -6,16 +6,15 @@ import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
@@ -27,10 +26,11 @@ public class PostRepositoryImpl implements PostRepository{
         this.sessionFactory = sessionFactory;
     }
 
-    public List<Post> getAll() {
+    public List<Post> getAll(String title, Integer userId, String sortBy, String sortOrder) {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
-            return query.list();
+            List<Post> posts = query.list();
+            return filter(posts, title, userId, sortBy, sortOrder);
         }
     }
 
@@ -117,5 +117,58 @@ public class PostRepositoryImpl implements PostRepository{
         }
 
         return result;
+    }
+
+    public List<Post> filter(List<Post> posts, String title, Integer userId, String sortBy, String sortOrder){
+        posts = filterByTitle(posts, title);
+        posts = filterByUser(posts, userId);
+        posts = sortBy(posts, sortBy);
+        posts = order(posts, sortOrder);
+        return posts;
+    }
+
+    private static List<Post> filterByTitle(List<Post> posts, String title) {
+        if (title != null && !title.isEmpty()) {
+            posts = posts.stream()
+                    .filter(post -> containsIgnoreCase(post.getTitle(), title))
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    private static List<Post> filterByUser(List<Post> posts, Integer userId) {
+        if (userId != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCreator().getId() == userId)
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    private static List<Post> sortBy(List<Post> posts, String sortBy) {
+        if (sortBy != null && !sortBy.isEmpty()) {
+            switch (sortBy.toLowerCase()) {
+                case "title":
+                    posts.sort(Comparator.comparing(Post::getTitle));
+                    break;
+                case "user":
+                    posts.sort(Comparator.comparing(post -> post.getCreator().getFirstName()));
+                    break;
+            }
+        }
+        return posts;
+    }
+
+    private static List<Post> order(List<Post> posts, String order) {
+        if (order != null && !order.isEmpty()) {
+            if (order.equals("desc")) {
+                Collections.reverse(posts);
+            }
+        }
+        return posts;
+    }
+
+    private static boolean containsIgnoreCase(String value, String sequence) {
+        return value.toLowerCase().contains(sequence.toLowerCase());
     }
 }

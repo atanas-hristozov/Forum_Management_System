@@ -35,8 +35,11 @@ public class PostRestController {
     }
 
     @GetMapping
-    public List<Post> get() {
-        return postService.get();
+    public List<Post> get(@RequestParam(required = false) String title,
+                          @RequestParam(required = false) Integer userId,
+                          @RequestParam(required = false) String sortBy,
+                          @RequestParam(required = false) String sortOrder) {
+        return postService.get(title, userId, sortBy, sortOrder);
     }
 
     @GetMapping("/{id}")

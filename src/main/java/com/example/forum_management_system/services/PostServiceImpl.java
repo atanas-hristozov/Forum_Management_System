@@ -22,8 +22,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> get() {
-        return postRepository.getAll();
+    public List<Post> get(String title, Integer userId, String sortBy, String sortOrder) {
+        return postRepository.getAll(title, userId, sortBy, sortOrder);
     }
 
     @Override

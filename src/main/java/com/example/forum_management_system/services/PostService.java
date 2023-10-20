@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface PostService {
 
-    List<Post> get();
+    List<Post> get(String title, Integer userId, String sortBy, String sortOrder);
 
     Post get(int id);
 
