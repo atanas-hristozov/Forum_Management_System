@@ -25,19 +25,15 @@ public class UserRestController {
     public static final String ERROR_MESSAGE = "You are not authorized to browse user information.";
 
     private final UserService userService;
-
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
 
 
     @Autowired
     public UserRestController(UserService userService,
-                              PostService postService,
-                              CommentService commentService,
                               UserMapper userMapper,
                               AuthenticationHelper authenticationHelper) {
         this.userService = userService;
-
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
     }
@@ -64,9 +60,7 @@ public class UserRestController {
                              @RequestParam(required = false) String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            if (!user.isAdmin()) {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
-            }
+            checkAdmin(user);
             UserFilterOptions userFilterOptionsForAdmins = new UserFilterOptions(username,
                     email, firstName);
 
@@ -81,17 +75,16 @@ public class UserRestController {
     public User create(@Valid @RequestBody UserCreateDto userCreateDto) {
         User user = userMapper.fromUserCreateDto(userCreateDto);
         userService.create(user);
+
         return user;
     }
 
     @DeleteMapping("/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            User user = authenticationHelper.tryGetUser(headers);
-            if (user.getId() != id) {
-                throw new AuthorizationException(ERROR_MESSAGE);
-            }
-            userService.delete(user);
+            User userToDelete = authenticationHelper.tryGetUser(headers);
+            checkIsItSameUser(userToDelete, id);
+            userService.delete(userToDelete);
 
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -106,10 +99,9 @@ public class UserRestController {
                        @PathVariable int id) {
         try {
             User loggedUser = authenticationHelper.tryGetUser(headers);
-            if (loggedUser.getId() != id) {
-                throw new AuthorizationException(ERROR_MESSAGE);
-            }
+            checkIsItSameUser(loggedUser, id);
             User user = userMapper.fromUserUpdateDto(id, userUpdateDto);
+
             userService.update(user);
 
         } catch (EntityNotFoundException e) {
@@ -123,14 +115,13 @@ public class UserRestController {
                        @PathVariable int id) {
         try {
             User loggedUser = authenticationHelper.tryGetUser(headers);
-            if (!loggedUser.isAdmin()) {
-                throw new AuthorizationException(ERROR_MESSAGE);
-            }
-            User userToUpdate = userService.getById(id);
+            checkAdmin(loggedUser);
 
+            User userToUpdate = userService.getById(id);
             if (userToUpdate.isAdmin()) {
                 throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
             }
+
             userToUpdate = userMapper.fromAdminRightsDto(id, adminRightsDto);
             userService.update(userToUpdate);
 
@@ -141,9 +132,19 @@ public class UserRestController {
         }
     }
 
+    private static void checkAdmin(User userToCheck){
+        if (!userToCheck.isAdmin()){
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
 
     private static void checkAccessPermissions(int targetUserId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
+    private static void checkIsItSameUser(User loggedUser, int id){
+        if (loggedUser.getId() != id) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }
