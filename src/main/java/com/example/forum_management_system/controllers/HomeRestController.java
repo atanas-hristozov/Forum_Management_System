@@ -22,13 +22,13 @@ public class HomeRestController {
         this.postService = postService;
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public int showUsersCount() {
         return userService.showUsersCount();
     }
 
-   /* @GetMapping
+    @GetMapping("/posts")
     public int showPostsCount() {
-        return postService.showUsersCount();
-    }*/
+        return postService.showPostsCount();
+    }
 }

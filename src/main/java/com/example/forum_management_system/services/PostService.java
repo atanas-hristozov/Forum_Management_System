@@ -23,4 +23,5 @@ public interface PostService {
 
 
     Set<Object>  dislikeEntity(int id, User user);
+    int showPostsCount();
 }

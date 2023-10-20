@@ -81,4 +81,11 @@ public class PostServiceImpl implements PostService {
     public Set<Object> dislikeEntity(int id, User user){
         return postRepository.dislikeEntity(id,user);
     }
+
+    @Override
+    public int showPostsCount() {
+        return postRepository.getAll().size();
+    }
+
+
 }
