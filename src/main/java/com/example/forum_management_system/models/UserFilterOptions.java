@@ -7,18 +7,16 @@ public class UserFilterOptions {
     private Optional<String> username;
     private Optional<String> email;
     private Optional<String> firstName;
-    private Optional<String> filterAllUsers;
+
 
 
 
     public UserFilterOptions(String username,
                              String email,
-                             String firstName,
-                             String filterPostsByUser) {
+                             String firstName) {
         this.username = Optional.ofNullable(username);
         this.email = Optional.ofNullable(email);
         this.firstName = Optional.ofNullable(firstName);
-        this.filterAllUsers = Optional.ofNullable(filterPostsByUser);
     }
 
     public Optional<String> getUsername() {
@@ -33,9 +31,7 @@ public class UserFilterOptions {
         return firstName;
     }
 
-    public Optional<String> getFilterAllUsers() {
-        return filterAllUsers;
-    }
+
 
 
 }

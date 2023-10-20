@@ -59,17 +59,16 @@ public class UserRestController {
 
     @GetMapping
     public List<User> getAll(@RequestHeader HttpHeaders headers,
-                             @RequestParam(required = false) String userName,
+                             @RequestParam(required = false) String username,
                              @RequestParam(required = false) String email,
-                             @RequestParam(required = false) String firstName,
-                             @RequestParam(required = false) String filterAllUsers) {
+                             @RequestParam(required = false) String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             if (!user.isAdmin()) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
             }
-            UserFilterOptions userFilterOptionsForAdmins = new UserFilterOptions(userName,
-                    email, firstName, filterAllUsers);
+            UserFilterOptions userFilterOptionsForAdmins = new UserFilterOptions(username,
+                    email, firstName);
 
             return userService.getAll(userFilterOptionsForAdmins);
 

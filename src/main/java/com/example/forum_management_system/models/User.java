@@ -46,10 +46,10 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+
     @Column(name = "liked")
     private boolean liked;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+
     @Column(name = "disliked")
     private boolean disliked;
 

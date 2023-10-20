@@ -32,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
             Map<String, Object> params = new HashMap<>();
 
             userFilterOptions.getUsername().ifPresent(value -> {
-                filters.add("userName like :username");
+                filters.add("username like :username");
                 params.put("username", String.format("%%%s%%", value));
             });
 
@@ -42,8 +42,8 @@ public class UserRepositoryImpl implements UserRepository {
             });
 
             userFilterOptions.getFirstName().ifPresent(value -> {
-                filters.add("firstName like :fistName");
-                params.put("firstName", String.format("%%%s%%", value));
+                filters.add("firstName like :first_name");
+                params.put("first_name", String.format("%%%s%%", value));
             });
 
             StringBuilder queryString = new StringBuilder("from User");
@@ -52,9 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
                         .append(" where ")
                         .append(String.join(" and ", filters));
             }
-            queryString.append(userFilterForAdmins(userFilterOptions));
-
-            Query<User> query = session.createQuery("from User", User.class);
+            Query<User> query = session.createQuery(queryString.toString(), User.class);
             query.setProperties(params);
             return query.list();
         }
@@ -123,25 +121,5 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    private String userFilterForAdmins(UserFilterOptions adminFilterOptions) {
-        if (adminFilterOptions.getFilterAllUsers().isEmpty()) {
-            return "";
-        }
 
-        String orderBy = "";
-        switch (adminFilterOptions.getFilterAllUsers().get()) {
-            case "username":
-                orderBy = "username";
-                break;
-            case "email":
-                orderBy = "email";
-                break;
-            case "firstName":
-                orderBy = "firstName";
-                break;
-        }
-
-        orderBy = String.format(" order by %s", orderBy);
-        return orderBy;
-    }
 }
