@@ -44,9 +44,8 @@ public class UserMapper {
         User user = userService.getById(id);
         user.setAdmin(dto.isAdmin());
         user.setBanned(dto.isBanned());
-        if (dto.getPhoneNumber()!= null) {
-            user.setPhoneNumber(dto.getPhoneNumber());
-        }
+        user.setPhoneNumber(dto.getPhoneNumber());
+
         return user;
     }
 }

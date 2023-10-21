@@ -14,7 +14,6 @@ public class UserUpdateDto {
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
     @NotNull
-    @UniqueElements
     private String email;
     @NotNull(message = "Password can't be empty!")
     private String password;
