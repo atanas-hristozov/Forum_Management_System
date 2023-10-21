@@ -1,15 +1,11 @@
 package com.example.forum_management_system.controllers;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
-import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.*;
-import com.example.forum_management_system.services.CommentService;
-import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,7 +18,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserRestController {
 
-    public static final String ERROR_MESSAGE = "You are not authorized to browse user information.";
+    public static final String ERROR_MESSAGE = "You are not authorized!";
+    public static final String CAN_T_DELETE_OTHER_ACCOUNT = "You can't delete other people's accounts!";
+
 
     private final UserService userService;
     private final UserMapper userMapper;
@@ -60,7 +58,7 @@ public class UserRestController {
                              @RequestParam(required = false) String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            checkAdmin(user);
+            checkAdminRights(user);
             UserFilterOptions userFilterOptionsForAdmins = new UserFilterOptions(username,
                     email, firstName);
 
@@ -72,7 +70,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody UserCreateDto userCreateDto) {
+    public User create(@RequestBody UserCreateDto userCreateDto) {
         User user = userMapper.fromUserCreateDto(userCreateDto);
         userService.create(user);
 
@@ -82,9 +80,11 @@ public class UserRestController {
     @DeleteMapping("/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            User userToDelete = authenticationHelper.tryGetUser(headers);
-            checkIsItSameUser(userToDelete, id);
-            userService.delete(userToDelete);
+            User loggedUser = authenticationHelper.tryGetUser(headers);
+            if (loggedUser.getId() == id || loggedUser.getId() == 1) {
+                userService.delete(loggedUser);
+            }
+            throw new AuthorizationException(ERROR_MESSAGE);
 
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -109,17 +109,20 @@ public class UserRestController {
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
-    }@PutMapping("/admin/{id}")
-    public void adminUpdate(@RequestHeader HttpHeaders headers,
-                       @RequestBody AdminRightsDto adminRightsDto,
-                       @PathVariable int id) {
+    }
+
+    @PutMapping("/admin/{id}")
+    public void adminRightsUpdate(@RequestHeader HttpHeaders headers,
+                                  @RequestBody AdminRightsDto adminRightsDto,
+                                  @PathVariable int id) {
         try {
             User loggedUser = authenticationHelper.tryGetUser(headers);
-            checkAdmin(loggedUser);
+
+            checkAdminRights(loggedUser);
 
             User userToUpdate = userService.getById(id);
-            if (userToUpdate.isAdmin()) {
-                throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
+            if (userToUpdate.getId() == 1 && loggedUser.getId() != 1) {
+                throw new AuthorizationException(ERROR_MESSAGE);
             }
 
             userToUpdate = userMapper.fromAdminRightsDto(id, adminRightsDto);
@@ -132,20 +135,22 @@ public class UserRestController {
         }
     }
 
-    private static void checkAdmin(User userToCheck){
-        if (!userToCheck.isAdmin()){
+    // Id: 1 = SuperAdmin
+    private static void checkAdminRights(User userToCheck) {
+        if (!userToCheck.isAdmin() || userToCheck.getId() != 1) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }
 
     private static void checkAccessPermissions(int targetUserId, User executingUser) {
-        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+        if (!executingUser.isAdmin() && executingUser.getId() != 1 && executingUser.getId() != targetUserId) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }
-    private static void checkIsItSameUser(User loggedUser, int id){
+
+    private static void checkIsItSameUser(User loggedUser, int id) {
         if (loggedUser.getId() != id) {
-            throw new AuthorizationException(ERROR_MESSAGE);
+            throw new AuthorizationException(CAN_T_DELETE_OTHER_ACCOUNT);
         }
     }
 }

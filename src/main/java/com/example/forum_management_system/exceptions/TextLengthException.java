@@ -1,0 +1,8 @@
+package com.example.forum_management_system.exceptions;
+
+public class TextLengthException extends RuntimeException{
+
+    public TextLengthException(int number1, int number2) {
+        super(String.format("Length should be between %s and %s symbols", number1, number2));
+    }
+}

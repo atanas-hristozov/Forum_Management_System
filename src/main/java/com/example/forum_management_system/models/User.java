@@ -1,5 +1,6 @@
 package com.example.forum_management_system.models;
 
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
@@ -15,6 +16,8 @@ import java.util.Objects;
         pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 public class User {
 
+    private static final int MIN_LENGTH = 4;
+    private static final int MAX_LENGTH = 32;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,13 +29,13 @@ public class User {
     @Column(name = "last_name")
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
-    @NotNull
-    @UniqueElements
-    @Column(name = "email")
+
+    @NotNull(message = "Email can't be empty!")
+    @Column(name = "email", unique = true)
     private String email;
-    @UniqueElements
+
     @NotNull(message = "Username can't be empty!")
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
     @JsonIgnore
     @NotNull(message = "Password can't be empty!")
@@ -62,6 +65,7 @@ public class User {
     }
 
     public void setFirstName(String firstName) {
+        checkNameLength(firstName);
         this.firstName = firstName;
     }
 
@@ -70,6 +74,7 @@ public class User {
     }
 
     public void setLastName(String lastName) {
+        checkNameLength(lastName);
         this.lastName = lastName;
     }
 
@@ -143,6 +148,11 @@ public class User {
 
     public void setDisliked(boolean disliked) {
         this.disliked = disliked;
+    }
+
+    private void checkNameLength(String text) {
+        if (text.length() < MIN_LENGTH || text.length() > MAX_LENGTH)
+            throw new TextLengthException(MIN_LENGTH, MAX_LENGTH);
     }
 
     @Override

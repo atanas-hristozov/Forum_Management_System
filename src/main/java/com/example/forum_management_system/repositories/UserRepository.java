@@ -14,6 +14,7 @@ public interface UserRepository {
     User getById(int id);
 
     User getByName(String username);
+    User getEmail(String email);
 
     void create(User user);
 

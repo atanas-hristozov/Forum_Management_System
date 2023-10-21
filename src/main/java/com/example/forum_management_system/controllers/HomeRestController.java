@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/home")
 public class HomeRestController {
 
-
     private final UserService userService;
     private final PostService postService;
 

@@ -5,6 +5,8 @@ import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.UserFilterOptions;
+import com.example.forum_management_system.repositories.CommentRepository;
+import com.example.forum_management_system.repositories.PostRepository;
 import com.example.forum_management_system.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,18 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
     private final UserRepository userRepository;
-
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PostRepository postRepository,
+                           CommentRepository commentRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
+
 
     @Override
     public List<User> getAll(UserFilterOptions userFilterOptions) {
@@ -45,14 +53,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(User user) {
         boolean usernameExists = true;
+        boolean emailExists = true;
         try {
             userRepository.getByName(user.getUsername());
         } catch (EntityNotFoundException e) {
             usernameExists = false;
         }
+        try {
+            userRepository.getEmail(user.getEmail());
+        } catch (EntityNotFoundException c) {
+            emailExists = false;
+        }
 
         if (usernameExists) {
             throw new EntityDuplicateException("User", "username", user.getUsername());
+        }
+        if (emailExists) {
+            throw new EntityDuplicateException("User", "email", user.getEmail());
         }
         user.setAdmin(false);
         user.setBanned(false);
@@ -68,59 +85,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) {
-            userRepository.delete(user);
+        commentRepository.delete(user.getId());
+        postRepository.delete(user.getId());
+        userRepository.delete(user);
     }
 
-   /* @Override
-    public void promoteAdmin(User user, int id) {
-        validateAdmin(user);
-            User userToUpdate = userRepository.getById(id);
-            if (userToUpdate.isAdmin()){
-                throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
-            }
-            userToUpdate.setAdmin(true);
 
-            userRepository.update(userToUpdate);
-    }
-
-    @Override
-    public void demoteAdmin(User user, int id) {
-        validateAdmin(user);
-        User userToUpdate = userRepository.getById(id);
-        if (userToUpdate.isAdmin()){
-            throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
-        }
-        userToUpdate.setAdmin(false);
-
-        userRepository.update(userToUpdate);
-    }
-
-    @Override
-    public void banUser(User user, int id) {
-        validateAdmin(user);
-        User userToUpdate = userRepository.getById(id);
-        if (userToUpdate.isAdmin()){
-            throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
-        }
-        userToUpdate.setBanned(true);
-
-        userRepository.update(userToUpdate);
-    }
-
-    @Override
-    public void unbanUser(User user, int id) {
-        validateAdmin(user);
-        User userToUpdate = userRepository.getById(id);
-        if (userToUpdate.isAdmin()){
-            throw new EntityDuplicateException("Admin", "id", String.valueOf(id));
-        }
-        userToUpdate.setAdmin(false);
-
-        userRepository.update(userToUpdate);
-    }*/
-
-    private void validateAdmin(User userToCheck){
-        if (!userToCheck.isAdmin()){
+    private void validateAdminRights(User userToCheck) {
+        if (!userToCheck.isAdmin() || userToCheck.getId() != 1) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
     }
