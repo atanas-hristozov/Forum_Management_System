@@ -34,6 +34,14 @@ public class PostRepositoryImpl implements PostRepository{
         }
     }
 
+    @Override
+    public List<Post> getAllCount() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("from Post ", Post.class);
+            return query.list();
+        }
+    }
+
     public Post getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             Post post = session.get(Post.class, id);

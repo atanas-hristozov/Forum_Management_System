@@ -10,6 +10,7 @@ import java.util.Set;
 public interface PostRepository {
 
     List<Post> getAll(String title, Integer userId, String sortBy, String sortOrder);
+    List<Post> getAllCount();
     Post getById(int id);
     Post getByTitle(String title);
     void create(Post post);

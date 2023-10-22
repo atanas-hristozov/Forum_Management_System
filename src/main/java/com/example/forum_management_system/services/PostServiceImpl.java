@@ -84,7 +84,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int showPostsCount() {
-        return postRepository.getAll().size();
+        return postRepository.getAllCount().size();
     }
 
 
