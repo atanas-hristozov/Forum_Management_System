@@ -70,7 +70,7 @@ public class CommentRestController {
             User user = authenticationHelper.tryGetUser(headers);
             Post post = postService.get(postId);
             Comment comment = commentMapper.fromDto(id, commentDto);
-            service.create(comment,post, user);
+            service.update(comment,post, user);
             return comment;
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

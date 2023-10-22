@@ -14,11 +14,9 @@ public class CommentMapper {
         this.commentService = commentService;
     }
     public Comment fromDto(int id, CommentDto dto){
-        Comment comment = fromDto(dto);
-        comment.setId(id);
         Comment repositoryComment = commentService.get(id);
-        comment.setAuthor(repositoryComment.getAuthor());
-        return comment;
+        repositoryComment.setText(dto.getText());
+        return repositoryComment;
     }
     public Comment fromDto(CommentDto dto){
         Comment comment = new Comment();
