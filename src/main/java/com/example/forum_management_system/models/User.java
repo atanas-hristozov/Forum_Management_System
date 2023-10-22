@@ -8,7 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +24,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private List<Post> children;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Comment> children2;
 
     @Column(name = "first_name")
     @Size(min = 4, max = 32, message = "First name must be between 4 and 32 symbols.")
@@ -46,6 +53,7 @@ public class User {
     private boolean isAdmin;
     @Column(name = "is_banned")
     private boolean isBanned;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
