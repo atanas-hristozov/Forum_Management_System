@@ -35,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Comment comment,Post post, User user) {
+        Comment existingComment = repository.get(comment.getId());
         comment.setPost_id(post);
         comment.setAuthor(user);
         repository.update(comment);
