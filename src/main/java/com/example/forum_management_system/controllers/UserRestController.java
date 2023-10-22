@@ -1,11 +1,13 @@
 package com.example.forum_management_system.controllers;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
+import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.*;
 import com.example.forum_management_system.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -72,8 +74,11 @@ public class UserRestController {
     @PostMapping
     public User create(@RequestBody UserCreateDto userCreateDto) {
         User user = userMapper.fromUserCreateDto(userCreateDto);
-        userService.create(user);
-
+        try {
+            userService.create(user);
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
         return user;
     }
 
@@ -81,10 +86,13 @@ public class UserRestController {
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User loggedUser = authenticationHelper.tryGetUser(headers);
-            if (loggedUser.getId() == id || loggedUser.getId() == 1) {
-                userService.delete(loggedUser);
+            int identicalNum = loggedUser.getId();
+            User userToDelete = userService.getById(id);
+            if (identicalNum == id || identicalNum == 1) {
+                userService.delete(userToDelete);
+            } else {
+                throw new AuthorizationException(ERROR_MESSAGE);
             }
-            throw new AuthorizationException(ERROR_MESSAGE);
 
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

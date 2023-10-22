@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -14,6 +15,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,7 +27,7 @@ public class Post {
     @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
     @Positive
-    @Column(name = "likes")
+    @Column(name = "like")
     private int likes = 0;
     @Positive
     @Column(name = "dislikes")

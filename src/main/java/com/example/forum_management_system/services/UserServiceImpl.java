@@ -17,16 +17,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
     private final UserRepository userRepository;
-    private final PostRepository postRepository;
-    private final CommentRepository commentRepository;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           PostRepository postRepository,
-                           CommentRepository commentRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.postRepository = postRepository;
-        this.commentRepository = commentRepository;
     }
 
 
@@ -85,8 +80,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) {
-        commentRepository.delete(user.getId());
-        postRepository.delete(user.getId());
         userRepository.delete(user);
     }
 
