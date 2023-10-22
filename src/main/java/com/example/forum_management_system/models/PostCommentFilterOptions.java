@@ -19,7 +19,7 @@ public class PostCommentFilterOptions {
         this.sortComments = Optional.ofNullable(sortAllComments);
     }
 
-    public Optional<String> getSortAllPosts() {
+    public Optional<String> getSortPosts() {
         return sortPosts;
     }
 
