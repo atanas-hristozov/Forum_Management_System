@@ -1,11 +1,11 @@
 package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.UserHelpers;
+import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.UserFilterOptions;
 import com.example.forum_management_system.repositories.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,9 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -96,7 +96,42 @@ public class UserServicesImplTests {
 
         verify(mockRepository).create(userToCreate);
     }
+    @Test
+    public void testShouldThrowException_WhenCreateWithDuplicateUsername() {
+        User user = UserHelpers.createMockUser();
+        User user1 = UserHelpers.createMockUser();
 
+        when(mockRepository.getByName(user.getUsername())).thenReturn(user1);
+
+        assertThrows(EntityDuplicateException.class, () -> mockService.create(UserHelpers.createMockUser()));
+    }
+
+    @Test
+    public void testShouldThrowException_WhenCreateWithDuplicateEmail() {
+        User user = UserHelpers.createMockUser();
+        User user1 = UserHelpers.createMockUser();
+
+        when(mockRepository.getEmail(user.getEmail())).thenReturn(user1);
+
+        assertThrows(EntityDuplicateException.class, () -> mockService.create(UserHelpers.createMockUser()));
+    }
+
+    @Test
+    public void testUpdate() {
+        User userToUpdate = UserHelpers.createMockUser();
+
+        mockService.update(userToUpdate);
+
+        verify(mockRepository).update(userToUpdate);
+    }
+    @Test
+    public void testDelete() {
+        User userToDelete = UserHelpers.createMockUser();
+
+        mockService.delete(userToDelete);
+
+        verify(mockRepository).delete(userToDelete);
+    }
 }
 
 
