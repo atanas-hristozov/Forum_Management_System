@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -51,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllCommentsFromPost(int postId) {
+    public Map<String, Comment> getAllCommentsFromPost(int postId) {
         return repository.getAllCommentsFromPost(postId);
     }
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
@@ -36,7 +37,7 @@ public class CommentRestController {
     }
 
     @GetMapping
-    public List<Comment> getAllFromPost(@PathVariable int postId){
+    public Map<String, Comment> getAllFromPost(@PathVariable int postId){
         return service.getAllCommentsFromPost(postId);
     }
     @GetMapping("/{id}")

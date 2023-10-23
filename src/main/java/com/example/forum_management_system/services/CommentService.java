@@ -5,9 +5,10 @@ import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
-    List<Comment> getAllCommentsFromPost(int postId);
+    Map<String, Comment> getAllCommentsFromPost(int postId);
     List<Comment> getAll();
 
     Comment get(int id);
