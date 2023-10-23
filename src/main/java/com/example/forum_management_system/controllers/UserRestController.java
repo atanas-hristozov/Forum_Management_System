@@ -22,6 +22,7 @@ public class UserRestController {
 
     public static final String ERROR_MESSAGE = "You are not authorized!";
     public static final String CAN_T_DELETE_OTHER_ACCOUNT = "You can't delete other people's accounts!";
+    public static final String CAN_T_BE_EMPTY = "Cannot be empty!";
 
 
     private final UserService userService;
@@ -41,9 +42,7 @@ public class UserRestController {
     @GetMapping("/{id}")
     public User get(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            User loggedUser = authenticationHelper.tryGetUser(headers);
-            checkAccessPermissions(id, loggedUser);
-
+            authenticationHelper.tryGetUser(headers);
             return userService.getById(id);
 
         } catch (EntityNotFoundException e) {
@@ -78,6 +77,8 @@ public class UserRestController {
             userService.create(user);
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, CAN_T_BE_EMPTY);
         }
         return user;
     }

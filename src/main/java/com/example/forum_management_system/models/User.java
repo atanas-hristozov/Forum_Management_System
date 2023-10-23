@@ -107,6 +107,9 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if (password.isEmpty()){
+            throw new EntityNotFoundException();
+        }
         this.password = password;
     }
 
