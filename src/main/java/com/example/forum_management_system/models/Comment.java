@@ -1,11 +1,13 @@
 package com.example.forum_management_system.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "comments")
 public class Comment {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -14,7 +16,7 @@ public class Comment {
     @Column(name = "text")
     @NotNull(message = "text can't be empty!")
     private String text;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post_id;
