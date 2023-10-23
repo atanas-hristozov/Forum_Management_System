@@ -20,6 +20,7 @@ public class User {
 
     private static final int MIN_LENGTH = 4;
     private static final int MAX_LENGTH = 32;
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -48,9 +49,10 @@ public class User {
     @NotNull(message = "Password can't be empty!")
     @Column(name = "password")
     private String password;
-
+    @JsonIgnore
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @JsonIgnore
     @Column(name = "is_banned")
     private boolean isBanned;
 

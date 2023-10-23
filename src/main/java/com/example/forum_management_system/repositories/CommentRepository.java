@@ -4,10 +4,12 @@ import com.example.forum_management_system.models.Comment;
 import com.example.forum_management_system.models.User;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface CommentRepository {
-    List<Comment> getAllCommentsFromPost(int postId);
+    Map<String, Comment> getAllCommentsFromPost(int postId);
+    //List<Comment> getAllCommentsFromPost(int postId);
     List<Comment> getAll();
     Comment get(int id);
     void create(Comment comment);

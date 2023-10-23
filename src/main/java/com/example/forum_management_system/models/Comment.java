@@ -21,7 +21,7 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post_id;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
