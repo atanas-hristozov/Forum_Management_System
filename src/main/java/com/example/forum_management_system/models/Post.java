@@ -34,6 +34,8 @@ public class Post {
     private int dislikes = 0;
     @Column(name = "timestamp_created")
     private Timestamp timestamp;
+    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public Post() {
     }
