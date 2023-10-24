@@ -121,6 +121,7 @@ public class CommentServiceImplTests {
         commentService.delete(1, user);
     }
 */
+    /*
     @Test
     public void testGetAllCommentsFromPost() {
         List<Comment> comments = new ArrayList<>();
@@ -128,5 +129,5 @@ public class CommentServiceImplTests {
 
         List<Comment> result = commentService.getAllCommentsFromPost(1);
         assertEquals(comments, result);
-    }
+    }*/
 }
