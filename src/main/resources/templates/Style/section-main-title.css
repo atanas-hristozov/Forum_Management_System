@@ -228,3 +228,65 @@ h3{
     height: 40px;
     padding: 0 20px;
 }
+
+.forum-create-post{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    padding: 0;
+    width: 95vw;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px;
+}
+.forum-create-post h2{
+    margin-top: 0;
+    background-color: rgba(17, 119, 56, 0.4);
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 20px 20px 0 0;
+}
+.forum-create-post form{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.forum-create-post-textfield{
+    margin: 10px 0;
+    height: 100px;
+    border: 1px solid rgb(17, 119, 56);
+    border-radius: 10px;
+    width: 95%;
+}
+.forum-create-post-button{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    background-color: rgba(17, 119, 56, 0.4);
+    color: rgb(17, 119, 56);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.forum-create-post-button:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgb(17, 119, 56);
+    transition: 0.2s ease-in-out;
+    color: white;
+    
+}
+@media only screen and (min-width: 1200px) {
+    .forum-create-post{
+        width: 1000px;
+    }
+    .forum-create-post-textfield{
+        width: 97%;
+    }
+}
