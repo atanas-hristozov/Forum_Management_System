@@ -27,8 +27,8 @@
 
     <section class="post-page">
         <div class="mainpage-tables-section-comment" id="post-page-comment">
-            <h3>Post title</h3>
-            <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+            <h3 th:text="${post.getTitle()}">Post title</h3>
+            <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
         </div>
         <div class="mainpage-tables-section-comment-attribute">
             <div class="mainpage-tables-section-comment-attribute-text">

@@ -6,12 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/register")
 public class RegisterMcvController {
-    @Controller
-    @RequestMapping("/register")
-    public class UserMvcController {
-        @GetMapping
-        public String showLoginPage(){
-            return "Register";
-        }
+
+    @GetMapping
+    public String showRegisterPage(){
+        return "Register";
     }
 }

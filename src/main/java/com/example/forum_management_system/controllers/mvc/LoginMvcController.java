@@ -6,12 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/login")
 public class LoginMvcController {
-    @Controller
-    @RequestMapping("/login")
-    public class UserMvcController {
-        @GetMapping
-        public String showLoginPage(){
-            return "Login";
-        }
+    @GetMapping
+    public String showLoginPage(){
+        return "Login";
     }
 }
