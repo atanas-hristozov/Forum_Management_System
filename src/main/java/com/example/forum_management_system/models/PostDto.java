@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class PostDto {
     @Size(min = 16, max = 64, message = "Title length should be between 16 and 64")
@@ -14,8 +15,12 @@ public class PostDto {
     private int likes;
     @Positive(message = "Dislikes should be positive")
     private int dislikes;
-    @Positive(message = "User id should be positive")
+    @Positive(message = "UserId should be positive")
     private int userId;
+
+    private Set<Tag> tags;
+
+
 
     public PostDto(){
     }
@@ -58,5 +63,12 @@ public class PostDto {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

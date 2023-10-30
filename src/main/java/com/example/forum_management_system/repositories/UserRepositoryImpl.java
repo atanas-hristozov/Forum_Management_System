@@ -86,7 +86,6 @@ public class UserRepositoryImpl implements UserRepository {
             if (result.isEmpty()) {
                 throw new EntityNotFoundException("User", "username", username);
             }
-
             return result.get(0);
         }
     }

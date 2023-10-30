@@ -13,6 +13,7 @@ public class PostMapper {
 
     private final UserService userService;
 
+
     @Autowired
     public PostMapper(PostService postService, UserService userService) {
         this.postService = postService;
@@ -22,8 +23,9 @@ public class PostMapper {
     public Post fromDto(int id, PostDto dto) {
         Post post = fromDto(dto);
         post.setId(id);
-        Post repositoryBeer = postService.get(id);
-        post.setCreator(repositoryBeer.getCreator());
+        Post repositoryPost = postService.get(id);
+        post.setCreator(repositoryPost.getCreator());
+        post.setTags(dto.getTags());
         return post;
     }
 
@@ -33,7 +35,7 @@ public class PostMapper {
         post.setContent(dto.getContent());
         post.setLikes(dto.getLikes());
         post.setDislikes(dto.getDislikes());
-        post.setCreator(userService.getById(dto.getUserId()));
+
         return post;
     }
 }

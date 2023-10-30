@@ -1,6 +1,7 @@
 package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
 
 
@@ -17,11 +18,13 @@ public interface PostService {
 
     void update(Post post, User user);
 
-    void delete(int id);
+    void delete(int postId, User user);
 
     Set<Object> likeEntity(int id, User user);
 
-
     Set<Object>  dislikeEntity(int id, User user);
     int showPostsCount();
+    Set<Tag> getTagsByPost(Post post);
+    void addTagToPost(Post post, Set<Tag> tagsToAdd);
+    void removeTagFromPost(Post post, Set<Tag> tagsToRemove);
 }
