@@ -1,5 +1,7 @@
 package com.example.forum_management_system.models;
 
+import com.example.forum_management_system.exceptions.AuthorizationException;
+
 import java.util.Optional;
 
 public class AdminRightsDto {
@@ -34,7 +36,5 @@ public class AdminRightsDto {
     public void setBanned(boolean banned) {
         isBanned = banned;
     }
-
-
 }
 

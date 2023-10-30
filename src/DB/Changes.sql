@@ -52,3 +52,23 @@ create table comments
     constraint comments_users_id_fk
         foreign key (author_id) references users (id)
 );
+
+
+/*// Update 30.10*/
+create table posts_tags
+(
+    post_id int null,
+    tag_id  int not null,
+    constraint posts_tags_posts_id_fk
+        foreign key (post_id) references posts (id),
+    constraint posts_tags_tag_id_fk
+        foreign key (tag_id) references tags (id)
+);
+
+create table tags
+(
+    id      int auto_increment
+        primary key,
+    content varchar(255) not null
+);
+
