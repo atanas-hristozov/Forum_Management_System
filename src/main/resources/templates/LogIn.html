@@ -27,22 +27,24 @@
     
     <div class="login-box">
         <h2>Login</h2>
-        <form>
+        <form th:action="@{/auth/login}" th:object="${login}" method="post">
             <div class="user-box">
                 <input type="text" name="" required="">
-                <label>Username</label>
+                <label th:errors="*{username}">Username</label>
             </div>
             <div class="user-box">
                 <input type="password" name="" required="">
                 <label>Password</label>
             </div>
-            <a href="#">
+
+                <button type="submit" value="Login">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Submit
-            </a>
+                </button>
+
         </form>
     </div>
     <a class="login-register" href="Register.html" th:href="@{/register}">If you don't have an account, click here.</a>

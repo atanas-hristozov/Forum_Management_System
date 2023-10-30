@@ -60,6 +60,17 @@ public class AuthenticationHelper {
         return userInfo.substring(firstSpace + 1);
     }
 
+    public User verifyAuthentication(String username, String password) {
+        try {
+            User user = userService.getByName(username);
+            if (!user.getPassword().equals(password)) {
+                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+            }
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+    }
 
 
 
