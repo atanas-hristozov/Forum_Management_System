@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Style/main.css">
-    <link rel="stylesheet" href="Style/header-main.css">
-    <link rel="stylesheet" href="Style/section-main-title.css">
+    <link rel="stylesheet" href="../static/main.css" th:href="@{/main.css}">
+    <link rel="stylesheet" href="../static/header-main.css" th:href="@{/header-main.css}">
+    <link rel="stylesheet" href="../static/section-main-title.css" th:href="@{/section-main-title.css}">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/png" href="img/Title.png">
-    <title>Document</title>
+    <link rel="shortcut icon" type="image/png" href="../static/img/Title.png" th:href="@{/img/Title.png}">
+    <title>Forum Page</title>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
-          <a href="Index.html" class="logo"><img src="img/logo_01.png" alt=""></a>
+          <a href="Index.html" class="logo"><img src="../static/img/logo_01.png" th:src="@{/img/logo_01.png}" alt="Logo"></a>
           <input class="menu-btn" type="checkbox" id="menu-btn" />
           <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
           <ul class="menu">
@@ -26,7 +26,7 @@
     </header>
     
     <section class="main-header">
-        <img class="main-image" src="img/Page_Not_Found.png" alt="Cover_Photo">
+        <img class="main-image" src="../static/img/Page_Not_Found.png" th:src="@{/img/Page_Not_Found.png}" alt="Cover_Photo">
     </section>
 </body>
 </html>
