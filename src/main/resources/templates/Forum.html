@@ -35,12 +35,18 @@
             <a href="Login.html" th:href="@{/login}"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
         </div>
     </section>
-    <section class="forum-create-post">
+    <section th:if="${isAuthenticated}" class="forum-create-post">
+
+
+
         <h2>Create new post</h2>
-        <form>
+        <form th:action="@{__${requestURI}__}" th:object="${post}" method="post">
             <textarea class="forum-create-post-textfield" placeholder="Start a new post..." id="fname" name="postText"></textarea>
-            <input class="forum-create-post-button" type="submit" value="Post">
+            <input class="forum-create-post-button" type="submit" value="Save">
         </form>
+
+
+
     </section>
     <section class="mainpage-tables" id="main-pages-forum">
         <h2>All Posts</h2>

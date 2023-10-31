@@ -20,7 +20,7 @@
           <ul class="menu">
             <li><a href="Index.html" th:href="@{/}">Home</a></li>
             <li><a href="Forum.html" th:href="@{/forum}">Forum</a></li>
-            <li><a href="User.html" th:href="@{/user}">MyProfile</a></li>
+            <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/user}">MyProfile</a></li>
           </ul>
         </div> 
     </header>
@@ -32,7 +32,10 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <input type="text" placeholder="Search..">
             </div>
-            <a href="Login.html" th:href="@{/login}"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+            <a href="Login.html" th:unless="${isAuthenticated}" th:href="@{/auth/login}"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+            <form th:if="${isAuthenticated}" th:action="@{/auth/logout}" method="post">
+                <button type="submit" value="redirect:/"><i class="fa fa-user" aria-hidden="true"></i> Logout</button>
+            </form>
         </div>
     </section>
 

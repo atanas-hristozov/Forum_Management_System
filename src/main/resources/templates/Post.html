@@ -31,17 +31,9 @@
             <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
         </div>
         <div class="mainpage-tables-section-comment-attribute">
-            <div class="mainpage-tables-section-comment-attribute-text">
-                <p>№ of Comments:</p>
-                <p>5</p>
-            </div>
             <button class="mainpage-tables-section-comment-attribute-text">
                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                <p>3</p>
-            </button>
-            <button class="mainpage-tables-section-comment-attribute-text">
-                <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                <p>2</p>
+                <p th:text="${post.getLikes()}">3</p>
             </button>
         </div>
         <div class="post-comment">
