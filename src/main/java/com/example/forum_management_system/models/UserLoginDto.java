@@ -8,7 +8,6 @@ public class UserLoginDto {
     @NotEmpty(message = "Password cannot be empty.")
     private String password;
     public UserLoginDto(){
-
     }
 
     public String getUsername() {

@@ -51,4 +51,11 @@ public class AuthenticationMvcController {
             return "Login";
         }
     }
+
+    @PostMapping("/logout")
+    public String handleLogout(HttpSession session) {
+        session.removeAttribute("currentUser");
+        return "redirect:/";
+    }
+
 }

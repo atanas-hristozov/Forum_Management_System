@@ -33,7 +33,20 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <input type="text" placeholder="Search..">
             </div>
-            <a href="LogIn.html"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+            <form th:action="@{/auth/logout}" method="post">
+               <!-- <i class="fa fa-user" aria-hidden="true"></i>-->
+<!--
+            <a href="Login.html"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+-->
+                <button type="submit" value="redirect:/">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Logout
+                </button>
+</form>
+
         </div>
     </section>
 

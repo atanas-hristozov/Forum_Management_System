@@ -24,17 +24,25 @@
             </ul>
         </div>
     </header>
-    
+
     <div class="login-box">
         <h2>Login</h2>
         <form th:action="@{/auth/login}" th:object="${login}" method="post">
             <div class="user-box">
+                <label th:text="#{user.label.username}">Username</label>
+                <input type="text" th:field="*{username}"/>
+<!--
                 <input type="text" name="" required="">
-                <label th:errors="*{username}">Username</label>
+-->
+                <label class="error" th:errors="*{username}">Username error placeholder</label>
             </div>
             <div class="user-box">
-                <input type="password" name="" required="">
-                <label>Password</label>
+                <label th:text="#{user.label.password}">Password</label>
+                <!--<input type="password" name="" required="">-->
+                <input type="password" th:field="*{password}"/>
+                <label class="error" th:errors="*{password}">Password error placeholder</label>
+<!--
+                <label>Password</label>-->
             </div>
 
                 <button type="submit" value="Login">
