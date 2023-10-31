@@ -1,48 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/main.css" th:href="@{/main.css}">
-    <link rel="stylesheet" href="../static/header-main.css" th:href="@{/header-main.css}">
-    <link rel="stylesheet" href="../static/login.css" th:href="@{/login.css}">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/png" href="../static/img/Title.png">
-    <title>Document</title>
-</head>
+<div th:replace="~{Templates.html :: head('Main Page')}"></div>
+
 <body>
-    <header class="header">
-        <div class="header-content">
-            <a href="Index.html" th:href="@{/}" class="logo"><img src="../static/img/logo_01.png" th:src="@{/img/logo_01.png}" alt="Logo"></a>
-            <input class="menu-btn" type="checkbox" id="menu-btn" />
-            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
-            <ul class="menu">
-                <li><a href="Index.html" th:href="@{/}">Home</a></li>
-                <li><a href="Forum.html" th:href="@{/forum}">Forum</a></li>
-                <li><a href="User.html" th:href="@{/user}">MyProfile</a></li>
-            </ul>
-        </div>
-    </header>
+<div th:replace="~{Templates.html :: header}"></div>
 
     <div class="login-box">
         <h2>Login</h2>
         <form th:action="@{/auth/login}" th:object="${login}" method="post">
-            <div class="user-box">
+            <!--<div class="user-box">
                 <label th:text="#{user.label.username}">Username</label>
                 <input type="text" th:field="*{username}"/>
-<!--
-                <input type="text" name="" required="">
--->
-                <label class="error" th:errors="*{username}">Username error placeholder</label>
+                    <label class="error" th:errors="*{username}">Username error placeholder</label>
             </div>
             <div class="user-box">
                 <label th:text="#{user.label.password}">Password</label>
-                <!--<input type="password" name="" required="">-->
+                    <input type="password" name="" required="">
                 <input type="password" th:field="*{password}"/>
                 <label class="error" th:errors="*{password}">Password error placeholder</label>
-<!--
-                <label>Password</label>-->
+            </div>-->
+
+            <div class="user-box">
+                <input type="text" name="" required="" th:field="*{username}">
+                <label th:text="#{user.label.username}">Username</label>
+            </div>
+            <div class="user-box">
+                <input type="password" name="" required="" th:field="*{password}">
+                <label th:text="#{user.label.password}">Password</label>
             </div>
 
                 <button type="submit" value="Login">
@@ -52,6 +36,8 @@
                 <span></span>
                 Submit
                 </button>
+            <div class="error-login-message" th:errors="*{username}">Username error placeholder</div>
+            <div class="error-login-message" th:errors="*{password}">Password error placeholder</div>
 
         </form>
     </div>
