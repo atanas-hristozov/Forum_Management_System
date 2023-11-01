@@ -61,7 +61,21 @@
     border-radius: 20px;
     color: white;
 }
-
+.search form button{
+    margin-right: 20px;
+    background-color: rgba(240, 248, 255, 0.3);
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+}
+.search form button i{
+    border-radius: 50%;
+    font-size: 20px;
+    color: white;
+    margin-right: 10px;
+}
 .title{
     display: flex;
     flex-direction: column;

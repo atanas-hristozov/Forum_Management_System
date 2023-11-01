@@ -30,6 +30,10 @@ public class PostMcvController {
         this.postMapper = postMapper;
         this.authenticationHelper = authenticationHelper;
     }
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
+    }
 
     @GetMapping("/{id}")
     public String showPostPage(@PathVariable int id, Model model){
@@ -41,8 +45,6 @@ public class PostMcvController {
         catch (EntityNotFoundException e){
             return "Error_Page";
         }
-
-
     }
     @PostMapping
     public String createPost(@Valid @ModelAttribute("post")PostDto postDto, BindingResult bindingResult, Model model, HttpSession session) {

@@ -3,8 +3,8 @@
 <div th:replace="~{Templates.html :: head('Main Page')}"></div>
 <body>
 <div th:replace="~{Templates.html :: header}"></div>
-    
-    <section class="main-header">
+<div th:replace="~{Templates.html :: main-header('/img/Welkome_back_02.png')}"></div>
+    <!--<section class="main-header">
         <img class="main-image" src="../static/img/Welkome_back_02.png" th:src="@{/img/Welkome_back_02.png}" alt="Cover_Photo">
         <div class="search">
             <div>
@@ -12,26 +12,31 @@
                 <input type="text" placeholder="Search..">
             </div>
             <form th:action="@{/auth/logout}" method="post">
-               <!-- <i class="fa fa-user" aria-hidden="true"></i>-->
-<!--
-            <a href="Login.html"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
--->
-                <button type="submit" value="redirect:/" >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Logout
-                </button>
-</form>
-
+                <button type="submit" value="redirect:/"><i class="fa fa-user" aria-hidden="true"></i> Logout</button>
+            </form>
         </div>
-    </section>
+    </section>-->
+
 
     <h2 class="Profile-title">Profile Information</h2>
 
     <section class="Profile">
-        
+        <h3>Hello User</h3>
+        <div>
+            <p>First name:</p>
+            <p>Ivan</p>
+        </div>
+        <div>
+            <p>Last name:</p>
+            <p>Ivanov</p>
+        </div>
+        <div>
+            <p>E-mail:</p>
+            <p>Ivan@abv.bg</p>
+        </div>
+        <form action="">
+            <button type="post">Edit User information</button>
+        </form>
     </section>
 </body>
 </html>
