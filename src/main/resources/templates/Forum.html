@@ -5,19 +5,6 @@
 <div th:replace="~{Templates.html :: header}"></div>
 <div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
 
-<section th:if="${isAuthenticated}" class="forum-create-post">
-
-
-
-        <h2>Create new post</h2>
-        <form th:action="@{__${requestURI}__}" th:object="${post}" method="post">
-            <textarea class="forum-create-post-textfield" placeholder="Start a new post..." id="fname" name="postText"></textarea>
-            <input class="forum-create-post-button" type="submit" value="Save">
-        </form>
-
-
-
-    </section>
     <section class="mainpage-tables" id="main-pages-forum">
         <h2>All Posts</h2>
         <div class="main-pages-forum-columns">

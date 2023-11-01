@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('Create New Post')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+<div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
+
+<section class="forum-create-post">
+
+  <h2>Create new post</h2>
+  <form th:action="@{/post/new}" th:object="${post}" method="post">
+    <label> Add title</label>
+    <input type="text" th:field="*{title}">
+    <label> Post Text</label>
+    <textarea th:field="*{content}" class="forum-create-post-textfield" placeholder="Start a new post..." id="fname" name="postText"></textarea>
+    <input class="forum-create-post-button" type="submit" value="Save">
+  </form>
+
+</section>
+
+</body>
+</html>
+
+<!--th:action="@{__${requestURI}__}"-->
