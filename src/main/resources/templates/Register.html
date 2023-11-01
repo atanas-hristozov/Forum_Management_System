@@ -6,30 +6,31 @@
     
     <div class="login-box">
         <h2>Register</h2>
-        <form>
+        <form th:action="@{/user}" th:object="${user}" action="#" method="post">
             <div class="user-box">
-                <input type="text" name="" required="">
+                <input th:field="*{firstName}" type="text" name="" required="">
                 <label>First Name</label>
             </div>
             <div class="user-box">
-                <input type="text" name="" required="">
+                <input th:field="*{lastName}" type="text" name="" required="">
                 <label>Last Name</label>
             </div>
             <div class="user-box">
-                <input type="text" name="" required="">
+                <input th:field="*{username}" type="text" name="" required="">
                 <label>Username</label>
             </div>
             <div class="user-box">
-                <input type="password" name="" required="">
+                <input th:field="*{password}" type="password" name="" required="">
                 <label>Password</label>
             </div>
-            <a href="#">
+            <button type="submit" value="Register">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Submit
-            </a>
+                Register
+            </button>
+            <div class="error-login-message" th:errors="*{username}">Username error placeholder</div>
         </form>
     </div>
 </body>

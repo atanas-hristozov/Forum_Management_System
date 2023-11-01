@@ -8,11 +8,11 @@
 <section class="forum-create-post">
 
   <h2>Create new post</h2>
-  <form th:action="@{/post/new}" th:object="${post}" method="post">
-    <label> Add title</label>
-    <input type="text" th:field="*{title}">
-    <label> Post Text</label>
-    <textarea th:field="*{content}" class="forum-create-post-textfield" placeholder="Start a new post..." id="fname" name="postText"></textarea>
+  <form th:action="@{/post/new}" th:object="${post}" method="post" action="#">
+    <label for="title"> Add title</label>
+    <input id="title" type="text" th:field="*{title}">
+    <label for="content"> Post Text</label>
+    <textarea th:field="*{content}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
     <input class="forum-create-post-button" type="submit" value="Save">
   </form>
 
