@@ -24,10 +24,10 @@
     <section class="mainpage-tables">
         <div class="mainpage-tables-section">
             <h2>Top 10 recent posts</h2>
-            <a href="Post.html" th:href="@{/post}">
+            <a href="Post.html" th:each="post : ${posts}" th:href="@{/post/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+                    <h3 th:text="${post.getTitle()}">Post title</h3>
+                    <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
                 </div>
                 <div class="mainpage-tables-section-comment-attribute">
                     <div class="mainpage-tables-section-comment-attribute-text">
@@ -36,201 +36,21 @@
                     </div>
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
+                        <p th:text="${post.getLikes()}">3</p>
                     </div>
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
+                        <p th:text="${post.getDislikes()}">2</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="mainpage-tables-section">
             <h2>Top 10 rated posts</h2>
-            <a href="Post.html" th:href="@{/post}">
+            <a href="Post.html" th:each="post : ${posts}" th:href="@{/post/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+                    <h3 th:text="${post.getTitle()}">Post title</h3>
+                    <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
                 </div>
                 <div class="mainpage-tables-section-comment-attribute">
                     <div class="mainpage-tables-section-comment-attribute-text">
@@ -239,191 +59,11 @@
                     </div>
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
+                        <p th:text="${post.getLikes()}">3</p>
                     </div>
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
-                    </div>
-                </div>
-            </a>
-            <a href="Post.html" th:href="@{/post}">
-                <div class="mainpage-tables-section-comment">
-                    <h3>Post title</h3>
-                    <p>Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
-                <div class="mainpage-tables-section-comment-attribute">
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>№ of Comments:</p>
-                        <p>5</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        <p>3</p>
-                    </div>
-                    <div class="mainpage-tables-section-comment-attribute-text">
-                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        <p>2</p>
+                        <p th:text="${post.getDislikes()}">2</p>
                     </div>
                 </div>
             </a>

@@ -147,6 +147,7 @@ h3{
 .mainpage-tables-section-comment{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .mainpage-tables-section-comment-attribute{
     display: flex;
@@ -156,6 +157,7 @@ h3{
     color: black;
     margin: 10px;
 }
+
 .mainpage-tables-section-comment-attribute-text{
     color: rgb(17, 119, 56);
     display: flex;

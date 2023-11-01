@@ -10,10 +10,19 @@
             <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
         </div>
         <div class="mainpage-tables-section-comment-attribute">
-            <button class="mainpage-tables-section-comment-attribute-text">
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                <p th:text="${post.getLikes()}">3</p>
-            </button>
+            <form type="post">
+                <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <p th:text="${post.getLikes()}">3</p>
+                </button>
+            </form>
+            <form type="post">
+                <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                    <p th:text="${post.getDislikes()}">3</p>
+                </button>
+            </form>
+
         </div>
         <div class="post-comment">
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>

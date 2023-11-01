@@ -21,11 +21,11 @@
                         </div>
                         <div class="mainpage-tables-section-comment-attribute-text">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <p>3</p>
+                            <p th:text="${post.getLikes()}">3</p>
                         </div>
                         <div class="mainpage-tables-section-comment-attribute-text">
                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                            <p>2</p>
+                            <p th:text="${post.getDislikes()}">2</p>
                         </div>
                     </div>
                 </a>
