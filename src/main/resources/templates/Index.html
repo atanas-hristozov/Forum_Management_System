@@ -4,7 +4,7 @@
 <body>
     <div th:replace="~{Templates.html :: header}"></div>
     <div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
-
+<!--
     <header class="header" th:fragment="header">
         <div class="header-content">
             <a href="Index.html" th:href="@{/}" class="logo"><img src="../static/img/logo_01.png" th:src="@{/img/logo_01.png}" alt="Logo"></a>
@@ -16,7 +16,7 @@
                 <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/user}">MyProfile</a></li>
             </ul>
         </div>
-    </header>
+    </header>-->
     <section class="title">
         <h1>Forum</h1>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate, exercitationem accusantium? Porro, similique eaque totam molestias quasi, vitae in ut ducimus maiores voluptate sint eveniet repellendus, possimus beatae? Tempora, pariatur?</p>
@@ -39,7 +39,7 @@
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
                 </div>
-                <div class="mainpage-tables-section-comment-attribute">
+                <!--<div class="mainpage-tables-section-comment-attribute">
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <p>№ of Comments:</p>
                         <p>5</p>
@@ -52,7 +52,7 @@
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                         <p th:text="${post.getDislikes()}">2</p>
                     </div>
-                </div>
+                </div>-->
             </a>
         </div>
         <div class="mainpage-tables-section">
@@ -62,7 +62,7 @@
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
                 </div>
-                <div class="mainpage-tables-section-comment-attribute">
+                <!--<div class="mainpage-tables-section-comment-attribute">
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <p>№ of Comments:</p>
                         <p>5</p>
@@ -75,7 +75,7 @@
                         <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                         <p th:text="${post.getDislikes()}">2</p>
                     </div>
-                </div>
+                </div>-->
             </a>
         </div>
     </section>

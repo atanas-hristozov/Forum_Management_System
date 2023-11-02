@@ -56,7 +56,8 @@ public class PostRepositoryImpl implements PostRepository{
     public List<PostDtoHome> getMostCommented() {
         try (Session session = sessionFactory.openSession()) {
             Query<PostDtoHome[]> query = session.createQuery(
-                    "SELECT p.id AS post_id, p.title AS post_title, p.content As post_content, COUNT(c.id) AS comment_count " +
+                    "SELECT p.id AS post_id, p.title AS post_title, " +
+                            "p.content As post_content, COUNT(c.id) AS comment_count " +
                             "FROM Post p " +
                             "LEFT JOIN p.comments c " +
                             "GROUP BY p.id, p.title, p.content " +

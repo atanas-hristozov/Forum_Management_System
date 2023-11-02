@@ -40,7 +40,7 @@ public class CreatePostMvcController {
 
     @GetMapping
     public String showCreatePage(Model model){
-        model.addAttribute("posts", new PostDto());
+        model.addAttribute("post", new PostDto());
         return "CreateNewPost";
     }
 

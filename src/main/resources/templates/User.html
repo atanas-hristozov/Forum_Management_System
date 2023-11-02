@@ -21,18 +21,18 @@
     <h2 class="Profile-title">Profile Information</h2>
 
     <section class="Profile">
-        <h3>Hello User</h3>
+        <h3 th:text="'Hello ' + ${user.getUsername()}">Hello User</h3>
         <div>
             <p>First name:</p>
-            <p>Ivan</p>
+            <p th:text="${user.getFirstName()}">Ivan</p>
         </div>
         <div>
             <p>Last name:</p>
-            <p>Ivanov</p>
+            <p th:text="${user.getLastName()}">Ivanov</p>
         </div>
         <div>
             <p>E-mail:</p>
-            <p>Ivan@abv.bg</p>
+            <p th:text="${user.getEmail()}">Ivan@abv.bg</p>
         </div>
         <form action="">
             <button type="post">Edit User information</button>

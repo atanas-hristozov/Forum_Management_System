@@ -12,10 +12,10 @@ public class UserCreateDto {
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Last name must be between 4 and 32 symbols.")
     private String lastName;
-    @UniqueElements(message = "Email already exists!")
+    //@UniqueElements(message = "Email already exists!")
     @NotNull
     private String email;
-    @UniqueElements(message = "Username already exists!")
+    //@UniqueElements(message = "Username already exists!")
     @NotNull(message = "Username can't be empty!")
     private String username;
     @NotNull(message = "Password can't be empty!")
