@@ -4,6 +4,7 @@ import com.example.forum_management_system.exceptions.AlreadyDislikedException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.models.PostDtoHome;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.UserService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -52,24 +53,54 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> getMostCommented() {
+    public List<PostDtoHome> getMostCommented() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery(
-                    "SELECT p.id AS post_id, p.title AS post_title, COUNT(c.id) AS comment_count " +
+            Query<PostDtoHome[]> query = session.createQuery(
+                    "SELECT p.id AS post_id, p.title AS post_title, p.content As post_content, COUNT(c.id) AS comment_count " +
                             "FROM Post p " +
                             "LEFT JOIN p.comments c " +
-                            "GROUP BY p.id, p.title " +
-                            "ORDER BY comment_count DESC, p.id", Post.class
+                            "GROUP BY p.id, p.title, p.content " +
+                            "ORDER BY comment_count DESC, p.id"
             );
-            query.setMaxResults(10);
-            return query.list();
+            List<PostDtoHome[]> results = query.list();
+
+            List<PostDtoHome> postDtoList = new ArrayList<>();
+            for (Object[] result : results) {
+                PostDtoHome postDto = new PostDtoHome();
+                postDto.setId((Integer) result[0]);
+                postDto.setTitle((String) result[1]);
+                postDto.setContent((String) result[2]);
+                postDto.setCommentCount(((Number) result[3]).intValue());
+
+                postDtoList.add(postDto);
+            }
+
+            return postDtoList;
+
+         /*   try (Session session = sessionFactory.openSession()) {
+                Query<Object[]> query = session.createQuery(
+                        "SELECT p.id, p.title, p.content, COUNT(c.id) " +
+                                "FROM Post p " +
+                                "LEFT JOIN p.comments c " +
+                                "GROUP BY p.id, p.title " +
+                                "ORDER BY COUNT(c.id) DESC, p.id"
+                );
+                query.setMaxResults(10);
+                List<Object[]> results = query.list();
+
+                List<PostDtoHome> postDtoList = new ArrayList<>();
+                for (Object[] result : results) {
+                    PostDtoHome postDto = new PostDtoHome();
+                    postDto.setId((Integer) result[0]);
+                    postDto.setTitle((String) result[1]);
+                    postDto.setContent((String) result[2]);
+                    postDto.setCommentCount(((Number) result[3]).intValue());
+                    // Handle the count as needed
+                    postDtoList.add(postDto);
+                }
+
+                return postDtoList;*/
         }
-        /*
-        SELECT p.id AS post_id, p.title AS post_title, COUNT(c.id) AS comment_count
-        FROM posts p
-        LEFT JOIN comments c ON p.id = c.post_id
-        GROUP BY p.id, p.title
-        ORDER BY p.id limit 10;*/
     }
 
     public Post getById(int id) {

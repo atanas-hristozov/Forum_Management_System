@@ -1,6 +1,7 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostDtoHome;
 import com.example.forum_management_system.models.User;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface PostRepository {
     List<Post> getAll(String title, Integer userId, String sortBy, String sortOrder);
     List<Post> getAllCount();
     List<Post> getMostRecent();
-    List<Post> getMostCommented();
+    public List<PostDtoHome> getMostCommented();
     Post getById(int id);
     Post getByTitle(String title);
     void create(Post post);

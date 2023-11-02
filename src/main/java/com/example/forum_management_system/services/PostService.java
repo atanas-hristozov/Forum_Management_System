@@ -1,6 +1,7 @@
 package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
 
@@ -25,7 +26,7 @@ public interface PostService {
     Set<Object>  dislikeEntity(int id, User user);
     int showPostsCount();
     List<Post> getMostRecent();
-    List<Post> getMostCommented();
+    List<PostDtoHome> getMostCommented();
     Set<Tag> getTagsByPost(Post post);
     void addTagToPost(Post post, Set<Tag> tagsToAdd);
     void removeTagFromPost(Post post, Set<Tag> tagsToRemove);
