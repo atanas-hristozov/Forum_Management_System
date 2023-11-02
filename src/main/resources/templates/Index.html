@@ -21,10 +21,20 @@
         <h1>Forum</h1>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate, exercitationem accusantium? Porro, similique eaque totam molestias quasi, vitae in ut ducimus maiores voluptate sint eveniet repellendus, possimus beatae? Tempora, pariatur?</p>
     </section>
+    <section>
+        <div>
+            <h3>All users</h3>
+            <p th:text="${usersCount}">23</p>
+        </div>
+        <div>
+            <h3>All posts</h3>
+            <p th:text="${postsCount}">23</p>
+        </div>
+    </section>
     <section class="mainpage-tables">
         <div class="mainpage-tables-section">
             <h2>Top 10 recent posts</h2>
-            <a href="Post.html" th:each="post : ${posts}" th:href="@{/post/{id}(id=${post.getId()})}">
+            <a href="Post.html" th:each="post : ${topRecentPosts}" th:href="@{/post/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
@@ -46,8 +56,8 @@
             </a>
         </div>
         <div class="mainpage-tables-section">
-            <h2>Top 10 rated posts</h2>
-            <a href="Post.html" th:each="post : ${posts}" th:href="@{/post/{id}(id=${post.getId()})}">
+            <h2>Top 10 commented posts</h2>
+            <a href="Post.html" th:each="post : ${topCommented}" th:href="@{/post/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>

@@ -11,6 +11,8 @@ public interface PostRepository {
 
     List<Post> getAll(String title, Integer userId, String sortBy, String sortOrder);
     List<Post> getAllCount();
+    List<Post> getMostRecent();
+    List<Post> getMostCommented();
     Post getById(int id);
     Post getByTitle(String title);
     void create(Post post);

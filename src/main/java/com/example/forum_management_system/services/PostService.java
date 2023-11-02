@@ -24,6 +24,8 @@ public interface PostService {
 
     Set<Object>  dislikeEntity(int id, User user);
     int showPostsCount();
+    List<Post> getMostRecent();
+    List<Post> getMostCommented();
     Set<Tag> getTagsByPost(Post post);
     void addTagToPost(Post post, Set<Tag> tagsToAdd);
     void removeTagFromPost(Post post, Set<Tag> tagsToRemove);

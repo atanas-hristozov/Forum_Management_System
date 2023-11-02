@@ -45,7 +45,10 @@ public class CreatePostMvcController {
     }
 
     @PostMapping
-    public String createPost(@Valid @ModelAttribute("post")PostDto postDto, BindingResult bindingResult, Model model, HttpSession session) {
+    public String createPost(@Valid @ModelAttribute("post")PostDto postDto,
+                             BindingResult bindingResult,
+                             Model model,
+                             HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);

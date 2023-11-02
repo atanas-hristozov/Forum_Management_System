@@ -36,7 +36,7 @@ public class RegisterMcvController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
-    @PostMapping("/create")
+    @PostMapping
     public String CreateUser(@Valid @ModelAttribute("user") UserCreateDto userCreateDto,
                              Model model,
                              BindingResult result){
@@ -46,14 +46,14 @@ public class RegisterMcvController {
         try {
             User user = userMapper.fromUserCreateDto(userCreateDto);
             userService.create(user);
-            return "redirect:/user";
+            return "redirect:/Login";
         } catch (EntityNotFoundException e){
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         } catch (EntityDuplicateException e){
             result.rejectValue("username", "duplicate_username", e.getMessage());
-            return "register";
+            return "Register";
         }
 
     }

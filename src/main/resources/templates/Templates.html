@@ -26,7 +26,7 @@
             <li><a href="Index.html" th:href="@{/}">Home</a></li>
             <li><a href="Forum.html" th:href="@{/forum}">Forum</a></li>
             <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/post/new}">Create Post</a></li>
-            <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/user}">MyProfile</a></li>
+            <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/user/{id}(id=${user.getById()})}">MyProfile</a></li>
         </ul>
     </div>
 </header>

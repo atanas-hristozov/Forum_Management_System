@@ -85,6 +85,17 @@ public class PostServiceImpl implements PostService {
     public int showPostsCount() {
         return postRepository.getAllCount().size();
     }
+
+    @Override
+    public List<Post> getMostRecent() {
+        return postRepository.getMostRecent();
+    }
+
+    @Override
+    public List<Post> getMostCommented() {
+        return postRepository.getMostCommented();
+    }
+
     @Override
     public void delete(int postId, User user) {
         checkAccessPermissions(postId, user);

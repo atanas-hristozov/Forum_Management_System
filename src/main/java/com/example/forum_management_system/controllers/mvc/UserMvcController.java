@@ -35,7 +35,12 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
     @GetMapping("/{id}")
-    public String showUserPage(@PathVariable int id, Model model){
+    public String showUserPage(@PathVariable int id, Model model, HttpSession session){
+        if (populateIsAuthenticated(session)){
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+            model.addAttribute("currentUser", user);
+        }
         try {
             User user = userService.getById(id);
             model.addAttribute("user", user);
