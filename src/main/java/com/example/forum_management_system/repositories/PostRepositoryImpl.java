@@ -1,13 +1,10 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.exceptions.AlreadyDislikedException;
-import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
-import com.example.forum_management_system.models.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.User;
-import com.example.forum_management_system.services.UserService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

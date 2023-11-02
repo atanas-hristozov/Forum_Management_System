@@ -3,7 +3,7 @@ package com.example.forum_management_system.controllers.mvc;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
-import com.example.forum_management_system.models.UserLoginDto;
+import com.example.forum_management_system.models.userDtos.UserLoginDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

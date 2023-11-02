@@ -1,7 +1,7 @@
 package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
 

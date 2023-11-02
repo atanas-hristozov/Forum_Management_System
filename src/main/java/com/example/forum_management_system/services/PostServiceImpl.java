@@ -4,7 +4,7 @@ import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.repositories.PostRepository;

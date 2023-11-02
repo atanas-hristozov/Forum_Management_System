@@ -1,7 +1,7 @@
 package com.example.forum_management_system.helpers;
 
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDto;
+import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,7 +6,7 @@ import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDto;
+import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import jakarta.servlet.http.HttpSession;

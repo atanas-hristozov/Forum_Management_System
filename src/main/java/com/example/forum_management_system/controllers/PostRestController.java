@@ -3,21 +3,17 @@ package com.example.forum_management_system.controllers;
 import com.example.forum_management_system.exceptions.*;
 import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDto;
+import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.services.PostService;
-import com.example.forum_management_system.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController

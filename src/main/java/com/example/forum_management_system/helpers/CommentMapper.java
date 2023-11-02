@@ -1,7 +1,7 @@
 package com.example.forum_management_system.helpers;
 
 import com.example.forum_management_system.models.Comment;
-import com.example.forum_management_system.models.CommentDto;
+import com.example.forum_management_system.models.commentDtos.CommentDto;
 import com.example.forum_management_system.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

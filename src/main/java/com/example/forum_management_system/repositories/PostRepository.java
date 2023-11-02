@@ -1,11 +1,10 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.User;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public interface PostRepository {

@@ -1,4 +1,4 @@
-package com.example.forum_management_system.models;
+package com.example.forum_management_system.models.userDtos;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
 

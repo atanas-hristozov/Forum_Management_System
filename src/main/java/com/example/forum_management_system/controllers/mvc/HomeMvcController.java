@@ -1,7 +1,7 @@
 package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;

@@ -4,7 +4,7 @@ import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.helpers.CommentMapper;
 import com.example.forum_management_system.models.Comment;
-import com.example.forum_management_system.models.CommentDto;
+import com.example.forum_management_system.models.commentDtos.CommentDto;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

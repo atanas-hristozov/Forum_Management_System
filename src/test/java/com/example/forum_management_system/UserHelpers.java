@@ -1,6 +1,9 @@
 package com.example.forum_management_system;
 
 import com.example.forum_management_system.models.*;
+import com.example.forum_management_system.models.userDtos.AdminRightsDto;
+import com.example.forum_management_system.models.userDtos.UserCreateDto;
+import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserHelpers {

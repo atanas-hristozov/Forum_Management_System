@@ -1,9 +1,9 @@
 package com.example.forum_management_system.helpers;
 
 import com.example.forum_management_system.models.User;
-import com.example.forum_management_system.models.UserCreateDto;
-import com.example.forum_management_system.models.AdminRightsDto;
-import com.example.forum_management_system.models.UserUpdateDto;
+import com.example.forum_management_system.models.userDtos.UserCreateDto;
+import com.example.forum_management_system.models.userDtos.AdminRightsDto;
+import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.example.forum_management_system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -2,9 +2,10 @@ package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.User;
-import com.example.forum_management_system.models.UserCreateDto;
+import com.example.forum_management_system.models.userDtos.UserCreateDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -39,22 +40,26 @@ public class RegisterMcvController {
     @PostMapping
     public String CreateUser(@Valid @ModelAttribute("user") UserCreateDto userCreateDto,
                              Model model,
-                             BindingResult result){
-        if(result.hasErrors()){
+                             BindingResult result) {
+        if (result.hasErrors()) {
             return "Register";
         }
         try {
             User user = userMapper.fromUserCreateDto(userCreateDto);
             userService.create(user);
             return "redirect:/Login";
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
-        } catch (EntityDuplicateException e){
+        } catch (EntityDuplicateException e) {
             result.rejectValue("username", "duplicate_username", e.getMessage());
             return "Register";
+        } catch (TextLengthException e) {
+            result.rejectValue("firstName", "invalid_length", e.getMessage());
+            return "Register";
         }
+
 
     }
 

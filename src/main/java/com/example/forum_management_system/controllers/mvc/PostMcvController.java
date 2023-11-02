@@ -1,21 +1,14 @@
 package com.example.forum_management_system.controllers.mvc;
 
-import com.example.forum_management_system.exceptions.AuthorizationException;
-import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
-import com.example.forum_management_system.models.PostDto;
-import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller

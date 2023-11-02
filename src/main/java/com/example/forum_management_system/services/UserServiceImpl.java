@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
         if (emailExists) {
             throw new EntityDuplicateException("User", "email", user.getEmail());
         }
+
         user.setAdmin(false);
         user.setBanned(false);
         user.setLiked(false);
