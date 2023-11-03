@@ -34,9 +34,13 @@
             <p>E-mail:</p>
             <p th:text="${user.getEmail()}">Ivan@abv.bg</p>
         </div>
-        <form action="">
-            <button type="post">Edit User information</button>
-        </form>
+        <di>
+            <a th:href="@{/user/__${currentUser.getId()}__/update}" href="#">Edit user information</a>
+            <form>
+                <button type="submit">Delete</button>
+            </form>
+        </di>
     </section>
+
 </body>
 </html>

@@ -54,6 +54,11 @@ public class UserMvcController {
 
     @GetMapping("/{id}/update")
     public String showEditUserPage(@PathVariable int id, Model model, HttpSession session) {
+        if (populateIsAuthenticated(session)) {
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+            model.addAttribute("currentUser", user);
+        }
         try {
             authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
@@ -80,6 +85,11 @@ public class UserMvcController {
                                     BindingResult bindingResult,
                                     Model model,
                                     HttpSession session) {
+        if (populateIsAuthenticated(session)) {
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+            model.addAttribute("currentUser", user);
+        }
         User user;
         try {
             authenticationHelper.tryGetCurrentUser(session);

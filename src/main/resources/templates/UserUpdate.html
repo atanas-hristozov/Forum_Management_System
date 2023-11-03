@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('UserUpdate')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+
+<div class="login-box">
+    <h2>Register</h2>
+    <form th:action="@{/UserUpdate}" th:object="${currentUser}" action="#" method="post">
+        <div class="user-box">
+            <input th:field="*{firstName}" type="text" name="" required="">
+            <label th:text="*{firstName}">First Name</label>
+        </div>
+        <div class="user-box">
+            <input th:field="*{lastName}" type="text" name="" required="">
+            <label th:text="*{lastName}">Last Name</label>
+        </div>
+        <div class="user-box">
+            <input th:field="*{email}" type="email" name="" required="">
+            <label th:text="*{email}">Email</label>
+        </div>
+        <div class="user-box">
+            <input th:field="*{password}" type="password" name="" required="">
+            <label>Password</label>
+        </div>
+        <button type="submit" value="Update">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Update
+        </button>
+        <div class="error-login-message" th:errors="*{firstName}">Name error placeholder</div>
+        <div class="error-login-message" th:errors="*{password}">Password error placeholder</div>
+    </form>
+</div>
+</body>
+</html>
