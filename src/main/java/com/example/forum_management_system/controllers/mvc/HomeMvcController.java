@@ -6,6 +6,7 @@ import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class HomeMvcController {
     private final PostService postService;
     private final UserService userService;
-
+    @Autowired
     public HomeMvcController(PostService postService, UserService userService) {
         this.postService = postService;
         this.userService = userService;

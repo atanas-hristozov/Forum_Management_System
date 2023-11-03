@@ -9,6 +9,7 @@ import com.example.forum_management_system.models.userDtos.UserCreateDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegisterMcvController {
     private final UserService userService;
     private final UserMapper userMapper;
-
+    @Autowired
     public RegisterMcvController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;

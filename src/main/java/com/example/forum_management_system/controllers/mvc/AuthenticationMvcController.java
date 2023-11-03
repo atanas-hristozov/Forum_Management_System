@@ -7,6 +7,7 @@ import com.example.forum_management_system.models.userDtos.UserLoginDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,7 @@ public class AuthenticationMvcController {
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
-
+    @Autowired
     public AuthenticationMvcController(UserService userService,
                                        AuthenticationHelper authenticationHelper,
                                        UserMapper userMapper) {

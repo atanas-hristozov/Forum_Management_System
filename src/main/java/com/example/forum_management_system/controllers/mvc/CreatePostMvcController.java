@@ -11,6 +11,7 @@ import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class CreatePostMvcController {
     private final PostService postService;
     private final AuthenticationHelper authenticationHelper;
     private final PostMapper postMapper;
-
+    @Autowired
     public CreatePostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;

@@ -1,7 +1,9 @@
 package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
+import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.User;
@@ -9,6 +11,7 @@ import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,24 +24,21 @@ public class UserMvcController {
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
-
+    @Autowired
     public UserMvcController(UserMapper userMapper, AuthenticationHelper authenticationHelper, UserService userService) {
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
         this.userService = userService;
     }
 
-    /*@GetMapping
-    public String showUserPage(){
-        return "User";
-    }*/
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
     @GetMapping("/{id}")
-    public String showUserPage(@PathVariable int id, Model model, HttpSession session){
-        if (populateIsAuthenticated(session)){
+    public String showUserPage(@PathVariable int id, Model model, HttpSession session) {
+        if (populateIsAuthenticated(session)) {
             String username = session.getAttribute("currentUser").toString();
             User user = userService.getByName(username);
             model.addAttribute("currentUser", user);
@@ -47,8 +47,7 @@ public class UserMvcController {
             User user = userService.getById(id);
             model.addAttribute("user", user);
             return "User";
-        }
-        catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return "Error_Page";
         }
     }
@@ -75,18 +74,41 @@ public class UserMvcController {
     }
 
 
-   /* @PutMapping("/{id}/update")
+    @PutMapping("/{id}/update")
     public String updateUserProfile(@PathVariable int id,
-                                    @Valid @ModelAttribute("user")UserUpdateDto userUpdateDto,
+                                    @Valid @ModelAttribute("user") UserUpdateDto userUpdateDto,
                                     BindingResult bindingResult,
                                     Model model,
                                     HttpSession session) {
-
         User user;
         try {
-            user= authenticationHelper.tryGetCurrentUser(session);
+            authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
         }
 
+        if (bindingResult.hasErrors()) {
+            return "UserUpdate";
+        }
 
-    }*/
+        try {
+            user = userMapper.fromUserUpdateDto(id, userUpdateDto);
+            userService.update(user);
+
+            return "User";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+
+            return "Error_Page";
+        } catch (EntityDuplicateException e) {
+            bindingResult.rejectValue("email", "duplicate_email", e.getMessage());
+
+            return "UserUpdate";
+        } catch (TextLengthException e) {
+            bindingResult.rejectValue("firstName", "invalid_length", e.getMessage());
+
+            return "UserUpdate";
+        }
+    }
 }
