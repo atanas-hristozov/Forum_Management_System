@@ -98,4 +98,22 @@ public class UserMvcController {
             return "UserUpdate";
         }
     }
+
+    @DeleteMapping ("/delete")
+    public String deleteUserProfile(BindingResult bindingResult, HttpSession session) {
+        User user;
+        if (bindingResult.hasErrors()) {
+            return "redirect:/user";
+        }
+
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+            userService.delete(user);
+            session.removeAttribute("currentUser");
+            return "redirect:/";
+
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
 }

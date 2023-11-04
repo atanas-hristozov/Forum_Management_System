@@ -34,12 +34,12 @@
             <p>E-mail:</p>
             <p th:text="${user.getEmail()}">Ivan@abv.bg</p>
         </div>
-        <di>
+        <div>
             <a th:href="@{/user/update}" href="#">Edit user information</a>
             <form>
-                <button type="submit">Delete</button>
+                <button th:href="@{/user/delete}" href="#" type="submit">Delete</button>
             </form>
-        </di>
+        </div>
     </section>
 
 </body>
