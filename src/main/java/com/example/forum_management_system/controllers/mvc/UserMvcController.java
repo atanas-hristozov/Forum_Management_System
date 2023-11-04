@@ -110,9 +110,9 @@ public class UserMvcController {
         }
     }
 
-    @DeleteMapping ("/delete")
-    public String deleteUserProfile(BindingResult bindingResult, HttpSession session) {
-        User user;
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteUserProfile(@ModelAttribute("user") User user, HttpSession session, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             return "redirect:/user";
         }
