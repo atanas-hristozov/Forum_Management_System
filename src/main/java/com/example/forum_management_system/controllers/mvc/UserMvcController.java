@@ -48,6 +48,17 @@ public class UserMvcController {
             return "redirect:/auth/login";
         }
     }
+    @GetMapping("/admin")
+    public String showAdminPage(Model model, HttpSession session) {
+        if (populateIsAuthenticated(session)) {
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+            model.addAttribute("user", user);
+            return "UserAdmin";
+        } else {
+            return "redirect:/auth/login";
+        }
+    }
 
     @GetMapping("/update")
     public String showEditUserPage(Model model, HttpSession session) {

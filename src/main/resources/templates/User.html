@@ -1,32 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{Templates.html :: head('Main Page')}"></div>
+
+<div th:replace="~{Templates.html :: head('My Profile')}"></div>
 <body>
 <div th:replace="~{Templates.html :: header}"></div>
 <div th:replace="~{Templates.html :: main-header('/img/Welkome_back_02.png')}"></div>
-    <!--<section class="main-header">
-        <img class="main-image" src="../static/img/Welkome_back_02.png" th:src="@{/img/Welkome_back_02.png}" alt="Cover_Photo">
-        <div class="search">
-            <div>
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <input type="text" placeholder="Search..">
-            </div>
-            <form th:action="@{/auth/logout}" method="post">
-                <button type="submit" value="redirect:/"><i class="fa fa-user" aria-hidden="true"></i> Logout</button>
-            </form>
-        </div>
-    </section>-->
-
 
     <h2 class="Profile-title">Profile Information</h2>
 
-    <section class="Profile">
-        <h3 th:text="'Hello ' + ${user.getUsername()}">Hello User</h3>
-        <div>
+    <section class="Profile-user">
+        <h3 class="Profile-user-name" th:text="'Hello ' + ${user.getUsername()}">Hello User</h3>
+        <div class="border-bottom">
             <p>First name:</p>
             <p th:text="${user.getFirstName()}">Ivan</p>
         </div>
-        <div>
+        <div class="border-bottom">
             <p>Last name:</p>
             <p th:text="${user.getLastName()}">Ivanov</p>
         </div>
@@ -34,13 +22,12 @@
             <p>E-mail:</p>
             <p th:text="${user.getEmail()}">Ivan@abv.bg</p>
         </div>
-        <div>
+        <div class="user-form">
             <a th:href="@{/user/update}" href="#">Edit user information</a>
-            <form>
+            <form th:action="@{/user/delete}" th:object="${user}" action="#" method="post">
                 <button th:href="@{/user/delete}" href="#" type="submit">Delete</button>
             </form>
         </div>
     </section>
-
 </body>
 </html>
