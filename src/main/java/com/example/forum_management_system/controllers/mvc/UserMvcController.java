@@ -24,6 +24,7 @@ public class UserMvcController {
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
+
     @Autowired
     public UserMvcController(UserMapper userMapper, AuthenticationHelper authenticationHelper, UserService userService) {
         this.userMapper = userMapper;
@@ -36,63 +37,39 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-    @GetMapping("/{id}")
-    public String showUserPage(@PathVariable int id, Model model, HttpSession session) {
+    @GetMapping()
+    public String showUserPage(Model model, HttpSession session) {
         if (populateIsAuthenticated(session)) {
             String username = session.getAttribute("currentUser").toString();
             User user = userService.getByName(username);
-            model.addAttribute("currentUser", user);
-        }
-        try {
-            User user = userService.getById(id);
             model.addAttribute("user", user);
             return "User";
-        } catch (EntityNotFoundException e) {
-            return "Error_Page";
+        } else {
+            return "redirect:/auth/login";
         }
     }
 
-    @GetMapping("/{id}/update")
-    public String showEditUserPage(@PathVariable int id, Model model, HttpSession session) {
-        if (populateIsAuthenticated(session)) {
-            String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            model.addAttribute("currentUser", user);
-        }
+    @GetMapping("/update")
+    public String showEditUserPage(Model model, HttpSession session) {
         try {
-            authenticationHelper.tryGetCurrentUser(session);
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            model.addAttribute("currentUser", user);
+            return "UserUpdate";
         } catch (AuthorizationException e) {
 
             return "redirect:/auth/login";
         }
-        try {
-            userService.getById(id);
-            model.addAttribute("user", id);
-
-            return "UserUpdate";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-
-            return "Error_Page";
-        }
     }
 
 
-    @PutMapping("/{id}/update")
-    public String updateUserProfile(@PathVariable int id,
-                                    @Valid @ModelAttribute("user") UserUpdateDto userUpdateDto,
+    @PostMapping("/update")
+    public String updateUserProfile(@Valid @ModelAttribute("currentUser") UserUpdateDto userUpdateDto,
                                     BindingResult bindingResult,
                                     Model model,
                                     HttpSession session) {
-        if (populateIsAuthenticated(session)) {
-            String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            model.addAttribute("currentUser", user);
-        }
         User user;
         try {
-            authenticationHelper.tryGetCurrentUser(session);
+            user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
@@ -102,10 +79,10 @@ public class UserMvcController {
         }
 
         try {
-            user = userMapper.fromUserUpdateDto(id, userUpdateDto);
+            user = userMapper.fromUserUpdateDto(user.getId(), userUpdateDto);
             userService.update(user);
-
-            return "User";
+            model.addAttribute("currentUser", user);
+            return "redirect:/user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
