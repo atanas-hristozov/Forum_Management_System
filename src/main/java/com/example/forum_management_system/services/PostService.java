@@ -21,9 +21,9 @@ public interface PostService {
 
     void delete(int postId, User user);
 
-    Set<Object> likeEntity(int id, User user);
+   /* Set<Object> likeEntity(int id, User user);
 
-    Set<Object>  dislikeEntity(int id, User user);
+    Set<Object>  dislikeEntity(int id, User user);*/
     int showPostsCount();
     List<Post> getMostRecent();
     List<PostDtoHome> getMostCommented();

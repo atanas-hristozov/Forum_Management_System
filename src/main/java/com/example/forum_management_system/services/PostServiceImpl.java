@@ -73,14 +73,14 @@ public class PostServiceImpl implements PostService {
         postRepository.update(post);
     }
 
-    public Set<Object> likeEntity(int id, User user) {
+   /* public Set<Object> likeEntity(int id, User user) {
         return postRepository.likeEntity(id, user);
     }
 
 
     public Set<Object> dislikeEntity(int id, User user) {
         return postRepository.dislikeEntity(id, user);
-    }
+    }*/
 
     @Override
     public int showPostsCount() {

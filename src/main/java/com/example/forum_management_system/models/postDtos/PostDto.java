@@ -12,10 +12,6 @@ public class PostDto {
     private String title;
     @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
-    @Positive(message = "Likes should be positive")
-    private int likes;
-    @Positive(message = "Dislikes should be positive")
-    private int dislikes;
     @Positive(message = "UserId should be positive")
     private int userId;
 
@@ -42,21 +38,7 @@ public class PostDto {
         this.content = content;
     }
 
-    public int getLikes() {
-        return likes;
-    }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
-    }
 
     public int getUserId() {
         return userId;

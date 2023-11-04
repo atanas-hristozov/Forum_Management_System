@@ -150,7 +150,7 @@ public class PostRepositoryImpl implements PostRepository{
         }
     }
 
-    public Set<Object> likeEntity(int id, User user){
+   /* public Set<Object> likeEntity(int id, User user){
         Set<Object> result = new HashSet<Object>();
         Post post = getById(id);
         try (Session session = sessionFactory.openSession()){
@@ -184,7 +184,7 @@ public class PostRepositoryImpl implements PostRepository{
         }
 
         return result;
-    }
+    }*/
 
     public List<Post> filter(List<Post> posts, String title, Integer userId, String sortBy, String sortOrder){
         posts = filterByTitle(posts, title);

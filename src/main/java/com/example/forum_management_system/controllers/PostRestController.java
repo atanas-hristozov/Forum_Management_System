@@ -91,7 +91,7 @@ public class PostRestController {
         }
     }
 
-    @PatchMapping("/{id}/like")
+  /*  @PatchMapping("/{id}/like")
     public Set<Object> likeEntity(@PathVariable int id, @RequestHeader(name = "Authorization", required = false) HttpHeaders headers) {
         try{
             User user = authenticationHelper.tryGetUser(headers);
@@ -117,6 +117,6 @@ public class PostRestController {
         } catch (AlreadyDislikedException e){
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
         }
-    }
+    }*/
 
 }

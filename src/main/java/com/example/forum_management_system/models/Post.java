@@ -28,16 +28,13 @@ public class Post {
     @Column(name = "content")
     @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
-    @Positive
-    @Column(name = "like")
-    private int likes = 0;
-    @Positive
-    @Column(name = "dislikes")
-    private int dislikes = 0;
+
     @Column(name = "timestamp_created")
     private Timestamp timestamp;
     @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @ManyToMany(mappedBy = "likedPosts")
+    private Set<User> likedByUsers;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
@@ -82,20 +79,20 @@ public class Post {
         this.content = content;
     }
 
-    public int getLikes() {
-        return likes;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
-    public int getDislikes() {
-        return dislikes;
+    public Set<User> getLikedByUsers() {
+        return likedByUsers;
     }
 
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
+    public void setLikedByUsers(Set<User> likedByUsers) {
+        this.likedByUsers = likedByUsers;
     }
 
     public Timestamp getTimestamp() {
@@ -113,6 +110,7 @@ public class Post {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

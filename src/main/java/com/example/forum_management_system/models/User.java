@@ -55,16 +55,16 @@ public class User {
     @JsonIgnore
     @Column(name = "is_banned")
     private boolean isBanned;
+    @ManyToMany
+    @JoinTable(name = "posts_likes",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private Set<Post> likedPosts;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(table = "admins_phone_numbers", name = "phone_number")
     private String phoneNumber;
-    @JsonIgnore
-    @Column(name = "liked")
-    private boolean liked;
-    @JsonIgnore
-    @Column(name = "disliked")
-    private boolean disliked;
+
 
 
     public User() {
@@ -139,6 +139,30 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public Set<Post> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(Set<Post> likedPosts) {
+        this.likedPosts = likedPosts;
+    }
+
+    public List<Post> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Post> children) {
+        this.children = children;
+    }
+
+    public List<Comment> getChildren2() {
+        return children2;
+    }
+
+    public void setChildren2(List<Comment> children2) {
+        this.children2 = children2;
+    }
+
     public int getId() {
         return id;
     }
@@ -147,21 +171,7 @@ public class User {
         this.id = id;
     }
 
-    public boolean isLiked() {
-        return liked;
-    }
 
-    public void setLiked(boolean liked) {
-        this.liked = liked;
-    }
-
-    public boolean isDisliked() {
-        return disliked;
-    }
-
-    public void setDisliked(boolean disliked) {
-        this.disliked = disliked;
-    }
 
     private void checkNameLength(String text) {
         if (text.length() < MIN_LENGTH || text.length() > MAX_LENGTH)

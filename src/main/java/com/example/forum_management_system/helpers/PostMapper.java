@@ -33,8 +33,7 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
-        post.setLikes(dto.getLikes());
-        post.setDislikes(dto.getDislikes());
+
 
         return post;
     }
