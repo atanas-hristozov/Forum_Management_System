@@ -34,7 +34,7 @@
     <section class="mainpage-tables">
         <div class="mainpage-tables-section">
             <h2>Top 10 recent posts</h2>
-            <a href="Post.html" th:each="post : ${topRecentPosts}" th:href="@{/post/{id}(id=${post.getId()})}">
+            <a href="Post.html" th:each="post : ${topRecentPosts}" th:href="@{/posts/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
@@ -57,7 +57,7 @@
         </div>
         <div class="mainpage-tables-section">
             <h2>Top 10 commented posts</h2>
-            <a href="Post.html" th:each="post : ${topCommented}" th:href="@{/post/{id}(id=${post.getId()})}">
+            <a href="Post.html" th:each="post : ${topCommented}" th:href="@{/posts/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>

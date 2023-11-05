@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -55,7 +56,8 @@ public class User {
     @JsonIgnore
     @Column(name = "is_banned")
     private boolean isBanned;
-    @ManyToMany
+
+    @ManyToMany( fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
     @JoinTable(name = "posts_likes",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "post_id"))
@@ -140,11 +142,17 @@ public class User {
     }
 
     public Set<Post> getLikedPosts() {
+        if(likedPosts==null)
+            return new HashSet<>();
+
         return likedPosts;
     }
 
-    public void setLikedPosts(Set<Post> likedPosts) {
-        this.likedPosts = likedPosts;
+    public void addToLikedPosts(Post likedPost) {
+        if(likedPosts==null || likedPosts.isEmpty())
+            likedPosts=new HashSet<>();
+
+        likedPosts.add(likedPost);
     }
 
     public List<Post> getChildren() {

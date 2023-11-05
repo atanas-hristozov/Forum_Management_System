@@ -8,12 +8,15 @@ import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.repositories.PostRepository;
+import com.example.forum_management_system.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -21,9 +24,14 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
+    private final UserRepository userRepository;
+    private final UserService userService;
+
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository, UserService userService) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -73,14 +81,17 @@ public class PostServiceImpl implements PostService {
         postRepository.update(post);
     }
 
-   /* public Set<Object> likeEntity(int id, User user) {
-        return postRepository.likeEntity(id, user);
+    @Override
+    public boolean isLikedBy(int postId, int userId) {
+        List<User> likedUsers = postRepository.getLikedBy(postId);
+        return likedUsers.contains(userService.getById(userId));
     }
 
-
-    public Set<Object> dislikeEntity(int id, User user) {
-        return postRepository.dislikeEntity(id, user);
-    }*/
+    @Override
+    public int showPostsLikesCount(int postId) {
+        List<User> likedUsers = postRepository.getLikedBy(postId);
+        return likedUsers.size();
+    }
 
     @Override
     public int showPostsCount() {
@@ -124,6 +135,20 @@ public class PostServiceImpl implements PostService {
     @Override
     public void removeTagFromPost(Post post, Set<Tag> tagsToRemove) {
         post.getTags().removeAll(tagsToRemove);
+    }
+    @Transactional
+    @Override
+    public void likeDislikePost(Post post, User user) {
+        if (!post.getLikedByUsers().contains(user)) {
+            post.getLikedByUsers().add(user);
+            user.getLikedPosts().add(post);
+
+        } else {
+            post.getLikedByUsers().remove(user);
+            user.getLikedPosts().remove(post);
+        }
+        postRepository.update(post);
+        userRepository.update(user);
     }
 
     private static void checkAccessPermissions(int postId, User executingUser) {

@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/register")
-public class RegisterMcvController {
+public class RegisterMvcController {
     private final UserService userService;
     private final UserMapper userMapper;
     @Autowired
-    public RegisterMcvController(UserService userService, UserMapper userMapper) {
+    public RegisterMvcController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
@@ -48,7 +48,7 @@ public class RegisterMcvController {
         try {
             User user = userMapper.fromUserCreateDto(userCreateDto);
             userService.create(user);
-            return "redirect:/Login";
+            return "redirect:/auth/login";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

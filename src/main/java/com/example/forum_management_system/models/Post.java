@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class Post {
     private Timestamp timestamp;
     @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    @ManyToMany(mappedBy = "likedPosts")
+    @ManyToMany(mappedBy = "likedPosts", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
     private Set<User> likedByUsers;
 
     @JsonIgnore
@@ -88,11 +89,16 @@ public class Post {
     }
 
     public Set<User> getLikedByUsers() {
+        if(likedByUsers==null)
+            return new HashSet<>();
         return likedByUsers;
     }
 
-    public void setLikedByUsers(Set<User> likedByUsers) {
-        this.likedByUsers = likedByUsers;
+    public void setNewLike(User userLike) {
+        if (likedByUsers==null || likedByUsers.isEmpty()) {
+            this.likedByUsers = new HashSet<>();
+        }
+        likedByUsers.add(userLike);
     }
 
     public Timestamp getTimestamp() {

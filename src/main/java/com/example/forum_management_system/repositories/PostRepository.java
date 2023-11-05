@@ -18,6 +18,5 @@ public interface PostRepository {
     void create(Post post);
     void update(Post post);
     void delete(int id);
-/*    Set<Object> likeEntity(int id, User user);
-    Set<Object> dislikeEntity(int id, User user);*/
+    List<User> getLikedBy(int postId);
 }

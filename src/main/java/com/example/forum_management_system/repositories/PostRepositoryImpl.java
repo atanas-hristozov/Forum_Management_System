@@ -10,17 +10,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
-public class PostRepositoryImpl implements PostRepository{
+public class PostRepositoryImpl implements PostRepository {
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public PostRepositoryImpl (SessionFactory sessionFactory) {
+    public PostRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -74,30 +75,6 @@ public class PostRepositoryImpl implements PostRepository{
             }
 
             return postDtoList;
-
-         /*   try (Session session = sessionFactory.openSession()) {
-                Query<Object[]> query = session.createQuery(
-                        "SELECT p.id, p.title, p.content, COUNT(c.id) " +
-                                "FROM Post p " +
-                                "LEFT JOIN p.comments c " +
-                                "GROUP BY p.id, p.title " +
-                                "ORDER BY COUNT(c.id) DESC, p.id"
-                );
-                query.setMaxResults(10);
-                List<Object[]> results = query.list();
-
-                List<PostDtoHome> postDtoList = new ArrayList<>();
-                for (Object[] result : results) {
-                    PostDtoHome postDto = new PostDtoHome();
-                    postDto.setId((Integer) result[0]);
-                    postDto.setTitle((String) result[1]);
-                    postDto.setContent((String) result[2]);
-                    postDto.setCommentCount(((Number) result[3]).intValue());
-                    // Handle the count as needed
-                    postDtoList.add(postDto);
-                }
-
-                return postDtoList;*/
         }
     }
 
@@ -117,7 +94,7 @@ public class PostRepositoryImpl implements PostRepository{
             query.setParameter("title", title);
 
             List<Post> result = query.list();
-            if (result.size() == 0) {
+            if (result.isEmpty()) {
                 throw new EntityNotFoundException("Post", "title", title);
             }
 
@@ -143,50 +120,35 @@ public class PostRepositoryImpl implements PostRepository{
 
     public void delete(int id) {
         Post postToDelete = getById(id);
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.remove(postToDelete);
             session.getTransaction().commit();
         }
     }
 
-   /* public Set<Object> likeEntity(int id, User user){
-        Set<Object> result = new HashSet<Object>();
-        Post post = getById(id);
-        try (Session session = sessionFactory.openSession()){
-            if (user.isLiked()){
-                throw new AlreadyDislikedException();
+    @Override
+    public List<User> getLikedBy(int postId) {
+
+        try (Session session = sessionFactory.openSession()) {
+            Query<Integer> query = session.
+                    createQuery("SELECT u.id FROM Post p JOIN p.likedByUsers u WHERE p.id = :postId",
+                    Integer.class);
+            query.setParameter("postId", postId);
+            List<Integer> likedUserIds = query.list();
+
+            List<User> likedUsers = new ArrayList<>();
+            for (Integer userId : likedUserIds) {
+                User user = session.get(User.class, userId);
+                if (user != null) {
+                    likedUsers.add(user);
+                }
             }
-
-            post.setLikes(post.getLikes()+1);
-            user.setLiked(true);
-
-            result.add(user);
-            result.add(post);
+            return likedUsers;
         }
-
-        return result;
     }
 
-    public Set<Object> dislikeEntity(int id, User user){
-        Set<Object> result = new HashSet<Object>();
-        Post post = getById(id);
-        try (Session session = sessionFactory.openSession()){
-            if (user.isDisliked()){
-                throw new AlreadyDislikedException();
-            }
-
-            post.setDislikes(post.getLikes()+1);
-            user.setDisliked(true);
-
-            result.add(user);
-            result.add(post);
-        }
-
-        return result;
-    }*/
-
-    public List<Post> filter(List<Post> posts, String title, Integer userId, String sortBy, String sortOrder){
+    public List<Post> filter(List<Post> posts, String title, Integer userId, String sortBy, String sortOrder) {
         posts = filterByTitle(posts, title);
         posts = filterByUser(posts, userId);
         posts = sortBy(posts, sortBy);

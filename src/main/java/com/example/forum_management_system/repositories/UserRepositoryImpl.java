@@ -1,6 +1,7 @@
 package com.example.forum_management_system.repositories;
 
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.UserFilterOptions;
 import com.example.forum_management_system.models.User;
 import org.hibernate.Session;
