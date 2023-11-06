@@ -1,8 +1,8 @@
 package com.example.forum_management_system.models;
 
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
@@ -14,6 +14,10 @@ import java.util.Set;
 @Entity
 @Table(name = "posts")
 public class Post {
+    public static final int TITLE_MIN_LENGTH = 16;
+    public static final int TITLE_MAX_LENGTH = 64;
+    public static final int CONTENT_MIN_LENGTH = 32;
+    public static final int CONTENT_MAX_LENGTH = 8192;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -69,6 +73,7 @@ public class Post {
     }
 
     public void setTitle(String title) {
+        checkTitleLength(title);
         this.title = title;
     }
 
@@ -77,6 +82,7 @@ public class Post {
     }
 
     public void setContent(String content) {
+        checkContentLength(content);
         this.content = content;
     }
 
@@ -128,5 +134,14 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    private void checkTitleLength(String text) {
+        if (text.length() < TITLE_MIN_LENGTH || text.length() > TITLE_MAX_LENGTH)
+            throw new TextLengthException(TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
+    }
+    private void checkContentLength(String text) {
+        if (text.length() < CONTENT_MIN_LENGTH || text.length() > CONTENT_MAX_LENGTH)
+            throw new TextLengthException(CONTENT_MIN_LENGTH, CONTENT_MAX_LENGTH);
     }
 }

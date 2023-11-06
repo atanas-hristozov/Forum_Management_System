@@ -9,18 +9,24 @@
         <form th:action="@{/post/{id} (id=${post.getId()})}" th:object="${post}" action="#" method="get">
 -->
             <form th:action="@{/posts/{id} (id=${post.getId()})}" th:object="${post}" action="#" method="post">
-        <div class="mainpage-tables-section-comment" id="post-page-comment">
-            <h3 th:text="${post.getTitle()}">Post title</h3>
-            <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-        </div>
+                <div class="mainpage-tables-section-comment" id="post-page-comment">
+                    <h3 th:text="${post.getTitle()}">Post title</h3>
+                    <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+                </div>
 
-        <div class="mainpage-tables-section-comment-attribute">
-                <button class="mainpage-tables-section-comment-attribute-text" type="submit">
-                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    <p th:text="${likes}">3</p>
-                </button>
-        </div>
+                <div class="mainpage-tables-section-comment-attribute">
+                        <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <p th:text="${likes}">3</p>
+                        </button>
+                </div>
             </form>
+        <a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update'}">Update Post</a>
+
+        <form th:action="@{'/posts/' + ${post.getId()} + '/delete'}" th:object="${post}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit">Delete</button>
+        </form>
 
 
         <div class="post-comment">

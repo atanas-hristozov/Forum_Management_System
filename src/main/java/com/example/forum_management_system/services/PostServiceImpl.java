@@ -77,7 +77,7 @@ public class PostServiceImpl implements PostService {
         if (duplicateExists) {
             throw new EntityDuplicateException("Post", "title", post.getTitle());
         }
-        checkAccessPermissions(post.getId(), user);
+        checkAuthor(user, post.getCreator());
         postRepository.update(post);
     }
 
@@ -153,6 +153,11 @@ public class PostServiceImpl implements PostService {
 
     private static void checkAccessPermissions(int postId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != 1 && executingUser.getId() != postId) {
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
+    private static void checkAuthor(User user, User executingUser) {
+        if (executingUser.getId() != user.getId()) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }

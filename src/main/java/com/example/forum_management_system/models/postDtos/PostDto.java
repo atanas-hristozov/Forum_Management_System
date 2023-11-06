@@ -12,8 +12,6 @@ public class PostDto {
     private String title;
     @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
-    @Positive(message = "UserId should be positive")
-    private int userId;
 
     private Set<Tag> tags;
 
@@ -38,15 +36,6 @@ public class PostDto {
         this.content = content;
     }
 
-
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public Set<Tag> getTags() {
         return tags;

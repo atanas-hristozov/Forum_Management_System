@@ -21,10 +21,9 @@ public class PostMapper {
     }
 
     public Post fromDto(int id, PostDto dto) {
-        Post post = fromDto(dto);
-        post.setId(id);
-        Post repositoryPost = postService.get(id);
-        post.setCreator(repositoryPost.getCreator());
+        Post post =  postService.get(id);
+        post.setTitle(dto.getTitle());
+        post.setContent(dto.getContent());
         post.setTags(dto.getTags());
         return post;
     }
@@ -33,8 +32,6 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
-
-
         return post;
     }
 }

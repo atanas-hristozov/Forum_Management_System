@@ -9,6 +9,7 @@ import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
+import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/post/new")
+@RequestMapping("/posts/new")
 public class CreatePostMvcController {
     private final PostService postService;
     private final AuthenticationHelper authenticationHelper;
     private final PostMapper postMapper;
+    private final UserService userService;
     @Autowired
-    public CreatePostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
+    public CreatePostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, UserService userService) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper = postMapper;
+        this.userService = userService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -47,9 +50,14 @@ public class CreatePostMvcController {
 
     @PostMapping
     public String createPost(@Valid @ModelAttribute("post")PostDto postDto,
-                             BindingResult bindingResult,
                              Model model,
+                             BindingResult bindingResult,
                              HttpSession session) {
+
+        if (populateIsAuthenticated(session)){
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+        }
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -62,8 +70,8 @@ public class CreatePostMvcController {
         try {
             Post post = postMapper.fromDto(postDto);
             postService.create(post,user);
-
-            return "redirect:/Forum";
+            model.addAttribute("post", post);
+            return "redirect:/forum";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
