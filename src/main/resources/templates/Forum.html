@@ -19,6 +19,9 @@
                             <p>№ of Comments:</p>
                             <p>5</p>
                         </div>
+                        <div>
+                            <p th:text="${post.getCreator().getUsername()}">Author</p>
+                        </div>
                       <!--  <div class="mainpage-tables-section-comment-attribute-text">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                             <p th:text="${post.getLikedByUsers()}">3</p>

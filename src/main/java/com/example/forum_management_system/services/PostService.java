@@ -19,7 +19,7 @@ public interface PostService {
 
     void update(Post post, User user);
 
-    void delete(int postId, User user);
+    void delete(Post post, User user);
 
    /* Set<Object> likeEntity(int id, User user);
 

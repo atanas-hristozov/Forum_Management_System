@@ -109,9 +109,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(int postId, User user) {
-        checkAccessPermissions(postId, user);
-        postRepository.delete(postId);
+    public void delete(Post post, User user) {
+        checkAccessPermissions(post.getCreator(), user);
+        postRepository.delete(post);
     }
 
     @Override
@@ -151,8 +151,8 @@ public class PostServiceImpl implements PostService {
         userRepository.update(user);
     }
 
-    private static void checkAccessPermissions(int postId, User executingUser) {
-        if (!executingUser.isAdmin() && executingUser.getId() != 1 && executingUser.getId() != postId) {
+    private static void checkAccessPermissions(User user, User executingUser) {
+        if (!executingUser.isAdmin() && executingUser.getId() != 1 && executingUser.getId() != user.getId()) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }

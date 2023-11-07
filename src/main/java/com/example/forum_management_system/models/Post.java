@@ -28,17 +28,15 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User creator;
     @Column(name = "title")
-    @Size(min = 16, max = 64, message = "Title length should be between 16 and 64")
     private String title;
     @Column(name = "content")
-    @Size(min = 32, max = 8192, message = "The content must be between 32 symbols and 8192 symbols.")
     private String content;
 
     @Column(name = "timestamp_created")
     private Timestamp timestamp;
     @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    @ManyToMany(mappedBy = "likedPosts", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
+    @ManyToMany(mappedBy = "likedPosts", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     private Set<User> likedByUsers;
 
     @JsonIgnore

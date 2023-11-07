@@ -12,6 +12,7 @@ import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.hibernate.Session;
@@ -30,6 +31,10 @@ public class PostMvcController {
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
+    @ModelAttribute("requestURI")
+    public String requestURI(final HttpServletRequest request) {
+        return request.getRequestURI();
+    }
 
     @Autowired
     public PostMvcController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper, UserService userService) {
@@ -104,7 +109,7 @@ public class PostMvcController {
         }
     }
     @PostMapping("/{id}/update")
-    public String updatePost(@PathVariable int id, PostDto postDto,
+    public String updatePost(@PathVariable int id, @Valid @ModelAttribute("post") PostDto postDto,
                              BindingResult bindingResult,
                              Model model,
                              HttpSession session){
@@ -128,10 +133,6 @@ public class PostMvcController {
             model.addAttribute("error", e.getMessage());
 
             return "Error_Page";
-        } catch (TextLengthException e) {
-            bindingResult.rejectValue("Title", "invalid_length", e.getMessage());
-            bindingResult.rejectValue("Content", "invalid_length", e.getMessage());
-            return "PostUpdate";
         }
     }
     @RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
@@ -145,7 +146,7 @@ public class PostMvcController {
         if (bindingResult.hasErrors()) {
             return "Forum";
         }
-        postService.delete(id, user);
+        postService.delete(post, user);
         return "Forum";
     }
 }

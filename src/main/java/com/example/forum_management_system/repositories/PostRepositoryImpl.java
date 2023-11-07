@@ -118,11 +118,10 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
-    public void delete(int id) {
-        Post postToDelete = getById(id);
+    public void delete(Post post) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.remove(postToDelete);
+            session.remove(post);
             session.getTransaction().commit();
         }
     }

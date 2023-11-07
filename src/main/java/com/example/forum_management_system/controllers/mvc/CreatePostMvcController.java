@@ -3,6 +3,7 @@ package com.example.forum_management_system.controllers.mvc;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
@@ -49,7 +50,7 @@ public class CreatePostMvcController {
     }
 
     @PostMapping
-    public String createPost(@Valid @ModelAttribute("post")PostDto postDto,
+    public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
                              Model model,
                              BindingResult bindingResult,
                              HttpSession session) {
@@ -76,9 +77,9 @@ public class CreatePostMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
-        } catch (EntityDuplicateException e) {
+        } catch (TextLengthException e) {
             bindingResult.rejectValue("title", "duplicate_title", e.getMessage());
-            return "Forum";
+            return "CreateNewPost";
         }
     }
 }

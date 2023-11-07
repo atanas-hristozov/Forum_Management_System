@@ -1,6 +1,7 @@
 package com.example.forum_management_system.models.postDtos;
 
 import com.example.forum_management_system.models.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 

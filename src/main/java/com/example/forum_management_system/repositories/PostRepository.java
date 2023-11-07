@@ -17,6 +17,6 @@ public interface PostRepository {
     Post getByTitle(String title);
     void create(Post post);
     void update(Post post);
-    void delete(int id);
+    void delete(Post post);
     List<User> getLikedBy(int postId);
 }
