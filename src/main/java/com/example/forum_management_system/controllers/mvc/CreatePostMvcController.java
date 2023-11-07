@@ -32,7 +32,10 @@ public class CreatePostMvcController {
     private final PostMapper postMapper;
     private final UserService userService;
     @Autowired
-    public CreatePostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, UserService userService) {
+    public CreatePostMvcController(PostService postService,
+                                   AuthenticationHelper authenticationHelper,
+                                   PostMapper postMapper,
+                                   UserService userService) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper = postMapper;
@@ -83,9 +86,6 @@ public class CreatePostMvcController {
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
         }
-        /*catch (TextLengthException e) {
-            bindingResult.rejectValue("title", "duplicate_title", e.getMessage());
-            return "CreateNewPost";
-        }*/
+
     }
 }

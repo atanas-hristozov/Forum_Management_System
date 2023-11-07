@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
 public class UserCreateDto {
+
     @NotNull(message = "Name can't be empty")
     private String firstName;
     @NotNull(message = "Name can't be empty")

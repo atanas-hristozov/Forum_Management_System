@@ -17,6 +17,7 @@ import java.util.Map;
 public class CommentServiceImpl implements CommentService {
     public static final String ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT = "Only admin or comment author can delete it!";
     private final CommentRepository repository;
+
     @Autowired
     public CommentServiceImpl(CommentRepository repository) {
         this.repository = repository;
@@ -29,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void create(Comment comment, Post post, User user) {
-        if(user.isBanned()){
+        if (user.isBanned()) {
             throw new AuthorizationException("User is banned!");
         }
         comment.setPost_id(post);
@@ -38,8 +39,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void update(Comment comment,Post post, User user) {
-        if(!comment.getAuthor().equals(user) && !user.isAdmin() && user.isBanned()){
+    public void update(Comment comment, Post post, User user) {
+        if (!comment.getAuthor().equals(user) && !user.isAdmin() && user.isBanned()) {
             throw new AuthorizationException("User is not the author or admin or he is banned.");
         }
         repository.update(comment);
@@ -61,9 +62,9 @@ public class CommentServiceImpl implements CommentService {
         return null;
     }
 
-    private void checkIfUserIsAuthorOrAdmin(int commentId, User user){
+    private void checkIfUserIsAuthorOrAdmin(int commentId, User user) {
         Comment comment = repository.get(commentId);
-        if (!(user.isAdmin() || comment.getAuthor().equals(user))){
+        if (!(user.isAdmin() || comment.getAuthor().getId() != user.getId())) {
             throw new AuthorizationException(ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT);
         }
     }

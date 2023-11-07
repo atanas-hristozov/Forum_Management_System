@@ -6,7 +6,7 @@
 <div th:replace="~{Templates.html :: header}"></div>
 <div th:replace="~{Templates.html :: main-header('/img/Welkome_back_02.png')}"></div>
 <section class="forum-create-post">
-    <p th:text="${pos}"></p>
+
     <h2>Update the post</h2>
     <form th:action="@{__${requestURI}__}" th:object="${post}" method="post" action="#">
         <label for="title"> Add title</label>
