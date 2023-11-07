@@ -24,6 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/posts")
 public class PostMvcController {
@@ -31,10 +33,6 @@ public class PostMvcController {
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
-    @ModelAttribute("requestURI")
-    public String requestURI(final HttpServletRequest request) {
-        return request.getRequestURI();
-    }
 
     @Autowired
     public PostMvcController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper, UserService userService) {
@@ -47,6 +45,17 @@ public class PostMvcController {
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
+    }
+    @ModelAttribute("requestURI")
+    public String requestURI(final HttpServletRequest request) {
+        return request.getRequestURI();
+    }
+    @ModelAttribute("isAuthor")
+    public boolean populateIsAuthor(HttpSession session, Post post) {
+        Object currentUser = session.getAttribute("currentUser");
+        Object creator = post.getCreator();
+
+        return Objects.equals(currentUser, creator);
     }
 
     @ModelAttribute("currentUser")

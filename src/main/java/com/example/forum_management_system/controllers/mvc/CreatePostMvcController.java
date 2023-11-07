@@ -11,6 +11,7 @@ import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,10 @@ public class CreatePostMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+    @ModelAttribute("requestURI")
+    public String requestURI(final HttpServletRequest request) {
+        return request.getRequestURI();
+    }
 
     @GetMapping
     public String showCreatePage(Model model){
@@ -51,8 +56,8 @@ public class CreatePostMvcController {
 
     @PostMapping
     public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
-                             Model model,
                              BindingResult bindingResult,
+                             Model model,
                              HttpSession session) {
 
         if (populateIsAuthenticated(session)){
@@ -66,7 +71,7 @@ public class CreatePostMvcController {
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
-            return "Forum";
+            return "CreateNewPost";
         }
         try {
             Post post = postMapper.fromDto(postDto);
@@ -76,10 +81,11 @@ public class CreatePostMvcController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        } catch (TextLengthException e) {
+            return "Error_Page";
+        }
+        /*catch (TextLengthException e) {
             bindingResult.rejectValue("title", "duplicate_title", e.getMessage());
             return "CreateNewPost";
-        }
+        }*/
     }
 }
