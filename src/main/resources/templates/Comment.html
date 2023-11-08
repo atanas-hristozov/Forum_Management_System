@@ -18,29 +18,9 @@
             </button>
         </div>
     </form>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
-    </div>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
-    </div>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
-    </div>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
-    </div>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
-    </div>
-    <div class="post-comment">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-        <p class="post-comment-author">Author</p>
+    <div th:each="comment : ${comments}" class="post-comment">
+        <p th:text="${comment.getText()}">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p th:text="${comment.getAuthor().getUsername()}" class="post-comment-author">Author</p>
     </div>
 </section>
 <section>
@@ -49,7 +29,7 @@
         <label for="content"> Post Text</label>
         <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
         <input class="forum-create-post-button" type="submit" value="Save">
-        <div class="error-login-message" th:errors="*{text}">Title error placeholder</div>
+        <div class="error-login-message" th:errors="*{text}">Content error placeholder</div>
     </form>
 </section>
 

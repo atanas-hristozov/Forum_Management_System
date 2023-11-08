@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,7 +37,7 @@ public class CommentRestController {
     }
 
     @GetMapping
-    public Map<String, Comment> getAllFromPost(@PathVariable int postId){
+    public List<Comment> getAllFromPost(@PathVariable int postId){
         return service.getAllCommentsFromPost(postId);
     }
     @GetMapping("/{id}")

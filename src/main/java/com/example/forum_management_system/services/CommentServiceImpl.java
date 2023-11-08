@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Map<String, Comment> getAllCommentsFromPost(int postId) {
+    public List<Comment> getAllCommentsFromPost(int postId) {
         return repository.getAllCommentsFromPost(postId);
     }
 

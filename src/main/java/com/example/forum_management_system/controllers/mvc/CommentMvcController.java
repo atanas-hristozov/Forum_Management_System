@@ -2,6 +2,7 @@ package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.CommentMapper;
 import com.example.forum_management_system.models.Comment;
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/posts")
@@ -50,13 +54,18 @@ public class CommentMvcController {
         return request.getRequestURI();
     }
     @GetMapping("/{id}/comments")
-    public String showCreatePage(@PathVariable int id, Model model){
+    public String showPostCommentsPage(@PathVariable int id, Model model){
         Post post = postService.get(id);
+        List<Comment> comments = commentService.getAllCommentsFromPost(id);
+        model.addAttribute("comments", comments);
         model.addAttribute("post", post);
         model.addAttribute("likes", postService.showPostsLikesCount(id));
         model.addAttribute("comment", new CommentDto());
+
+
         return "Comment";
     }
+
     @PostMapping("/{id}/comments")
     public String createNewComment(@PathVariable int id,
                                    @Valid @ModelAttribute("comment") CommentDto commentDto,
@@ -85,13 +94,16 @@ public class CommentMvcController {
             commentService.create(comment, post, user);
             model.addAttribute("user", user);
             model.addAttribute("post", post);
-            model.addAttribute("comment", comment);
+            model.addAttribute("comment", commentDto);
 
             String redirectUrl = "/posts/" + post.getId() + "/comments";
             return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
+            return "Error_Page";
+        } catch (TextLengthException e){
+            bindingResult.rejectValue("text", "invalid_length", e.getMessage());
             return "Error_Page";
         }
 

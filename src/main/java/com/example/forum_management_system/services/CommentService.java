@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CommentService {
-    Map<String, Comment> getAllCommentsFromPost(int postId);
+    List<Comment> getAllCommentsFromPost(int postId);
     List<Comment> getAll();
 
     Comment get(int id);

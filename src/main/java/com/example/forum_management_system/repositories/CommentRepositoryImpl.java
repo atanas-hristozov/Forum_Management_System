@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class CommentRepositoryImpl implements CommentRepository{
         }
     }
     @Override
-    public Map<String, Comment> getAllCommentsFromPost(int postId){
+    public List<Comment> getAllCommentsFromPost(int postId){
         try(Session session = sessionFactory.openSession()){
             Post post = postRepository.getById(postId);
             Query<Comment> query = session.createQuery("from Comment WHERE post_id = :post", Comment.class);
@@ -93,11 +94,11 @@ public class CommentRepositoryImpl implements CommentRepository{
             if (result.isEmpty()) {
                 throw new EntityNotFoundException("Comment", postId);
             }
-            Map<String, Comment> commentMap = new HashMap<>();
+            /*List<Comment> commentMap = new ArrayList<>();
             for (Comment comment: result) {
-                commentMap.put(comment.getAuthor().getUsername(), comment);
-            }
-            return commentMap;
+                commentMap.add(comment.getAuthor().getUsername(), comment);
+            }*/
+            return result;
         }
     }
     /*

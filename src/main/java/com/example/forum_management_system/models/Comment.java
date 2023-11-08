@@ -1,5 +1,6 @@
 package com.example.forum_management_system.models;
 
+import com.example.forum_management_system.exceptions.TextLengthException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -42,6 +43,9 @@ public class Comment {
     }
 
     public void setText(String text) {
+        if (text.isEmpty()){
+            throw new TextLengthException();
+        }
         this.text = text;
     }
 
