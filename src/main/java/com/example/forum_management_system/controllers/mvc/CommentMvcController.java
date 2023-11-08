@@ -21,7 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/posts/{id}/comments")
+@RequestMapping("/posts")
 public class CommentMvcController {
    private final CommentService commentService;
    private final CommentMapper commentMapper;
@@ -49,12 +49,15 @@ public class CommentMvcController {
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
     }
-    @GetMapping
-    public String showCreatePage(Model model){
+    @GetMapping("/{id}/comments")
+    public String showCreatePage(@PathVariable int id, Model model){
+        Post post = postService.get(id);
+        model.addAttribute("post", post);
+        model.addAttribute("likes", postService.showPostsLikesCount(id));
         model.addAttribute("comment", new CommentDto());
-        return "CreateNewComment";
+        return "Comment";
     }
-    @PostMapping("/add")
+    @PostMapping("/{id}/comments")
     public String createNewComment(@PathVariable int id,
                                    @Valid @ModelAttribute("comment") CommentDto commentDto,
                                    BindingResult bindingResult,
@@ -64,20 +67,28 @@ public class CommentMvcController {
         User user;
         Comment comment;
         Post post;
+        if (populateIsAuthenticated(httpSession)){
+            String username = httpSession.getAttribute("currentUser").toString();
+            user = userService.getByName(username);
+        }
         try {
             user = authenticationHelper.tryGetCurrentUser(httpSession);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
-            return "Forum";
+            return "Comment";
         }
         try {
             post = postService.get(id);
             comment = commentMapper.fromDto(commentDto);
             commentService.create(comment, post, user);
+            model.addAttribute("user", user);
+            model.addAttribute("post", post);
             model.addAttribute("comment", comment);
-            return "redirect:/forum";
+
+            String redirectUrl = "/posts/" + post.getId() + "/comments";
+            return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

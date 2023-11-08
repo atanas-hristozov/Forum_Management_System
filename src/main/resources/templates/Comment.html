@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('Main Page')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+
+<section class="post-page">
+    <form th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="post">
+        <div class="mainpage-tables-section-comment" id="post-page-comment">
+            <h3 th:text="${post.getTitle()}">Post title</h3>
+            <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+        </div>
+
+        <div class="mainpage-tables-section-comment-attribute">
+            <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                <p th:text="${likes}">3</p>
+            </button>
+        </div>
+    </form>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+    <div class="post-comment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
+        <p class="post-comment-author">Author</p>
+    </div>
+</section>
+<section>
+    <h3>Create comment</h3>
+    <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
+        <label for="content"> Post Text</label>
+        <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
+        <input class="forum-create-post-button" type="submit" value="Save">
+        <div class="error-login-message" th:errors="*{text}">Title error placeholder</div>
+    </form>
+</section>
+
+</body>
+</html>

@@ -27,32 +27,7 @@
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">Delete</button>
         </form>
-
-
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
-        <div class="post-comment">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
-            <p class="post-comment-author">Author</p>
-        </div>
     </section>
+    <a th:href="@{'/posts/' + ${post.getId()} + '/comments'}" href="#">Show All Comments</a>
 </body>
 </html>

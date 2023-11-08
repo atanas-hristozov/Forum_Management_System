@@ -14,7 +14,6 @@ public class Comment {
     private int id;
 
     @Column(name = "text")
-    @NotNull(message = "text can't be empty!")
     private String text;
     @JsonIgnore
     @ManyToOne
