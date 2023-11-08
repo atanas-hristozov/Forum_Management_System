@@ -32,9 +32,4 @@ public class ForumMvcController {
         return "Forum";
     }
 
-    /*@GetMapping
-    public String createPost(@Valid @ModelAttribute PostDto post){
-        //service.create(post);
-        return "redirect:Form";
-    }*/
 }

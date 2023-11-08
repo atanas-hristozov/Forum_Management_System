@@ -27,11 +27,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/posts")
 public class CommentMvcController {
-   private final CommentService commentService;
-   private final CommentMapper commentMapper;
-   private final AuthenticationHelper authenticationHelper;
-   private final PostService postService;
-   private final UserService userService;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
+    private final AuthenticationHelper authenticationHelper;
+    private final PostService postService;
+    private final UserService userService;
 
     public CommentMvcController(CommentService commentService,
                                 CommentMapper commentMapper,
@@ -49,12 +49,14 @@ public class CommentMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
     }
+
     @GetMapping("/{id}/comments")
-    public String showPostCommentsPage(@PathVariable int id, Model model){
+    public String showPostCommentsPage(@PathVariable int id, Model model) {
         Post post = postService.get(id);
         List<Comment> comments = commentService.getAllCommentsFromPost(id);
         model.addAttribute("comments", comments);
@@ -71,12 +73,12 @@ public class CommentMvcController {
                                    @Valid @ModelAttribute("comment") CommentDto commentDto,
                                    BindingResult bindingResult,
                                    Model model,
-                                   HttpSession httpSession){
+                                   HttpSession httpSession) {
 
         User user;
         Comment comment;
         Post post;
-        if (populateIsAuthenticated(httpSession)){
+        if (populateIsAuthenticated(httpSession)) {
             String username = httpSession.getAttribute("currentUser").toString();
             user = userService.getByName(username);
         }
@@ -102,10 +104,84 @@ public class CommentMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
-        } catch (TextLengthException e){
+        } catch (TextLengthException e) {
             bindingResult.rejectValue("text", "invalid_length", e.getMessage());
             return "Error_Page";
         }
+    }
 
+    @PutMapping("/{id}/comments/{id2}")
+    public String updateComment(@PathVariable int id,
+                                @PathVariable int id2,
+                                @Valid @ModelAttribute("comment") CommentDto commentDto,
+                                BindingResult bindingResult,
+                                Model model,
+                                HttpSession httpSession) {
+
+        User user;
+        Post post;
+        Comment comment;
+        if (populateIsAuthenticated(httpSession)) {
+            String username = httpSession.getAttribute("currentUser").toString();
+            userService.getByName(username);
+        }
+        try {
+            user = authenticationHelper.tryGetCurrentUser(httpSession);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+        if (bindingResult.hasErrors()) {
+            return "Comment";
+        }
+
+        try {
+            post = postService.get(id);
+            comment = commentService.get(id2);
+            commentService.update(comment, post, user);
+            return "redirect:/" + id + "/comments/" + id2;
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "Error_Page";
+        } catch (TextLengthException e) {
+            bindingResult.rejectValue("text", "invalid_length", e.getMessage());
+            return "Error_Page";
+        }
+    }
+
+    @DeleteMapping ("/{id}/comments/{id2}")
+    public String deleteComment(@PathVariable int id,
+                                @PathVariable int id2,
+                                @Valid @ModelAttribute("comment") CommentDto commentDto,
+                                BindingResult bindingResult,
+                                Model model,
+                                HttpSession httpSession) {
+
+        User user;
+        Post post;
+        Comment comment;
+        if (populateIsAuthenticated(httpSession)) {
+            String username = httpSession.getAttribute("currentUser").toString();
+            userService.getByName(username);
+        }
+        try {
+            user = authenticationHelper.tryGetCurrentUser(httpSession);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+        if (bindingResult.hasErrors()) {
+            return "Comment";
+        }
+
+        try {
+            post = postService.get(id);
+            comment = commentService.get(id2);
+            commentService.delete(comment.getId(), user);
+            return "redirect:/" + id + "/comments/" + id2;
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "Error_Page";
+        }
     }
 }

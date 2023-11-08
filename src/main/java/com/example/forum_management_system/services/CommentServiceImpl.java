@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
 
     private void checkIfUserIsAuthorOrAdmin(int commentId, User user) {
         Comment comment = repository.get(commentId);
-        if (!(user.isAdmin() || comment.getAuthor().getId() != user.getId())) {
+        if ((!user.isAdmin() || comment.getAuthor().getId() != user.getId())) {
             throw new AuthorizationException(ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT);
         }
     }
