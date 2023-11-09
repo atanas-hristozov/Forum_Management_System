@@ -4,7 +4,6 @@
 <body>
 <div th:replace="~{Templates.html :: header}"></div>
 <div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
-
     <section class="mainpage-tables" id="main-pages-forum">
         <h2>All Posts</h2>
         <div class="main-pages-forum-columns">
@@ -19,9 +18,15 @@
                             <p>Number of comments: </p>
                             <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                         </div>
-                    </div>
-                    <div>
-                        <p th:text="${post.getCreator().getUsername()}">Author</p>
+                        <div>
+                            <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                <p th:text="${post.getLikedByUsers().size()}">3</p>
+                            </button>
+                        </div>
+                        <div class="mainpage-tables-section-comment-attribute-text">
+                            <p th:text="${post.getCreator().getUsername()}">Author</p>
+                        </div>
                     </div>
                 </a>
             </div>

@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="~{Templates.html :: head('Main Page')}"></div>
 <body>
     <div th:replace="~{Templates.html :: header}"></div>
     <div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
+
 <!--
     <header class="header" th:fragment="header">
         <div class="header-content">
@@ -21,7 +23,7 @@
         <h1>Forum</h1>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate, exercitationem accusantium? Porro, similique eaque totam molestias quasi, vitae in ut ducimus maiores voluptate sint eveniet repellendus, possimus beatae? Tempora, pariatur?</p>
     </section>
-    <section>
+    <section class="all-information">
         <div>
             <h3>All users</h3>
             <p th:text="${usersCount}">23</p>
@@ -37,7 +39,22 @@
             <a href="Post.html" th:each="post : ${topRecentPosts}" th:href="@{/posts/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
-                    <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+                    <p th:text="${post.getContent()}">Post text: </p>
+                </div>
+                <div class="mainpage-tables-section-comment-attribute">
+                    <div class="mainpage-tables-section-comment-attribute-text">
+                        <p>Number of comments: </p>
+                        <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
+                    </div>
+                    <div>
+                        <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <p th:text="${post.getLikedByUsers().size()}">3</p>
+                        </button>
+                    </div>
+                    <div class="mainpage-tables-section-comment-attribute-text">
+                        <p th:text="${post.getCreator().getUsername()}">Author</p>
+                    </div>
                 </div>
             </a>
         </div>
@@ -47,6 +64,21 @@
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>
                     <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+                </div>
+                <div class="mainpage-tables-section-comment-attribute">
+                    <div class="mainpage-tables-section-comment-attribute-text">
+                        <p>Number of comments: </p>
+                        <p>5</p>
+                    </div>
+                    <div>
+                        <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <p>3</p>
+                        </button>
+                    </div>
+                    <div class="mainpage-tables-section-comment-attribute-text">
+                        <p>Author</p>
+                    </div>
                 </div>
             </a>
         </div>

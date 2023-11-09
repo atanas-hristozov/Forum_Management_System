@@ -3,6 +3,7 @@ package com.example.forum_management_system.controllers.mvc;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.User;
+import com.example.forum_management_system.services.CommentService;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -20,10 +21,12 @@ import java.util.List;
 public class HomeMvcController {
     private final PostService postService;
     private final UserService userService;
+    private final CommentService commentService;
     @Autowired
-    public HomeMvcController(PostService postService, UserService userService) {
+    public HomeMvcController(PostService postService, UserService userService, CommentService commentService) {
         this.postService = postService;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -41,9 +44,6 @@ public class HomeMvcController {
     }
     @GetMapping
     public String showHomePage(Model model, HttpSession session){
-
-
-
         List<Post> posts = postService.get(null,null,null,null);
         List<Post> topRecentPosts = postService.getMostRecent();
         List<PostDtoHome> topCommented = postService.getMostCommented();
@@ -54,6 +54,7 @@ public class HomeMvcController {
         model.addAttribute("topCommented", topCommented);
         model.addAttribute("postsCount", postsCount);
         model.addAttribute("usersCount", usersCount);
+        model.addAttribute("comments", commentService);
         return "Index";
     }
 }

@@ -123,12 +123,6 @@ h3{
     align-items: center;
     justify-content: center;
 }
-@media only screen and (min-width: 1200px) {
-    .mainpage-tables-section{
-        max-width: 500px;
-        margin: 20px 40px;
-    }
-}
 .mainpage-tables-section a{
     display: flex;
     flex-direction: column;
@@ -137,7 +131,11 @@ h3{
     background-color: rgb(245, 245, 245);
     margin: 10px;
     border-radius: 20px;
+    width: 90vw;
+    height: 200px;
 }
+
+
 .mainpage-tables-section a:hover{
     box-shadow:0 0  5px 5px rgba(17, 119, 56, 0.3);
     transform: scale(1.02);
@@ -152,12 +150,21 @@ h3{
 .mainpage-tables-section-comment-attribute{
     display: flex;
     flex-direction: row;
+    height: 50px;
 }
 .mainpage-tables-section-comment p{
     color: black;
     margin: 10px;
 }
 
+@media only screen and (min-width: 1200px) {
+    .mainpage-tables-section a{
+        width: 500px;
+    }
+    .mainpage-tables-section{
+        margin: 20px 40px;
+    }
+}
 .mainpage-tables-section-comment-attribute-text{
     color: rgb(17, 119, 56);
     display: flex;
@@ -170,6 +177,12 @@ h3{
     height: 40px;
     padding: 0 10px;
     border: none;
+}
+.mainpage-tables-section-comment h3{
+    height: 30px;
+}
+.mainpage-tables-section-comment p{
+    height: 80px;
 }
 .mainpage-tables-section-comment-attribute-text p{
     margin: 0 10px;
@@ -305,4 +318,20 @@ h3{
     .forum-create-post-textfield{
         width: 97%;
     }
+}
+
+.all-information{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.all-information div{
+    max-width: 500px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px 20px 20px 20px;
 }
