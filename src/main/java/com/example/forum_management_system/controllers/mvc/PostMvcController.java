@@ -63,15 +63,17 @@ public class PostMvcController {
         Object currentUser = session.getAttribute("currentUser");
         Post post = postService.get(id);
         String creator = post.getCreator().getUsername();
-        if(creator.equals(currentUser)){
+        if (creator.equals(currentUser)) {
             return true;
         }
         return false;
     }
+
     @ModelAttribute("isAdmin")
     public boolean populateIsAdmin(HttpSession session) {
         Object currentUser = session.getAttribute("currentUser");
-        return false;
+        User user = userService.getByName(currentUser.toString());
+        return user.isAdmin();
     }
 
 
