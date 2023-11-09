@@ -10,6 +10,7 @@ import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.postDtos.PostDto;
 import com.example.forum_management_system.models.userDtos.UserUpdateDto;
+import com.example.forum_management_system.services.CommentService;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import jakarta.validation.Valid;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -34,8 +36,12 @@ public class PostMvcController {
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
 
+
     @Autowired
-    public PostMvcController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper, UserService userService) {
+    public PostMvcController(PostService service,
+                             PostMapper postMapper,
+                             AuthenticationHelper authenticationHelper,
+                             UserService userService) {
         this.postService = service;
         this.postMapper = postMapper;
         this.authenticationHelper = authenticationHelper;
@@ -46,10 +52,12 @@ public class PostMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
     }
+
     @ModelAttribute("isAuthor")
     public boolean populateIsAuthor(HttpSession session, Post post) {
         Object currentUser = session.getAttribute("currentUser");
@@ -83,8 +91,8 @@ public class PostMvcController {
 
     @PostMapping("/{id}")
     public String likeDislikePost(@PathVariable int id,
-                           Model model,
-                           HttpSession session) {
+                                  Model model,
+                                  HttpSession session) {
         Post post;
         User user;
         try {
@@ -117,11 +125,12 @@ public class PostMvcController {
             return "Error_Page";
         }
     }
+
     @PostMapping("/{id}/update")
     public String updatePost(@PathVariable int id, @Valid @ModelAttribute("post") PostDto postDto,
                              BindingResult bindingResult,
                              Model model,
-                             HttpSession session){
+                             HttpSession session) {
         User user;
         Post post;
         try {
@@ -137,13 +146,14 @@ public class PostMvcController {
             postService.update(post, user);
             model.addAttribute("post", post);
             return "redirect:/forum";
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
 
             return "Error_Page";
         }
     }
+
     @RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
     public String deletePost(@ModelAttribute("post") Post post, @PathVariable int id, HttpSession session, BindingResult bindingResult) {
         User user;

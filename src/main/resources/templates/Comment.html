@@ -21,6 +21,7 @@
     <div th:each="comment : ${comments}" class="post-comment">
         <p th:text="${comment.getText()}">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
         <p th:text="${comment.getAuthor().getUsername()}" class="post-comment-author">Author</p>
+        <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>-->
     </div>
 </section>
 <section>

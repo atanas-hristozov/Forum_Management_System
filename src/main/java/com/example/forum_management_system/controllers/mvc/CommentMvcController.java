@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/posts/{id}/comments")
 public class CommentMvcController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
@@ -50,12 +50,13 @@ public class CommentMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
+
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
     }
 
-    @GetMapping("/{id}/comments")
+    @GetMapping()
     public String showPostCommentsPage(@PathVariable int id, Model model) {
         Post post = postService.get(id);
         List<Comment> comments = commentService.getAllCommentsFromPost(id);
@@ -64,11 +65,10 @@ public class CommentMvcController {
         model.addAttribute("likes", postService.showPostsLikesCount(id));
         model.addAttribute("comment", new CommentDto());
 
-
         return "Comment";
     }
 
-    @PostMapping("/{id}/comments")
+    @PostMapping()
     public String createNewComment(@PathVariable int id,
                                    @Valid @ModelAttribute("comment") CommentDto commentDto,
                                    BindingResult bindingResult,
@@ -104,16 +104,18 @@ public class CommentMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
-        } catch (TextLengthException e) {
+        /*} catch (TextLengthException e) {
             bindingResult.rejectValue("text", "invalid_length", e.getMessage());
             return "Error_Page";
+        }*/
         }
     }
 
-    @PutMapping("/{id}/comments/{id2}")
+    @PutMapping("/{id2}")
     public String updateComment(@PathVariable int id,
                                 @PathVariable int id2,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,
+                                @ModelAttribute("commentModel") Comment commentModel,
                                 BindingResult bindingResult,
                                 Model model,
                                 HttpSession httpSession) {
@@ -135,6 +137,7 @@ public class CommentMvcController {
         }
 
         try {
+            model.addAttribute("commentModel", commentModel);
             post = postService.get(id);
             comment = commentService.get(id2);
             commentService.update(comment, post, user);
@@ -149,7 +152,7 @@ public class CommentMvcController {
         }
     }
 
-    @DeleteMapping ("/{id}/comments/{id2}")
+    @DeleteMapping ("/{id2}")
     public String deleteComment(@PathVariable int id,
                                 @PathVariable int id2,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,

@@ -43,9 +43,9 @@ public class Comment {
     }
 
     public void setText(String text) {
-        if (text.isEmpty()){
+        /*if (text.isEmpty()){
             throw new TextLengthException();
-        }
+        }*/
         this.text = text;
     }
 
