@@ -88,7 +88,7 @@ public class CommentMvcController {
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
-            return "Comment";
+            return "redirect:/posts/{id}/comments";
         }
         try {
             post = postService.get(id);
@@ -104,16 +104,11 @@ public class CommentMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
-        /*} catch (TextLengthException e) {
-            bindingResult.rejectValue("text", "invalid_length", e.getMessage());
-            return "Error_Page";
-        }*/
         }
     }
-
-    @PutMapping("/{id2}")
+/*
+    @PutMapping
     public String updateComment(@PathVariable int id,
-                                @PathVariable int id2,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,
                                 @ModelAttribute("commentModel") Comment commentModel,
                                 BindingResult bindingResult,
@@ -150,7 +145,7 @@ public class CommentMvcController {
             bindingResult.rejectValue("text", "invalid_length", e.getMessage());
             return "Error_Page";
         }
-    }
+    }*/
 
     @DeleteMapping ("/{id2}")
     public String deleteComment(@PathVariable int id,

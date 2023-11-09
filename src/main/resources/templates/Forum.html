@@ -16,25 +16,12 @@
                     </div>
                     <div class="mainpage-tables-section-comment-attribute">
                         <div class="mainpage-tables-section-comment-attribute-text">
-
-                          <!--  <div th:each="post : ${posts}" class="post-comment">
-                                <p th:text="${post.getComments().size()}" class="post-comment-author">Number of comments</p>-->
-                                <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>-->
-                            </div>
-
-
+                            <p>Number of comments: </p>
+                            <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                         </div>
-                        <div>
-                            <p th:text="${post.getCreator().getUsername()}">Author</p>
-                        </div>
-                      <!--  <div class="mainpage-tables-section-comment-attribute-text">
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <p th:text="${post.getLikedByUsers()}">3</p>
-                        </div>-->
-                       <!-- <div class="mainpage-tables-section-comment-attribute-text">
-                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                            <p th:text="${post.getDislikes()}">2</p>
-                        </div>-->
+                    </div>
+                    <div>
+                        <p th:text="${post.getCreator().getUsername()}">Author</p>
                     </div>
                 </a>
             </div>

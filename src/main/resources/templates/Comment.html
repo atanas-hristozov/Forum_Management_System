@@ -21,7 +21,14 @@
     <div th:each="comment : ${comments}" class="post-comment">
         <p th:text="${comment.getText()}">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium nihil cupiditate dolore ullam ipsam hic asperiores exercitationem, voluptatibus officiis quia facere! Excepturi est laborum nobis ipsa maxime non nulla maiores.</p>
         <p th:text="${comment.getAuthor().getUsername()}" class="post-comment-author">Author</p>
-        <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>-->
+        <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>
+        <a th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>-->
+        <div>
+            <a th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>
+            <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
+                <input class="forum-create-post-button" type="submit" value="Delete">
+            </form>
+        </div>
     </div>
 </section>
 <section>

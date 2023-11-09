@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('Edit Comment')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+
+<section>
+  <p >Comment</p>
+  <div>
+    <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
+      <input class="forum-create-post-button" type="submit" value="Save">
+    </form>
+    <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
+      <input class="forum-create-post-button" type="submit" value="Save">
+    </form>
+  </div>
+</section>
+
+</body>
+</html>
