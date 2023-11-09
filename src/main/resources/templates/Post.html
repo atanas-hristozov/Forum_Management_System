@@ -21,7 +21,7 @@
                         </button>
                 </div>
             </form>
-        <a th:unless="${isAuthor}" href="#"  th:href="@{'/posts/' + ${post.getId()} + '/update'}">Update Post</a>
+        <a th:if="${isAuthor}" href="#"  th:href="@{'/posts/' + ${post.getId()} + '/update'}">Update Post</a>
 
         <form th:if="${isAuthor}" th:action="@{'/posts/' + ${post.getId()} + '/delete'}" th:object="${post}" method="post">
             <input type="hidden" name="_method" value="delete" />

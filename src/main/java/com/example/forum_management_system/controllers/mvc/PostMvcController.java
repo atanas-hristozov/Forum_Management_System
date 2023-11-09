@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/posts/{id}")
 public class PostMvcController {
     private final PostService postService;
     private final PostMapper postMapper;
@@ -59,12 +59,21 @@ public class PostMvcController {
     }
 
     @ModelAttribute("isAuthor")
-    public boolean populateIsAuthor(HttpSession session, Post post) {
+    public boolean populateIsAuthor(@PathVariable int id, HttpSession session) {
         Object currentUser = session.getAttribute("currentUser");
-        Object creator = post.getCreator();
-
-        return Objects.equals(currentUser, creator);
+        Post post = postService.get(id);
+        String creator = post.getCreator().getUsername();
+        if(creator.equals(currentUser)){
+            return true;
+        }
+        return false;
     }
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        Object currentUser = session.getAttribute("currentUser");
+        return false;
+    }
+
 
     @ModelAttribute("currentUser")
     public User currentUser(HttpSession session) {
@@ -76,7 +85,7 @@ public class PostMvcController {
         return null;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     public String showPostPage(@PathVariable int id, Model model) {
         try {
             Post post = postService.get(id);
@@ -89,7 +98,7 @@ public class PostMvcController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping
     public String likeDislikePost(@PathVariable int id,
                                   Model model,
                                   HttpSession session) {
@@ -114,7 +123,7 @@ public class PostMvcController {
         }
     }
 
-    @GetMapping("/{id}/update")
+    @GetMapping("/update")
     public String showPostUpdatePage(@PathVariable int id, Model model) {
         try {
             Post post = postService.get(id);
@@ -126,7 +135,7 @@ public class PostMvcController {
         }
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/update")
     public String updatePost(@PathVariable int id, @Valid @ModelAttribute("post") PostDto postDto,
                              BindingResult bindingResult,
                              Model model,
@@ -154,7 +163,7 @@ public class PostMvcController {
         }
     }
 
-    @RequestMapping(value = "{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deletePost(@ModelAttribute("post") Post post, @PathVariable int id, HttpSession session, BindingResult bindingResult) {
         User user;
         try {

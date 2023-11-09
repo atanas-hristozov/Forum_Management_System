@@ -6,14 +6,19 @@
 
 <section>
   <p >Comment</p>
-  <div>
+  <section class="forum-create-post">
+    <h2>Update the post</h2>
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
-      <input class="forum-create-post-button" type="submit" value="Save">
+      <label for="content">Update the comment</label>
+      <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
+      <input class="forum-create-post-button" type="submit" value="Update">
+      <div class="error-login-message" th:errors="*{text}">Title error placeholder</div>
     </form>
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
-      <input class="forum-create-post-button" type="submit" value="Save">
+      <input class="forum-create-post-button" type="submit" value="Delete">
     </form>
-  </div>
+
+  </section>
 </section>
 
 </body>
