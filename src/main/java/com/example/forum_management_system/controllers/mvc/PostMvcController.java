@@ -64,10 +64,7 @@ public class PostMvcController {
             Object currentUser = session.getAttribute("currentUser");
             Post post = postService.get(id);
             String creator = post.getCreator().getUsername();
-            if (creator.equals(currentUser)) {
-                return true;
-            }
-            return false;
+            return creator.equals(currentUser);
         }
         return false;
     }
