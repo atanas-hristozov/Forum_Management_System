@@ -55,9 +55,10 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<PostDtoHome[]> query = session.createQuery(
                     "SELECT p.id AS post_id, p.title AS post_title, " +
-                            "p.content As post_content, p.creator as post_creator, COUNT(c.id) AS comment_count " +
+                            "p.content As post_content, p.creator as post_creator, " +
+                            "COUNT(c.id) AS comment_count, size (p.likedByUsers) " +
                             "FROM Post p " +
-                            "LEFT JOIN p.creator u" +
+                            "LEFT JOIN p.creator u " +
                             "LEFT JOIN p.comments c " +
                             "GROUP BY p.id, p.title, p.content " +
                             "ORDER BY comment_count DESC, p.id"
@@ -71,13 +72,9 @@ public class PostRepositoryImpl implements PostRepository {
                 postDto.setId((Integer) result[0]);
                 postDto.setTitle((String) result[1]);
                 postDto.setContent((String) result[2]);
-                postDto.setCreator((User)result[3]);
+                postDto.setCreator((User) result[3]);
                 postDto.setCommentCount(((Number) result[4]).intValue());
-
-                /*User user = new User();
-                //user.setId(((Integer) result[4]).intValue());
-                user.setUsername((String) result[5]);
-                postDto.setCreator(user);*/
+                postDto.setLikesCount(((Number) result[5]).intValue());
 
                 postDtoList.add(postDto);
             }
@@ -140,7 +137,7 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<Integer> query = session.
                     createQuery("SELECT u.id FROM Post p JOIN p.likedByUsers u WHERE p.id = :postId",
-                    Integer.class);
+                            Integer.class);
             query.setParameter("postId", postId);
             List<Integer> likedUserIds = query.list();
 

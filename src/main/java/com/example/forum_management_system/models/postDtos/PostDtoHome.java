@@ -11,7 +11,7 @@ public class PostDtoHome {
     private int commentCount;
     private String content;
     private User creator;
-    private Set<User> likedByUsers;
+    private int likesCount;
 
 
     public PostDtoHome() {
@@ -64,13 +64,11 @@ public class PostDtoHome {
         this.creator = creator;
     }
 
-    public Set<User> getLikedByUsers() {
-        if(likedByUsers==null)
-            return new HashSet<>();
-        return likedByUsers;
+    public int getLikesCount() {
+        return likesCount;
     }
 
-    public void setLikedByUsers(Set<User> likedByUsers) {
-        this.likedByUsers = likedByUsers;
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
     }
 }
