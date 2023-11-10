@@ -55,14 +55,14 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<PostDtoHome[]> query = session.createQuery(
                     "SELECT p.id AS post_id, p.title AS post_title, " +
-                            "p.content AS post_content, COUNT(c.id) AS comment_count, " +
-                            "u.id AS user_id, u.username AS username " +
+                            "p.content As post_content, p.creator as post_creator, COUNT(c.id) AS comment_count " +
                             "FROM Post p " +
+                            "LEFT JOIN p.creator u" +
                             "LEFT JOIN p.comments c " +
-                            "LEFT JOIN p.likedByUsers u " +
-                            "GROUP BY p.id, p.title, p.content, u.id, u.username " +
+                            "GROUP BY p.id, p.title, p.content " +
                             "ORDER BY comment_count DESC, p.id"
             );
+            query.setMaxResults(10);
             List<PostDtoHome[]> results = query.list();
 
             List<PostDtoHome> postDtoList = new ArrayList<>();
@@ -71,12 +71,13 @@ public class PostRepositoryImpl implements PostRepository {
                 postDto.setId((Integer) result[0]);
                 postDto.setTitle((String) result[1]);
                 postDto.setContent((String) result[2]);
-                postDto.setCommentCount(((Number) result[3]).intValue());
+                postDto.setCreator((User)result[3]);
+                postDto.setCommentCount(((Number) result[4]).intValue());
 
-                User user = new User();
+                /*User user = new User();
                 //user.setId(((Integer) result[4]).intValue());
                 user.setUsername((String) result[5]);
-                postDto.setCreator(user);
+                postDto.setCreator(user);*/
 
                 postDtoList.add(postDto);
             }
