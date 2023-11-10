@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('Edit Comment')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+
+<section class="post-page">
+    <form action="#" method="post">
+        <div class="mainpage-tables-section-comment" id="post-page-comment">
+            <h3 th:text="${comment.getPost_id().getTitle()}">Post title</h3>
+            <p th:text="${comment.getText()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+        </div>
+    </form>
+    <a th:if="${isAuthor}" href="#"  th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()} + '/update'}">Update Comment</a>
+
+    <form th:if="${isAdmin or isAuthor}" th:action="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()} + '/delete'}" th:object="${comment}" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit">Delete</button>
+    </form>
+</section>
+
+</body>
+</html>

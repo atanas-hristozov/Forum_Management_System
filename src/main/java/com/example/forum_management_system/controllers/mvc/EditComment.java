@@ -51,8 +51,53 @@ public class EditComment {
         return request.getRequestURI();
     }
 
+    @ModelAttribute("isAuthor")
+    public boolean populateIsAuthor(@PathVariable int id, HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            Post post = postService.get(id);
+            String creator = post.getCreator().getUsername();
+            if (creator.equals(currentUser)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
+    }
+
+
+    @ModelAttribute("currentUser")
+    public User currentUser(HttpSession session) {
+        if (populateIsAuthenticated(session)) {
+            String username = session.getAttribute("currentUser").toString();
+            User user = userService.getByName(username);
+            return user;
+        }
+        return null;
+    }
+
     @GetMapping()
     public String getComment(@PathVariable int id,
+                             @PathVariable int id2,
+                             Model model){
+        Post post = postService.get(id);
+        Comment comment = commentService.get(id2);
+        model.addAttribute("comment", comment);
+        model.addAttribute("post", post);
+        return "CommentOptions";
+    }
+    @GetMapping("/update")
+    public String getCommentUpdate(@PathVariable int id,
                              @PathVariable int id2,
                              Model model){
         Post post = postService.get(id);
@@ -62,11 +107,11 @@ public class EditComment {
         return "EditComment";
     }
 
-    @PutMapping
+    @PostMapping("/update")
     public String updateComment(@PathVariable int id,
                                 @PathVariable int id2,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,
-                                @ModelAttribute("commentModel") Comment commentModel,
+
                                 BindingResult bindingResult,
                                 Model model,
                                 HttpSession httpSession) {
@@ -84,15 +129,17 @@ public class EditComment {
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
-            return "Comment";
+            return "EditComment";
         }
 
         try {
-            model.addAttribute("commentModel", commentModel);
+
             post = postService.get(id);
             comment = commentService.get(id2);
             commentService.update(comment, post, user);
-            return "redirect:/" + id + "/comments/" + id2;
+
+            String redirectUrl = "/posts/" + post.getId() + "/comments/" + comment.getId();
+            return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -103,7 +150,7 @@ public class EditComment {
         }
     }
 
-    @PostMapping
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteComment(@PathVariable int id,
                                 @PathVariable int id2,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,
@@ -112,8 +159,6 @@ public class EditComment {
                                 HttpSession httpSession) {
 
         User user;
-        Post post;
-        Comment comment;
         if (populateIsAuthenticated(httpSession)) {
             String username = httpSession.getAttribute("currentUser").toString();
             userService.getByName(username);

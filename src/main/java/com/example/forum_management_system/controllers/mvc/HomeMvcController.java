@@ -33,6 +33,15 @@ public class HomeMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
+    }
     @ModelAttribute("currentUser")
     public User currentUser(HttpSession session) {
         if (populateIsAuthenticated(session)){

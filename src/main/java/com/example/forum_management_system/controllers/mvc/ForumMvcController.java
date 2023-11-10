@@ -1,6 +1,7 @@
 package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.services.CommentService;
 import com.example.forum_management_system.services.PostService;
@@ -30,6 +31,15 @@ public class ForumMvcController {
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
+    }
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
     }
 
     @GetMapping

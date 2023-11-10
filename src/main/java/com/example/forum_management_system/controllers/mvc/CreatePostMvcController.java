@@ -46,6 +46,15 @@ public class CreatePostMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
+    }
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();

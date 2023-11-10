@@ -31,45 +31,24 @@
 </section>
 <section>
     <h3>All Users</h3>
+
     <table>
         <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
             <th>Username</th>
-            <th>Is admin</th>
-            <th>Is banned</th>
-            <th>Delete</th>
+            <th>Email</th>
+            <th>Firstname</th>
+            <th>Edit</th>
         </tr>
-        <tr>
-            <td>Ivan</td>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getUsername()}">Ivan</td>
             <td>Ivanov</td>
-            <td>ivan@abv.bg</td>
-            <td>Ivan92</td>
+            <td th:text="${user.getEmail()}">ivan@abv.bg</td>
+            <td th:text="${user.getFirstName()}">Ivan92</td>
             <td>
-                <form action="#" method="post">
-                    <select name="admin">
-                        <option value="volvo">Yes</option>
-                        <option value="saab">No</option>
-                    </select>
-                    <button href="#" type="submit">Update</button>
-                </form>
-            </td>
-            <td>
-                <form action="#" method="post">
-                    <select name="banned">
-                        <option value="volvo">Yes</option>
-                        <option value="saab">No</option>
-                    </select>
-                    <button href="#" type="submit">Update</button>
-                </form>
-            </td>
-            <td>
-                <form action="#" method="post">
-                    <button href="#" type="submit">Delete</button>
-                </form>
+                <a th:href="@{'/user/admin/' + ${user.getId()}}" href="#">Edit</a>
             </td>
         </tr>
+        <!--
         <tr>
             <td>Ivan</td>
             <td>Ivanov</td>
@@ -127,7 +106,7 @@
             </form>
         </td>
     </tr>
-
+-->
 
     </table>
 </section>

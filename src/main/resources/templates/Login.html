@@ -8,18 +8,6 @@
     <div class="login-box">
         <h2>Login</h2>
         <form th:action="@{/auth/login}" th:object="${login}" method="post">
-            <!--<div class="user-box">
-                <label th:text="#{user.label.username}">Username</label>
-                <input type="text" th:field="*{username}"/>
-                    <label class="error" th:errors="*{username}">Username error placeholder</label>
-            </div>
-            <div class="user-box">
-                <label th:text="#{user.label.password}">Password</label>
-                    <input type="password" name="" required="">
-                <input type="password" th:field="*{password}"/>
-                <label class="error" th:errors="*{password}">Password error placeholder</label>
-            </div>-->
-
             <div class="user-box">
                 <input type="text" name="" required="" th:field="*{username}">
                 <label th:text="#{user.label.username}">Username</label>

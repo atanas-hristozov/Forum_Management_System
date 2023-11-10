@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{Templates.html :: head('UserUpdate')}"></div>
+<body>
+<div th:replace="~{Templates.html :: header}"></div>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Firstname</th>
+        <th>IsBanned</th>
+        <th>IsAdmin</th>
+    </tr>
+    <tr th:object="${userToUpdate}">
+        <td th:text="${userToUpdate.getUsername()}">Ivan</td>
+        <td th:text="${userToUpdate.getEmail()}">ivan@abv.bg</td>
+        <td th:text="${userToUpdate.getFirstName()}">Ivan92</td>
+        <td>
+            <form action="#" method="post">
+                <select name="banned">
+                    <option value="volvo">Yes</option>
+                    <option value="saab">No</option>
+                </select>
+                <button href="#" type="submit">Update</button>
+            </form>
+        </td>
+        <td>
+            <form action="#" method="post">
+                <select name="banned">
+                    <option value="volvo">Yes</option>
+                    <option value="saab">No</option>
+                </select>
+                <button href="#" type="submit">Update</button>
+            </form>
+        </td>
+
+    </tr>
+    <!--
+    <tr>
+        <td>Ivan</td>
+        <td>Ivanov</td>
+        <td>ivan@abv.bg</td>
+        <td>Ivan92</td>
+        <td>
+            <form action="#" method="post">
+                <select name="admin">
+                    <option value="volvo">Yes</option>
+                    <option value="saab">No</option>
+                </select>
+                <button href="#" type="submit">Update</button>
+            </form>
+        </td>
+        <td>
+            <form action="#" method="post">
+                <select name="banned">
+                    <option value="volvo">Yes</option>
+                    <option value="saab">No</option>
+                </select>
+                <button href="#" type="submit">Update</button>
+            </form>
+        </td>
+        <td>
+            <form action="#" method="post">
+                <button href="#" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr><tr>
+    <td>Ivan</td>
+    <td>Ivanov</td>
+    <td>ivan@abv.bg</td>
+    <td>Ivan92</td>
+    <td>
+        <form action="#" method="post">
+            <select name="admin">
+                <option value="volvo">Yes</option>
+                <option value="saab">No</option>
+            </select>
+            <button href="#" type="submit">Update</button>
+        </form>
+    </td>
+    <td>
+        <form action="#" method="post">
+            <select name="banned">
+                <option value="volvo">Yes</option>
+                <option value="saab">No</option>
+            </select>
+            <button href="#" type="submit">Update</button>
+        </form>
+    </td>
+    <td>
+        <form action="#" method="post">
+            <button href="#" type="submit">Delete</button>
+        </form>
+    </td>
+</tr>
+-->
+
+</table>
+</div>
+</body>
+</html>

@@ -40,9 +40,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Comment comment, Post post, User user) {
-        if (!comment.getAuthor().equals(user) && !user.isAdmin() && user.isBanned()) {
+        /*if (!comment.getAuthor().equals(user) || !user.isAdmin() || user.isBanned()) {
             throw new AuthorizationException("User is not the author or admin or he is banned.");
-        }
+        }*/
         repository.update(comment);
     }
 

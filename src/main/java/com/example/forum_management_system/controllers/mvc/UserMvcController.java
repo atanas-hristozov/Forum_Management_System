@@ -7,6 +7,8 @@ import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
 import com.example.forum_management_system.models.User;
+import com.example.forum_management_system.models.UserFilterOptions;
+import com.example.forum_management_system.models.userDtos.UserFilterDto;
 import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +38,15 @@ public class UserMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
+    }
 
     @GetMapping()
     public String showUserPage(Model model, HttpSession session) {
@@ -44,17 +55,6 @@ public class UserMvcController {
             User user = userService.getByName(username);
             model.addAttribute("user", user);
             return "User";
-        } else {
-            return "redirect:/auth/login";
-        }
-    }
-    @GetMapping("/admin")
-    public String showAdminPage(Model model, HttpSession session) {
-        if (populateIsAuthenticated(session)) {
-            String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            model.addAttribute("user", user);
-            return "UserAdmin";
         } else {
             return "redirect:/auth/login";
         }

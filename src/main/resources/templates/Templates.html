@@ -26,7 +26,8 @@
             <li><a href="Index.html" th:href="@{/}">Home</a></li>
             <li><a href="Forum.html" th:href="@{/forum}">Forum</a></li>
             <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/posts/new}">Create Post</a></li>
-            <li><a href="User.html" th:if="${isAuthenticated}" th:href="@{/user}">MyProfile</a></li>
+            <li><a href="User.html" th:if="${isAuthenticated}" th:unless="${isAdmin}" th:href="@{/user}">MyProfile</a></li>
+            <li><a href="User.html" th:if="${isAdmin}" th:href="@{/user/admin}">Admin</a></li>
         </ul>
     </div>
 </header>

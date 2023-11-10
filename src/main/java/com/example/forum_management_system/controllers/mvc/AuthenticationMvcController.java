@@ -3,6 +3,7 @@ package com.example.forum_management_system.controllers.mvc;
 import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.UserMapper;
+import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.userDtos.UserLoginDto;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -18,16 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/auth")
 public class AuthenticationMvcController {
-    private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
-    private final UserMapper userMapper;
     @Autowired
-    public AuthenticationMvcController(UserService userService,
-                                       AuthenticationHelper authenticationHelper,
-                                       UserMapper userMapper) {
-        this.userService = userService;
+    public AuthenticationMvcController(AuthenticationHelper authenticationHelper) {
         this.authenticationHelper = authenticationHelper;
-        this.userMapper = userMapper;
     }
 
     @GetMapping("/login")
