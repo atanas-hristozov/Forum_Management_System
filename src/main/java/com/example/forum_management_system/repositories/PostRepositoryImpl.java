@@ -55,10 +55,12 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<PostDtoHome[]> query = session.createQuery(
                     "SELECT p.id AS post_id, p.title AS post_title, " +
-                            "p.content As post_content, COUNT(c.id) AS comment_count " +
+                            "p.content AS post_content, COUNT(c.id) AS comment_count, " +
+                            "u.id AS user_id, u.username AS username " +
                             "FROM Post p " +
                             "LEFT JOIN p.comments c " +
-                            "GROUP BY p.id, p.title, p.content " +
+                            "LEFT JOIN p.likedByUsers u " +
+                            "GROUP BY p.id, p.title, p.content, u.id, u.username " +
                             "ORDER BY comment_count DESC, p.id"
             );
             List<PostDtoHome[]> results = query.list();
@@ -70,6 +72,11 @@ public class PostRepositoryImpl implements PostRepository {
                 postDto.setTitle((String) result[1]);
                 postDto.setContent((String) result[2]);
                 postDto.setCommentCount(((Number) result[3]).intValue());
+
+                User user = new User();
+                //user.setId(((Integer) result[4]).intValue());
+                user.setUsername((String) result[5]);
+                postDto.setCreator(user);
 
                 postDtoList.add(postDto);
             }

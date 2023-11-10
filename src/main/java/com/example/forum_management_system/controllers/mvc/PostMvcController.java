@@ -60,20 +60,26 @@ public class PostMvcController {
 
     @ModelAttribute("isAuthor")
     public boolean populateIsAuthor(@PathVariable int id, HttpSession session) {
-        Object currentUser = session.getAttribute("currentUser");
-        Post post = postService.get(id);
-        String creator = post.getCreator().getUsername();
-        if (creator.equals(currentUser)) {
-            return true;
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            Post post = postService.get(id);
+            String creator = post.getCreator().getUsername();
+            if (creator.equals(currentUser)) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
 
     @ModelAttribute("isAdmin")
     public boolean populateIsAdmin(HttpSession session) {
-        Object currentUser = session.getAttribute("currentUser");
-        User user = userService.getByName(currentUser.toString());
-        return user.isAdmin();
+        if(session.getAttribute("currentUser") != null){
+            Object currentUser = session.getAttribute("currentUser");
+            User user = userService.getByName(currentUser.toString());
+            return user.isAdmin();
+        }
+        return false;
     }
 
 

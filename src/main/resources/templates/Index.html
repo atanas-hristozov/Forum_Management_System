@@ -68,16 +68,16 @@
                 <div class="mainpage-tables-section-comment-attribute">
                     <div class="mainpage-tables-section-comment-attribute-text">
                         <p>Number of comments: </p>
-                        <p>5</p>
+                        <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                     </div>
                     <div>
                         <button class="mainpage-tables-section-comment-attribute-text" type="submit">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <p>3</p>
+                            <p th:text="${post.getLikedByUsers().size()}">3</p>
                         </button>
                     </div>
                     <div class="mainpage-tables-section-comment-attribute-text">
-                        <p>Author</p>
+                        <p th:text="${post.getCreator().getUsername()}">Author</p>
                     </div>
                 </div>
             </a>
