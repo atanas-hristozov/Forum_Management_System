@@ -17,10 +17,10 @@
         <td th:text="${userToUpdate.getEmail()}">ivan@abv.bg</td>
         <td th:text="${userToUpdate.getFirstName()}">Ivan92</td>
         <td>
-            <form action="#" method="post">
+            <form th:action="@{/user/admin/{id} (id=${userToUpdate.getId()})}" th:object="${userToUpdate}" action="#" method="post">
                 <select name="banned">
-                    <option value="volvo">Yes</option>
-                    <option value="saab">No</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                 </select>
                 <button href="#" type="submit">Update</button>
             </form>
@@ -34,7 +34,6 @@
                 <button href="#" type="submit">Update</button>
             </form>
         </td>
-
     </tr>
     <!--
     <tr>

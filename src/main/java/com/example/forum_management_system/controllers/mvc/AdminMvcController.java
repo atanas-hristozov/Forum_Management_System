@@ -92,7 +92,8 @@ public class AdminMvcController {
     }
 
     @GetMapping("/{id}")
-    public String showAdminPage(@PathVariable int id, Model model, HttpSession session) {
+    public String showAdminPage(@PathVariable int id,
+                                Model model, HttpSession session) {
         try {
             if (populateIsAuthenticated(session)) {
                 String username = session.getAttribute("currentUser").toString();
@@ -110,7 +111,8 @@ public class AdminMvcController {
         return "redirect:/auth/login";
     }
     @PostMapping("/{id}")
-    public String updateUserProfile(@PathVariable int id, AdminRightsDto adminRightsDto,
+    public String updateUserProfile(@PathVariable int id,
+                                    @Valid @ModelAttribute("userToUpdate") AdminRightsDto adminRightsDto,
                                     BindingResult bindingResult, Model model, HttpSession httpSession) {
         User user;
         try {
@@ -126,9 +128,10 @@ public class AdminMvcController {
         try {
            User userToUpdate = userService.getById(id);
             user = userMapper.fromAdminRightsDto(id, adminRightsDto);
-            userService.update(userToUpdate);
-            model.addAttribute("userToUpdate", user);
-            return "UserAdmin";
+            userService.update(user);
+            model.addAttribute("user", user);
+            String redirectUrl = "/user/admin/" + user.getId();
+            return "redirect:" + redirectUrl;
 
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
