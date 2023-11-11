@@ -29,44 +29,22 @@
         </form>
     </div>
 </section>
-<section>
-    <h3>All Users</h3>
 
-    <table>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Firstname</th>
-            <th>Edit</th>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.getUsername()}">Ivan</td>
-            <td>Ivanov</td>
-            <td th:text="${user.getEmail()}">ivan@abv.bg</td>
-            <td th:text="${user.getFirstName()}">Ivan92</td>
-            <td>
-                <a th:href="@{'/user/admin/' + ${user.getId()}}" href="#">Edit</a>
-            </td>
-        </tr>
-
-    </table>
-</section>
-
-
-<div class="body-content">
-    <form action="#" th:action="@{/user/admin}" method="get" th:object="${filterUsers}">
-        <label th:text="#{users.filter.label}">Filter Options</label>
+<section class="user-filter-container">
+    <form action="#" th:action="@{/user/admin}" method="get" th:object="${filterUsers}" class="user-filter-form">
+        <label for="filterOptions" th:text="#{users.filter.label}">Filter Options</label>
         <br/><br/>
-        <input type="text" placeholder="Username" th:field="*{username}"/>
-        <input type="text" placeholder="Email" th:field="*{email}"/>
-        <input type="text" placeholder="First name" th:field="*{firstName}"/>
+        <input type="text" id="username" placeholder="Username" th:field="*{username}" class="filter-input"/>
+        <input type="text" id="email" placeholder="Email" th:field="*{email}" class="filter-input"/>
+        <input type="text" id="firstName" placeholder="First name" th:field="*{firstName}" class="filter-input"/>
 
-        <input type="submit" value="Search"/>
+        <input type="submit" value="Search" class="search-btn"/>
     </form>
 
-    <div th:if="${users.isEmpty()}">
+    <div th:if="${users.isEmpty()}" class="no-users-message">
         <h2 th:text="#{users.username.empty}">No Users</h2>
     </div>
+    <!--
     <div th:unless="${users.isEmpty()}">
         <h2 th:text="#{users.username}">All Users</h2>
 
@@ -78,14 +56,33 @@
             </div>
             <div class="row" th:each="user : ${users}">
                 <div class="cell">
-                    <a href="#" th:href="@{user/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">User</a>
-
+                <a href="#" th:href="@{user/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">User</a>
+                </div>
+            </div>    
         </div>
     </div>
-</div>
+    -->
+</section>
 
-<!-- ADD HERE-->
+<section class="user-table-section">
+    <h3>All Users</h3>
 
-
+    <table class="user-table">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Firstname</th>
+            <th>Edit</th>
+        </tr>
+        <tr th:each="user : ${users}" class="user-row">
+            <td th:text="${user.getUsername()}">Ivan</td>
+            <td th:text="${user.getEmail()}">ivan@abv.bg</td>
+            <td th:text="${user.getFirstName()}">Ivan92</td>
+            <td>
+                <a th:href="@{'/user/admin/' + ${user.getId()}}" href="#" class="edit-link">Edit</a>
+            </td>
+        </tr>
+    </table>
+</section>
 </body>
 </html>
