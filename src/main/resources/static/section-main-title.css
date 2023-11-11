@@ -241,9 +241,10 @@ h3{
     align-items: flex-start;
     margin: 20px 20px 0 20px;
     border-top: 2px solid rgba(17, 119, 56, 0.2);
+    width: -webkit-fill-available;
 }
 .post-comment p{
-    margin: 5px;
+    margin: 15px;
 }
 .post-comment-author{
     color: rgb(17, 119, 56);
@@ -334,4 +335,85 @@ h3{
     justify-content: center;
     background-color: rgb(245, 245, 245);
     border-radius: 20px 20px 20px 20px;
+}
+.post-page-optional-attributes{
+    display: flex;
+    flex-wrap: wrap;
+}
+.post-page-optional-attributes a{
+    color: rgb(17, 119, 56);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(17, 119, 56, 0.2);
+    margin: 0 10px 10px 10px;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 20px;
+}
+.post-page-optional-attributes a:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgb(17, 119, 56);
+    transition: 0.2s ease-in-out;
+}
+.post-page-optional-attributes form{
+    color: rgb(17, 119, 56);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(17, 119, 56, 0.2);
+    margin: 0 10px 10px 10px;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 20px;
+}
+.post-page-optional-attributes form:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgb(17, 119, 56);
+    transition: 0.2s ease-in-out;
+}
+.post-page-optional-attributes form button{
+    border: none;
+    background-color: transparent;
+    color: red;
+}
+.post-page-form{
+    width: -webkit-fill-available;
+}
+.post-page-optional-attributes p{
+    color: rgb(17, 119, 56);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(17, 119, 56, 0.2);
+    margin: 0 10px 10px 10px;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 20px;
+}
+.create-comment{
+    max-width: 1200px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px;
+}
+.create-comment form{
+    margin: 10px;
+}
+.create-comment form label{
+    text-transform: uppercase;
+    color: rgb(17, 119, 56);
+    margin: 20px 0 0 0;
+    font-weight: bold;
+}
+@media only screen and (min-width: 1200px) {
+    .create-comment{
+        margin: 10px auto;
+    }
 }

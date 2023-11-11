@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{Templates.html :: head('Main Page')}"></div>
+<div th:replace="~{Templates.html :: head('Post Page')}"></div>
 <body>
 <div th:replace="~{Templates.html :: header}"></div>
 
     <section class="post-page">
-            <form th:action="@{/posts/{id} (id=${post.getId()})}" th:object="${post}" action="#" method="post">
-                <div class="mainpage-tables-section-comment" id="post-page-comment">
-                    <h3 th:text="${post.getTitle()}">Post title</h3>
-                    <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
-                </div>
+        <form class="post-page-form" th:action="@{/posts/{id} (id=${post.getId()})}" th:object="${post}" action="#" method="post">
+            <div class="mainpage-tables-section-comment" id="post-page-comment">
+                <h3 th:text="${post.getTitle()}">Post title</h3>
+                <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
+            </div>
 
-                <div class="mainpage-tables-section-comment-attribute">
-                        <button class="mainpage-tables-section-comment-attribute-text" type="submit">
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <p th:text="${likes}">3</p>
-                        </button>
+            <div class="mainpage-tables-section-comment-attribute">
+                <div class="mainpage-tables-section-comment-attribute-text">
+                    <p>Number of comments: </p>
+                    <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                 </div>
-            </form>
-        <a th:if="${isAuthor}" href="#"  th:href="@{'/posts/' + ${post.getId()} + '/update'}">Update Post</a>
-
-        <form th:if="${isAdmin or isAuthor}" th:action="@{'/posts/' + ${post.getId()} + '/delete'}" th:object="${post}" method="post">
-            <input type="hidden" name="_method" value="delete" />
-            <button type="submit">Delete</button>
+                <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <p th:text="${likes}">3</p>
+                </button>
+                <div class="mainpage-tables-section-comment-attribute-text">
+                    <p th:text="${post.getCreator().getUsername()}">Author</p>
+                </div>
+            </div>
         </form>
+        <div class="post-page-optional-attributes">
+            <a th:href="@{'/posts/' + ${post.getId()} + '/comments'}" href="#">Show All Comments</a>
+            <a th:if="${isAuthor}" href="#"  th:href="@{'/posts/' + ${post.getId()} + '/update'}">Update Post</a>
+            <form th:if="${isAdmin or isAuthor}" th:action="@{'/posts/' + ${post.getId()} + '/delete'}" th:object="${post}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit">Delete</button>
+            </form>
+        </div>
     </section>
-    <a th:href="@{'/posts/' + ${post.getId()} + '/comments'}" href="#">Show All Comments</a>
 </body>
 </html>

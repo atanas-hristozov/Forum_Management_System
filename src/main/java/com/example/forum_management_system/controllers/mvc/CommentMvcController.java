@@ -73,6 +73,7 @@ public class CommentMvcController {
         model.addAttribute("post", post);
         model.addAttribute("likes", postService.showPostsLikesCount(id));
         model.addAttribute("comment", new CommentDto());
+        model.addAttribute("allComments", commentService);
 
         return "Comment";
     }

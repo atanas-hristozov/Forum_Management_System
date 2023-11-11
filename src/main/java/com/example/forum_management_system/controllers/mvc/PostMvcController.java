@@ -1,32 +1,24 @@
 package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.exceptions.AuthorizationException;
-import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
-import com.example.forum_management_system.exceptions.TextLengthException;
 import com.example.forum_management_system.helpers.AuthenticationHelper;
 import com.example.forum_management_system.helpers.PostMapper;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.postDtos.PostDto;
-import com.example.forum_management_system.models.userDtos.UserUpdateDto;
 import com.example.forum_management_system.services.CommentService;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/posts/{id}")
@@ -35,17 +27,19 @@ public class PostMvcController {
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
+    private final CommentService commentService;
 
 
     @Autowired
     public PostMvcController(PostService service,
                              PostMapper postMapper,
                              AuthenticationHelper authenticationHelper,
-                             UserService userService) {
+                             UserService userService, CommentService commentService) {
         this.postService = service;
         this.postMapper = postMapper;
         this.authenticationHelper = authenticationHelper;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -99,6 +93,7 @@ public class PostMvcController {
             Post post = postService.get(id);
             model.addAttribute("post", post);
             model.addAttribute("likes", postService.showPostsLikesCount(id));
+            model.addAttribute("comments", commentService);
             return "Post";
         } catch (EntityNotFoundException e) {
             return "Error_Page";
