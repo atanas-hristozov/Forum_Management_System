@@ -155,6 +155,7 @@ public class PostServiceImpl implements PostService {
         if (!executingUser.isAdmin() && executingUser.getId() != 1 && executingUser.getId() != user.getId()) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
+
     }
     private static void checkAuthor(User user, User executingUser) {
         if (executingUser.getId() != user.getId()) {

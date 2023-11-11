@@ -5,7 +5,7 @@
 <div th:replace="~{Templates.html :: header}"></div>
 
 <section class="post-page">
-    <form th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="post">
+    <form th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="get">
         <div class="mainpage-tables-section-comment" id="post-page-comment">
             <h3 th:text="${post.getTitle()}">Post title</h3>
             <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
