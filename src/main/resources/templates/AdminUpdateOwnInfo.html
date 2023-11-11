@@ -9,19 +9,19 @@
     <form th:action="@{/user/admin/update}" th:object="${currentUser}" action="#" method="post">
         <div class="user-box">
             <input th:field="*{firstName}" type="text" name="" required="">
-            <label th:text="*{firstName}">First Name</label>
+            <label>First Name</label>
         </div>
         <div class="user-box">
             <input th:field="*{lastName}" type="text" name="" required="">
-            <label th:text="*{lastName}">Last Name</label>
+            <label>Last Name</label>
         </div>
         <div class="user-box">
             <input th:field="*{email}" type="email" name="" required="">
-            <label th:text="*{email}">Email</label>
+            <label>Email</label>
         </div>
         <div class="user-box">
             <input th:field="*{phoneNumber}" type="text" name="">
-            <label th:text="*{phoneNumber}">Phone Number</label>
+            <label>Phone Number</label>
         </div>
         <div class="user-box">
             <input th:field="*{password}" type="password" name="" required="">
