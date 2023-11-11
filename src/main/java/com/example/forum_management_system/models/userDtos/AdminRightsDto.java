@@ -7,18 +7,10 @@ import java.util.Optional;
 public class AdminRightsDto {
     private boolean isAdmin;
     private boolean isBanned;
-    private String phoneNumber;
+
 
 
     public AdminRightsDto() {
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public boolean isAdmin() {

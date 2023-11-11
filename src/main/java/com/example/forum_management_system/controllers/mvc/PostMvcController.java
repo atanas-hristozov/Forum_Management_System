@@ -54,14 +54,15 @@ public class PostMvcController {
 
     @ModelAttribute("isAuthor")
     public boolean populateIsAuthor(@PathVariable int id, HttpSession session) {
-        if(session.getAttribute("currentUser") != null){
-            Object currentUser = session.getAttribute("currentUser");
+        Object currentUser = session.getAttribute("currentUser");
+        if (currentUser != null) {
+            String currentUsername = currentUser.toString();
+            User user = userService.getByName(currentUsername);
+            int currentUserId = user.getId();
             Post post = postService.get(id);
-            String creator = post.getCreator().getUsername();
-            if (creator.equals(currentUser)) {
-                return true;
-            }
-            return false;
+            int authorCheck = post.getCreator().getId();
+
+            return currentUserId == authorCheck;
         }
         return false;
     }
@@ -167,16 +168,15 @@ public class PostMvcController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deletePost(@ModelAttribute("post") Post post, @PathVariable int id, HttpSession session, BindingResult bindingResult) {
+    public String deletePost(@PathVariable int id, HttpSession session) {
         User user;
+        Post post;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
-        if (bindingResult.hasErrors()) {
-            return "Forum";
-        }
+        post=postService.get(id);
         postService.delete(post, user);
         return "Forum";
     }

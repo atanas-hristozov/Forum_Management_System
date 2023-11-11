@@ -22,7 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/posts/{id}/comments/{id2}")
+@RequestMapping("/posts/{postId}/comments/{commentId}")
 public class EditComment {
     private final CommentService commentService;
     private final PostService postService;
@@ -52,15 +52,14 @@ public class EditComment {
     }
 
     @ModelAttribute("isAuthor")
-    public boolean populateIsAuthor(@PathVariable int id, HttpSession session) {
-        if(session.getAttribute("currentUser") != null){
-            Object currentUser = session.getAttribute("currentUser");
-            Post post = postService.get(id);
-            String creator = post.getCreator().getUsername();
-            if (creator.equals(currentUser)) {
-                return true;
-            }
-            return false;
+    public boolean populateIsAuthor(@PathVariable int postId, @PathVariable int commentId, HttpSession session) {
+        Object currentUser = session.getAttribute("currentUser");
+        Post post = postService.get(postId);
+        if (currentUser != null) {
+            String currentUsername = currentUser.toString();
+            User user = userService.getByName(currentUsername);
+            Comment comment = commentService.get(commentId);
+            return comment.getAuthor().getId() == user.getId();
         }
         return false;
     }
@@ -80,38 +79,36 @@ public class EditComment {
     public User currentUser(HttpSession session) {
         if (populateIsAuthenticated(session)) {
             String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            return user;
+            return userService.getByName(username);
         }
         return null;
     }
 
     @GetMapping()
-    public String getComment(@PathVariable int id,
-                             @PathVariable int id2,
+    public String getComment(@PathVariable int postId,
+                             @PathVariable int commentId,
                              Model model){
-        Post post = postService.get(id);
-        Comment comment = commentService.get(id2);
+        Post post = postService.get(postId);
+        Comment comment = commentService.get(commentId);
         model.addAttribute("comment", comment);
         model.addAttribute("post", post);
         return "CommentOptions";
     }
     @GetMapping("/update")
-    public String getCommentUpdate(@PathVariable int id,
-                             @PathVariable int id2,
+    public String getCommentUpdate(@PathVariable int postId,
+                             @PathVariable int commentId,
                              Model model){
-        Post post = postService.get(id);
-        Comment comment = commentService.get(id2);
+        Post post = postService.get(postId);
+        Comment comment = commentService.get(commentId);
         model.addAttribute("comment", comment);
         model.addAttribute("post", post);
         return "EditComment";
     }
 
     @PostMapping("/update")
-    public String updateComment(@PathVariable int id,
-                                @PathVariable int id2,
+    public String updateComment(@PathVariable int postId,
+                                @PathVariable int commentId,
                                 @Valid @ModelAttribute("comment") CommentDto commentDto,
-
                                 BindingResult bindingResult,
                                 Model model,
                                 HttpSession httpSession) {
@@ -119,10 +116,6 @@ public class EditComment {
         User user;
         Post post;
         Comment comment;
-        if (populateIsAuthenticated(httpSession)) {
-            String username = httpSession.getAttribute("currentUser").toString();
-            userService.getByName(username);
-        }
         try {
             user = authenticationHelper.tryGetCurrentUser(httpSession);
         } catch (AuthorizationException e) {
@@ -131,11 +124,10 @@ public class EditComment {
         if (bindingResult.hasErrors()) {
             return "EditComment";
         }
-
         try {
 
-            post = postService.get(id);
-            comment = commentService.get(id2);
+            post = postService.get(postId);
+            comment = commentMapper.fromDto(commentId, commentDto);
             commentService.update(comment, post, user);
 
             String redirectUrl = "/posts/" + post.getId() + "/comments/" + comment.getId();
@@ -151,10 +143,8 @@ public class EditComment {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteComment(@PathVariable int id,
-                                @PathVariable int id2,
-                                @Valid @ModelAttribute("comment") CommentDto commentDto,
-                                BindingResult bindingResult,
+    public String deleteComment(@PathVariable int postId,
+                                @PathVariable int commentId,
                                 Model model,
                                 HttpSession httpSession) {
 
@@ -169,13 +159,10 @@ public class EditComment {
             return "redirect:/auth/login";
         }
 
-        if (bindingResult.hasErrors()) {
-            return "redirect:/posts/{id}/comments";
-        }
 
         try {
-            commentService.delete(id2, user);
-            return "redirect:/posts/" + id + "/comments";
+            commentService.delete(commentId, user);
+            return "redirect:/posts/" + postId + "/comments";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

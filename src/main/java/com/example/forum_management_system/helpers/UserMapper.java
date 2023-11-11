@@ -1,6 +1,7 @@
 package com.example.forum_management_system.helpers;
 
 import com.example.forum_management_system.models.User;
+import com.example.forum_management_system.models.userDtos.AdminUpdateDto;
 import com.example.forum_management_system.models.userDtos.UserCreateDto;
 import com.example.forum_management_system.models.userDtos.AdminRightsDto;
 import com.example.forum_management_system.models.userDtos.UserUpdateDto;
@@ -44,8 +45,19 @@ public class UserMapper {
         User user = userService.getById(id);
         user.setAdmin(dto.isAdmin());
         user.setBanned(dto.isBanned());
-        user.setPhoneNumber(dto.getPhoneNumber());
 
         return user;
     }
+
+    public User fromAdminUpdateDto(int id, AdminUpdateDto adminUpdateDto){
+        User user = userService.getById(id);
+        user.setFirstName(adminUpdateDto.getFirstName());
+        user.setLastName(adminUpdateDto.getLastName());
+        user.setEmail(adminUpdateDto.getEmail());
+        user.setPassword(adminUpdateDto.getPassword());
+        user.setPhoneNumber(adminUpdateDto.getPhoneNumber());
+
+        return user;
+    }
+
 }

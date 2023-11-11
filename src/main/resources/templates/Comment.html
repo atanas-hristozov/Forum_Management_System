@@ -5,7 +5,7 @@
 <div th:replace="~{Templates.html :: header}"></div>
 
 <section class="post-page">
-    <form class="post-page-form" th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="post">
+    <form class="post-page-form" th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="get">
         <div class="mainpage-tables-section-comment" id="post-page-comment">
             <h3 th:text="${post.getTitle()}">Post title</h3>
             <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
@@ -38,7 +38,7 @@
     <h3>Create comment</h3>
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
         <label for="content"> Comment Text</label>
-        <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
+        <textarea th:field="*{text}" required="" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
         <input class="forum-create-post-button" type="submit" value="Save">
         <div class="error-login-message" th:errors="*{text}">Content error placeholder</div>
     </form>
