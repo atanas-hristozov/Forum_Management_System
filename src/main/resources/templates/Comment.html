@@ -29,7 +29,7 @@
     <h3>Create comment</h3>
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
         <label for="content"> Post Text</label>
-        <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
+        <textarea th:field="*{text}" required="" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
         <input class="forum-create-post-button" type="submit" value="Save">
         <div class="error-login-message" th:errors="*{text}">Content error placeholder</div>
     </form>

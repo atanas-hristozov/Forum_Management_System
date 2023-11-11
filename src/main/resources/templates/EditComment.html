@@ -11,7 +11,7 @@
 
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
       <label for="content">Update the comment</label>
-      <textarea th:field="*{text}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
+      <textarea th:field="*{text}" required="" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
       <input class="forum-create-post-button" type="submit" value="Update">
       <div class="error-login-message" th:errors="*{text}">Title error placeholder</div>
     </form>
