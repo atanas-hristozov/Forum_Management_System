@@ -30,11 +30,11 @@
         <div class="post-page-optional-attributes">
             <p th:text="${comment.getAuthor().getUsername()}">Author</p>
             <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>-->
-            <a th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>
+            <a th:if="${comment.getAuthor().getUsername().equals(currentUserName)}" th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>
         </div>
     </div>
 </section>
-<section class="create-comment">
+<section th:if="${isAuthenticated}" class="create-comment">
     <h3>Create comment</h3>
     <form th:action="@{__${requestURI}__}" th:object="${comment}" method="post" action="#">
         <label for="content"> Comment Text</label>

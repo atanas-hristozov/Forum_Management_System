@@ -154,7 +154,10 @@ h3{
 }
 .mainpage-tables-section-comment p{
     color: black;
-    margin: 10px;
+    margin: 11px;
+    max-height: 79px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media only screen and (min-width: 1200px) {

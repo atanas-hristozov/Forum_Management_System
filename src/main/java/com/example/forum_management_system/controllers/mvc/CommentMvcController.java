@@ -66,7 +66,7 @@ public class CommentMvcController {
     }
 
     @GetMapping()
-    public String showPostCommentsPage(@PathVariable int id, Model model) {
+    public String showPostCommentsPage(@PathVariable int id, Model model, HttpSession httpSession) {
         Post post = postService.get(id);
         List<Comment> comments = commentService.getAllCommentsFromPost(id);
         model.addAttribute("comments", comments);
@@ -74,6 +74,10 @@ public class CommentMvcController {
         model.addAttribute("likes", postService.showPostsLikesCount(id));
         model.addAttribute("comment", new CommentDto());
         model.addAttribute("allComments", commentService);
+
+        // Check if "currentUser" attribute is not null before calling toString()
+        String currentUserName = (httpSession.getAttribute("currentUser") != null) ? httpSession.getAttribute("currentUser").toString() : null;
+        model.addAttribute("currentUserName", currentUserName);
 
         return "Comment";
     }
