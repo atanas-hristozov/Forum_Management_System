@@ -53,6 +53,40 @@
 </section>
 
 
+<div class="body-content">
+    <form action="#" th:action="@{/user/admin}" method="get" th:object="${filterUsers}">
+        <label th:text="#{users.filter.label}">Filter Options</label>
+        <br/><br/>
+        <input type="text" placeholder="Username" th:field="*{username}"/>
+        <input type="text" placeholder="Email" th:field="*{email}"/>
+        <input type="text" placeholder="First name" th:field="*{firstName}"/>
+
+        <input type="submit" value="Search"/>
+    </form>
+
+    <div th:if="${users.isEmpty()}">
+        <h2 th:text="#{users.username.empty}">No Users</h2>
+    </div>
+    <div th:unless="${users.isEmpty()}">
+        <h2 th:text="#{users.username}">All Users</h2>
+
+        <div class="table">
+            <div class="header">
+                <div class="cell" th:text="#{user.label.username}">Username</div>
+                <div class="cell" th:text="#{user.label.email}">Email</div>
+                <div class="cell" th:text="#{user.label.first-name}">First Name</div>
+            </div>
+            <div class="row" th:each="user : ${users}">
+                <div class="cell">
+                    <a href="#" th:href="@{user/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">User</a>
+                <!--</div>
+                <div class="cell" th:text="${beer.abv}">4.5</div>
+                <div class="cell" th:text="${beer.style.name}">Style</div>
+            </div>-->
+        </div>
+    </div>
+</div>
+
 <!-- ADD HERE-->
 
 
