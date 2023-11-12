@@ -532,3 +532,62 @@ h3{
     text-align: center;
     color: #777;
 }
+
+.update-user-by-admin{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.update-user-by-admin table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 5px rgb(17, 119, 56);
+}
+
+.update-user-by-admin th, td {
+    padding: 12px;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.update-user-by-admin th {
+    color: rgb(17, 119, 56);
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+    overflow: hidden;
+    text-transform: uppercase;
+    background-color: rgba(17, 119, 56, 0.2);
+}
+
+
+.update-user-by-admin form {
+    display: flex;
+    align-items: center;
+}
+
+.update-user-by-admin select, button {
+    margin-right: 10px;
+    padding: 8px;
+}
+
+.update-user-by-admin button {
+    background-color: rgba(17, 119, 56, 0.4);
+    color: rgb(17, 119, 56);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+.update-user-by-admin button:hover {
+    background-color: rgb(8, 56, 26);
+    color: white;
+}
