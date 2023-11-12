@@ -55,5 +55,4 @@ public class ForumMvcController {
         model.addAttribute("comments", commentService);
         return "Forum";
     }
-
 }

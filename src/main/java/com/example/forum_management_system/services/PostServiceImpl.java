@@ -136,7 +136,7 @@ public class PostServiceImpl implements PostService {
     public void removeTagFromPost(Post post, Set<Tag> tagsToRemove) {
         post.getTags().removeAll(tagsToRemove);
     }
-    @Transactional
+
     @Override
     public void likeDislikePost(Post post, User user) {
         if (!post.getLikedByUsers().contains(user)) {
