@@ -210,20 +210,20 @@ public class PostRepositoryImpl implements PostRepository {
             Map<String, Object> params = new HashMap<>();
 
             filterOptions.getPostAuthor().ifPresent(value -> {
-                filters.add("name like :author");
+                filters.add("user.username LIKE :author");
                 params.put("author", String.format("%%%s%%", value));
             });
 
             filterOptions.getPostTitle().ifPresent(value -> {
-                filters.add("postTitle :postTitle");
-                params.put("postTitle", value);
+                filters.add("post.title LIKE :postTitle");
+                params.put("postTitle", String.format("%%%s%%", value));
             });
 
-            StringBuilder queryString = new StringBuilder("from Post");
+            StringBuilder queryString = new StringBuilder("FROM Post post JOIN post.creator user");
             if (!filters.isEmpty()) {
                 queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
+                        .append(" WHERE ")
+                        .append(String.join(" AND ", filters));
             }
             queryString.append(generateOrderBy(filterOptions));
 

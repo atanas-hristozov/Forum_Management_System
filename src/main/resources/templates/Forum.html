@@ -7,14 +7,19 @@
 <section class="mainpage-tables" id="main-pages-forum">
     <h2>All Posts</h2>
 
-    <form action="#" th:action="@{/forum}" method="get" th:object="${posts}">
-        <label th:text="#{posts.filter.label}">Filter Options</label>
-        <br/><br/>
-        <input type="text" placeholder="Post name" th:field="*{posts.}"/>
-
-
-        <input type="submit" value="Search"/>
-    </form>
+    <section class="user-filter-container">
+        <form th:if="${isAuthenticated}" action="#" th:action="@{/forum}" method="get" th:object="${postsFilter}" class="user-filter-form">
+            <label th:text="#{posts.filter.label}">Filter Options</label>
+            <label>Title</label>
+            <input type="text" id="username" placeholder="Title" th:field="*{postTitle}" class="filter-input"/>
+            <label>Post Author</label>
+            <input type="text" id="email" placeholder="Post Author" th:field="*{postAuthor}" class="filter-input"/>
+            <input type="submit" value="Search" class="search-btn"/>
+        </form>
+        <div th:if="${posts.isEmpty()}" class="no-users-message">
+            <h2>No Such Posts</h2>
+        </div>
+    </section>
 
     <div class="main-pages-forum-columns">
         <div class="mainpage-tables-section" id="forum-columns-grid">

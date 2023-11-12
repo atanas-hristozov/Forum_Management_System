@@ -60,7 +60,7 @@ public class ForumMvcController {
         model.addAttribute("postsCount", postsCount);
         model.addAttribute("usersCount", usersCount);
         model.addAttribute("comments", commentService);
-        model.addAttribute("postFilter", postService);
+        model.addAttribute("postsFilter", postFilterOptions);
         return "Forum";
     }
 }
