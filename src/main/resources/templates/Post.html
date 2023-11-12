@@ -16,10 +16,10 @@
                     <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                 </div>
                 <form>
-                <button class="mainpage-tables-section-comment-attribute-text" type="submit">
-                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    <p th:text="${likes}">3</p>
-                </button>
+                    <button class="mainpage-tables-section-comment-attribute-text" type="submit">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                        <p th:text="${likes}">3</p>
+                    </button>
                 </form>
                 <div class="mainpage-tables-section-comment-attribute-text">
                     <p th:text="${post.getCreator().getUsername()}">Author</p>
