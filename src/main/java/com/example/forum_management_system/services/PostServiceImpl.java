@@ -4,6 +4,7 @@ import com.example.forum_management_system.exceptions.AuthorizationException;
 import com.example.forum_management_system.exceptions.EntityDuplicateException;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostFilterOptions;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
@@ -37,6 +38,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> get(String title, Integer userId, String sortBy, String sortOrder) {
         return postRepository.getAll(title, userId, sortBy, sortOrder);
+    }
+
+    @Override
+    public List<Post> getAllFromPostFilter(PostFilterOptions filterOptions) {
+        return postRepository.getAllFromPostFilter(filterOptions);
     }
 
     @Override

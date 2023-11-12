@@ -1,8 +1,10 @@
 package com.example.forum_management_system.controllers.mvc;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostFilterOptions;
 import com.example.forum_management_system.models.User;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
+import com.example.forum_management_system.models.postDtos.PostFilterOptionsDto;
 import com.example.forum_management_system.services.CommentService;
 import com.example.forum_management_system.services.PostService;
 import com.example.forum_management_system.services.UserService;
@@ -43,16 +45,22 @@ public class ForumMvcController {
     }
 
     @GetMapping
-    public String showForumPage(Model model){
-        List<Post> posts = postService.get(null,null,null,null);
-        List<Post> topRecentPosts = postService.getMostRecent();
-        List<PostDtoHome> topCommented = postService.getMostCommented();
+    public String showForumPage(@ModelAttribute("filterOptions") PostFilterOptionsDto filterOptionsDto, Model model){
+        PostFilterOptions postFilterOptions = new PostFilterOptions(
+                filterOptionsDto.getPostTitle(),
+                filterOptionsDto.getPostAuthor(),
+                filterOptionsDto.getSortPostsBy(),
+                filterOptionsDto.getSortOrder());
+
+        List<Post> posts = postService.getAllFromPostFilter(postFilterOptions);
+        /*List<Post> posts = postService.get(null,null,null,null);*/
         int postsCount = postService.showPostsCount();
         int usersCount = userService.showUsersCount();
         model.addAttribute("posts", posts);
         model.addAttribute("postsCount", postsCount);
         model.addAttribute("usersCount", usersCount);
         model.addAttribute("comments", commentService);
+        model.addAttribute("postFilter", postService);
         return "Forum";
     }
 }

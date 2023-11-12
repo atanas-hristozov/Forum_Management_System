@@ -32,7 +32,7 @@
 
 <section class="user-filter-container">
     <form action="#" th:action="@{/user/admin}" method="get" th:object="${filterUsers}" class="user-filter-form">
-        <label for="filterOptions" th:text="#{users.filter.label}">Filter Options</label>
+        <label th:text="#{users.filter.label}">Filter Options</label>
         <br/><br/>
         <input type="text" id="username" placeholder="Username" th:field="*{username}" class="filter-input"/>
         <input type="text" id="email" placeholder="Email" th:field="*{email}" class="filter-input"/>

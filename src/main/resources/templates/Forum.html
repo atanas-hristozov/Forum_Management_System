@@ -6,8 +6,19 @@
 <div th:replace="~{Templates.html :: main-header('/img/Green and White Minimalist Nature Travel Vlog Youtube Thumbnail.png')}"></div>
 <section class="mainpage-tables" id="main-pages-forum">
     <h2>All Posts</h2>
+
+    <form action="#" th:action="@{/forum}" method="get" th:object="${posts}">
+        <label th:text="#{posts.filter.label}">Filter Options</label>
+        <br/><br/>
+        <input type="text" placeholder="Post name" th:field="*{posts.}"/>
+
+
+        <input type="submit" value="Search"/>
+    </form>
+
     <div class="main-pages-forum-columns">
         <div class="mainpage-tables-section" id="forum-columns-grid">
+
             <a href="Post.html" th:each="post : ${posts}" th:href="@{/posts/{id}(id=${post.getId()})}">
                 <div class="mainpage-tables-section-comment">
                     <h3 th:text="${post.getTitle()}">Post title</h3>

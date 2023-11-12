@@ -1,6 +1,7 @@
 package com.example.forum_management_system.services;
 
 import com.example.forum_management_system.models.Post;
+import com.example.forum_management_system.models.PostFilterOptions;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.Tag;
 import com.example.forum_management_system.models.User;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 public interface PostService {
 
+    List<Post> getAllFromPostFilter(PostFilterOptions filterOptions);
     List<Post> get(String title, Integer userId, String sortBy, String sortOrder);
 
     Post get(int id);

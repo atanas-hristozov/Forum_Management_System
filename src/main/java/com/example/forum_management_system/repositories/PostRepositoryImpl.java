@@ -3,6 +3,7 @@ package com.example.forum_management_system.repositories;
 import com.example.forum_management_system.exceptions.AlreadyDislikedException;
 import com.example.forum_management_system.models.Post;
 import com.example.forum_management_system.exceptions.EntityNotFoundException;
+import com.example.forum_management_system.models.PostFilterOptions;
 import com.example.forum_management_system.models.postDtos.PostDtoHome;
 import com.example.forum_management_system.models.User;
 import org.hibernate.Session;
@@ -185,7 +186,7 @@ public class PostRepositoryImpl implements PostRepository {
                     posts.sort(Comparator.comparing(Post::getTitle));
                     break;
                 case "user":
-                    posts.sort(Comparator.comparing(post -> post.getCreator().getFirstName()));
+                    posts.sort(Comparator.comparing(post -> post.getCreator().getUsername()));
                     break;
             }
         }
@@ -200,6 +201,65 @@ public class PostRepositoryImpl implements PostRepository {
         }
         return posts;
     }
+
+
+    @Override
+    public List<Post> getAllFromPostFilter(PostFilterOptions filterOptions) {
+        try (Session session = sessionFactory.openSession()) {
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterOptions.getPostAuthor().ifPresent(value -> {
+                filters.add("name like :author");
+                params.put("author", String.format("%%%s%%", value));
+            });
+
+            filterOptions.getPostTitle().ifPresent(value -> {
+                filters.add("postTitle :postTitle");
+                params.put("postTitle", value);
+            });
+
+            StringBuilder queryString = new StringBuilder("from Post");
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+            queryString.append(generateOrderBy(filterOptions));
+
+            Query<Post> query = session.createQuery(queryString.toString(), Post.class);
+            query.setProperties(params);
+            return query.list();
+        }
+    }
+
+
+    private String generateOrderBy(PostFilterOptions filterOptions) {
+        if (filterOptions.getSortPostsBy().isEmpty()) {
+            return "";
+        }
+
+        String orderBy = "";
+        switch (filterOptions.getSortPostsBy().get()) {
+            case "postTitle":
+                orderBy = "postTitle";
+                break;
+            case "postAuthor":
+                orderBy = "postAuthor";
+                break;
+            default:
+                return "";
+        }
+
+        orderBy = String.format(" order by %s", orderBy);
+
+        if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+
+        return orderBy;
+    }
+
 
     private static boolean containsIgnoreCase(String value, String sequence) {
         return value.toLowerCase().contains(sequence.toLowerCase());
