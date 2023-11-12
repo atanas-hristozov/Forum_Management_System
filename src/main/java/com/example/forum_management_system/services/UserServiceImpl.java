@@ -83,10 +83,4 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private void validateAdminRights(User userToCheck) {
-        if (!userToCheck.isAdmin() || userToCheck.getId() != 1) {
-            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
-        }
-    }
-
 }

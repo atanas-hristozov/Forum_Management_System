@@ -130,7 +130,7 @@ public class EditComment {
             comment = commentMapper.fromDto(commentId, commentDto);
             commentService.update(comment, post, user);
 
-            String redirectUrl = "/posts/" + post.getId() + "/comments/" + comment.getId();
+            String redirectUrl = "/posts/" + post.getId() + "/comments";
             return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());

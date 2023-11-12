@@ -158,7 +158,10 @@ public class PostMvcController {
             post = postMapper.fromDto(id, postDto);
             postService.update(post, user);
             model.addAttribute("post", post);
-            return "redirect:/forum";
+
+            String redirectUrl = "/posts/" + post.getId();
+            return "redirect:" + redirectUrl;
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -178,7 +181,7 @@ public class PostMvcController {
         }
         post=postService.get(id);
         postService.delete(post, user);
-        return "Forum";
+        return "redirect:/forum";
     }
 }
 
