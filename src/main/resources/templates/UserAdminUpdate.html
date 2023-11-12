@@ -3,99 +3,41 @@
 <div th:replace="~{Templates.html :: head('UserUpdate')}"></div>
 <body>
 <div th:replace="~{Templates.html :: header}"></div>
-
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Firstname</th>
-        <th>IsBanned</th>
-        <th>IsAdmin</th>
-    </tr>
-    <tr th:object="${userToUpdate}">
-        <td th:text="${userToUpdate.getUsername()}">Ivan</td>
-        <td th:text="${userToUpdate.getEmail()}">ivan@abv.bg</td>
-        <td th:text="${userToUpdate.getFirstName()}">Ivan92</td>
-        <td>
-            <form th:action="@{/user/admin/{id} (id=${userToUpdate.getId()})}" th:object="${userToUpdate}" action="#" method="post">
-                <select name="banned">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-                <button href="#" type="submit">Update</button>
-            </form>
-        </td>
-        <td>
-            <form action="#" method="post">
-                <select name="banned">
-                    <option value="volvo">Yes</option>
-                    <option value="saab">No</option>
-                </select>
-                <button href="#" type="submit">Update</button>
-            </form>
-        </td>
-    </tr>
-    <!--
-    <tr>
-        <td>Ivan</td>
-        <td>Ivanov</td>
-        <td>ivan@abv.bg</td>
-        <td>Ivan92</td>
-        <td>
-            <form action="#" method="post">
-                <select name="admin">
-                    <option value="volvo">Yes</option>
-                    <option value="saab">No</option>
-                </select>
-                <button href="#" type="submit">Update</button>
-            </form>
-        </td>
-        <td>
-            <form action="#" method="post">
-                <select name="banned">
-                    <option value="volvo">Yes</option>
-                    <option value="saab">No</option>
-                </select>
-                <button href="#" type="submit">Update</button>
-            </form>
-        </td>
-        <td>
-            <form action="#" method="post">
-                <button href="#" type="submit">Delete</button>
-            </form>
-        </td>
-    </tr><tr>
-    <td>Ivan</td>
-    <td>Ivanov</td>
-    <td>ivan@abv.bg</td>
-    <td>Ivan92</td>
-    <td>
-        <form action="#" method="post">
-            <select name="admin">
-                <option value="volvo">Yes</option>
-                <option value="saab">No</option>
-            </select>
-            <button href="#" type="submit">Update</button>
-        </form>
-    </td>
-    <td>
-        <form action="#" method="post">
-            <select name="banned">
-                <option value="volvo">Yes</option>
-                <option value="saab">No</option>
-            </select>
-            <button href="#" type="submit">Update</button>
-        </form>
-    </td>
-    <td>
-        <form action="#" method="post">
-            <button href="#" type="submit">Delete</button>
-        </form>
-    </td>
-</tr>
--->
-
-</table>
+<section class="update-user-by-admin">
+    <H2 th:text="'Edit User ' + ${userToUpdate.getUsername()}">Edit username</H2>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Firstname</th>
+            <th>IsBanned</th>
+            <th>IsAdmin</th>
+        </tr>
+        <tr th:object="${userToUpdate}">
+            <td th:text="${userToUpdate.getUsername()}">Ivan</td>
+            <td th:text="${userToUpdate.getEmail()}">ivan@abv.bg</td>
+            <td th:text="${userToUpdate.getFirstName()}">Ivan92</td>
+            <td>
+                <form th:action="@{/user/admin/{id} (id=${userToUpdate.getId()})}" th:object="${userToUpdate}" action="#" method="post">
+                    <select name="banned">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <button href="#" type="submit">Update</button>
+                </form>
+            </td>
+            <td>
+                <form action="#" method="post">
+                    <select name="banned">
+                        <option value="volvo">Yes</option>
+                        <option value="saab">No</option>
+                    </select>
+                    <button href="#" type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</section>
 </div>
 </body>
 </html>
