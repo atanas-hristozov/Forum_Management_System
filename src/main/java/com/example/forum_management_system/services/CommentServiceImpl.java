@@ -30,9 +30,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void create(Comment comment, Post post, User user) {
-        if (user.isBanned()) {
-            throw new AuthorizationException("User is banned!");
-        }
+        checkIfBanned(user);
         comment.setPost_id(post);
         comment.setAuthor(user);
         repository.create(comment);
@@ -40,9 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void update(Comment comment, Post post, User user) {
-        /*if (!comment.getAuthor().equals(user) || !user.isAdmin() || user.isBanned()) {
-            throw new AuthorizationException("User is not the author or admin or he is banned.");
-        }*/
+        checkIfBanned(user);
         repository.update(comment);
     }
 
@@ -66,6 +62,11 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = repository.get(commentId);
         if ((!user.isAdmin() && comment.getAuthor().getId() != user.getId())) {
             throw new AuthorizationException(ONLY_ADMIN_OR_COMMENT_AUTHOR_CAN_DELETE_IT);
+        }
+    }
+    private static void checkIfBanned(User user){
+        if (user.isBanned()){
+            throw new AuthorizationException("User is banned!");
         }
     }
 }

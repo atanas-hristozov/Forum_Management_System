@@ -56,13 +56,15 @@
         <tr>
             <th>Username</th>
             <th>Email</th>
-            <th>Firstname</th>
+            <th>First Name</th>
+            <th>Is Banned</th>
             <th>Edit</th>
         </tr>
         <tr th:each="user : ${users}" class="user-row">
             <td th:text="${user.getUsername()}">Ivan</td>
             <td th:text="${user.getEmail()}">ivan@abv.bg</td>
             <td th:text="${user.getFirstName()}">Ivan92</td>
+            <td th:text="${user.isBanned()}">Yes</td>
             <td>
                 <a th:href="@{'/user/admin/' + ${user.getId()}}" href="#" class="edit-link">Edit</a>
             </td>

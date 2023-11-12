@@ -17,6 +17,9 @@
     <div class="error-login-message" th:errors="*{title}">Title error placeholder</div>
     <div class="error-login-message" th:errors="*{content}">Content error placeholder</div>
   </form>
+  <div th:if="${errorBanned}" class="error-message">
+    <p th:text="${errorBanned}" class="error-login-message"></p>
+  </div>
 </section>
 
 </body>

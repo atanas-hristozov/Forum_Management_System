@@ -168,6 +168,9 @@ public class PostMvcController {
             model.addAttribute("error", e.getMessage());
 
             return "Error_Page";
+        } catch (AuthorizationException e){
+            model.addAttribute("errorBanned", e.getMessage());
+            return "PostUpdate";
         }
     }
 

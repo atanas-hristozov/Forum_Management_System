@@ -94,6 +94,9 @@ public class CreatePostMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
+        } catch (AuthorizationException e){
+            model.addAttribute("errorBanned", e.getMessage());
+            return "CreateNewPost";
         }
 
     }

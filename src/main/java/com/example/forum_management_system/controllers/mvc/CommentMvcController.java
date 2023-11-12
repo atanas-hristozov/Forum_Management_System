@@ -75,7 +75,6 @@ public class CommentMvcController {
         model.addAttribute("comment", new CommentDto());
         model.addAttribute("allComments", commentService);
 
-        // Check if "currentUser" attribute is not null before calling toString()
         String currentUserName = (httpSession.getAttribute("currentUser") != null) ? httpSession.getAttribute("currentUser").toString() : null;
         model.addAttribute("currentUserName", currentUserName);
 
@@ -118,6 +117,9 @@ public class CommentMvcController {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
+        } catch (AuthorizationException e){
+            model.addAttribute("errorBanned", e.getMessage());
+            return "redirect:/forum";
         }
     }
 }

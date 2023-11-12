@@ -53,6 +53,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void create(Post post, User user) {
         boolean duplicateExists = true;
+        checkIfBanned(user);
         try {
             postRepository.getByTitle(post.getTitle());
         } catch (EntityNotFoundException e) {
@@ -70,6 +71,7 @@ public class PostServiceImpl implements PostService {
     public void update(Post post, User user) {
 
         boolean duplicateExists = true;
+        checkIfBanned(user);
 
         try {
             Post existingPost = postRepository.getByTitle(post.getTitle());
@@ -166,6 +168,11 @@ public class PostServiceImpl implements PostService {
     private static void checkAuthor(User user, User executingUser) {
         if (executingUser.getId() != user.getId()) {
             throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
+    private static void checkIfBanned(User user){
+        if (user.isBanned()){
+            throw new AuthorizationException("User is banned!");
         }
     }
 }

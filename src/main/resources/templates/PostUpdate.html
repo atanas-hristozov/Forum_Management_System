@@ -12,13 +12,14 @@
         <input id="title" type="text" th:field="*{title}">
         <label for="content"> Post Text</label>
         <textarea th:field="*{content}" class="forum-create-post-textfield" placeholder="Start a new post..." id="content" name="postText"></textarea>
-
         <input class="forum-create-post-button" type="submit" value="Save">
 
         <div class="error-login-message" th:errors="*{title}">Title error placeholder</div>
         <div class="error-login-message" th:errors="*{content}">Content error placeholder</div>
     </form>
-
+    <div th:if="${errorBanned}" class="error-message">
+        <p th:text="${errorBanned}" class="error-login-message"></p>
+    </div>
 </section>
 
 </body>
