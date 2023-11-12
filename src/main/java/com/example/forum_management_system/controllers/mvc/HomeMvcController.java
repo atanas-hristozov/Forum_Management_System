@@ -46,8 +46,7 @@ public class HomeMvcController {
     public User currentUser(HttpSession session) {
         if (populateIsAuthenticated(session)){
             String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            return user;
+            return userService.getByName(username);
         }
         return null;
     }

@@ -9,15 +9,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommentMapper {
     private final CommentService commentService;
+
     @Autowired
     public CommentMapper(CommentService commentService) {
         this.commentService = commentService;
     }
+
     public Comment fromDto(int id, CommentDto dto){
         Comment repositoryComment = commentService.get(id);
         repositoryComment.setText(dto.getText());
         return repositoryComment;
     }
+
     public Comment fromDto(CommentDto dto){
         Comment comment = new Comment();
         comment.setText(dto.getText());

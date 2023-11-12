@@ -89,13 +89,16 @@ public class CreatePostMvcController {
             Post post = postMapper.fromDto(postDto);
             postService.create(post,user);
             model.addAttribute("post", post);
+
             return "redirect:/forum";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
+
             return "Error_Page";
         } catch (AuthorizationException e){
             model.addAttribute("errorBanned", e.getMessage());
+
             return "CreateNewPost";
         }
 

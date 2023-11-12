@@ -53,14 +53,13 @@ public class ForumMvcController {
                 filterOptionsDto.getSortOrder());
 
         List<Post> posts = postService.getAllFromPostFilter(postFilterOptions);
-        /*List<Post> posts = postService.get(null,null,null,null);*/
         int postsCount = postService.showPostsCount();
         int usersCount = userService.showUsersCount();
         model.addAttribute("posts", posts);
         model.addAttribute("postsCount", postsCount);
         model.addAttribute("usersCount", usersCount);
         model.addAttribute("comments", commentService);
-        model.addAttribute("postsFilter", postFilterOptions);
+        model.addAttribute("postsFilter", filterOptionsDto);
         return "Forum";
     }
 }

@@ -82,8 +82,7 @@ public class PostMvcController {
     public User currentUser(HttpSession session) {
         if (populateIsAuthenticated(session)) {
             String username = session.getAttribute("currentUser").toString();
-            User user = userService.getByName(username);
-            return user;
+            return userService.getByName(username);
         }
         return null;
     }
@@ -95,7 +94,9 @@ public class PostMvcController {
             model.addAttribute("post", post);
             model.addAttribute("likes", postService.showPostsLikesCount(id));
             model.addAttribute("comments", commentService);
+
             return "Post";
+
         } catch (EntityNotFoundException e) {
             return "Error_Page";
         }
@@ -116,13 +117,13 @@ public class PostMvcController {
 
         try {
             post = postService.get(id);
-
             postService.likeDislikePost(post, user);
-
             model.addAttribute("post", post);
             model.addAttribute("likes", postService.showPostsLikesCount(id));
             String redirectUrl = "/posts/" + post.getId();
+
             return "redirect:" + redirectUrl;
+
         } catch (EntityNotFoundException e) {
             return "Error_Page";
         }
@@ -134,7 +135,9 @@ public class PostMvcController {
             Post post = postService.get(id);
             model.addAttribute("post", post);
             model.addAttribute("likes", postService.showPostsLikesCount(id));
+
             return "PostUpdate";
+
         } catch (EntityNotFoundException e) {
             return "Error_Page";
         }
@@ -159,8 +162,8 @@ public class PostMvcController {
             post = postMapper.fromDto(id, postDto);
             postService.update(post, user);
             model.addAttribute("post", post);
-
             String redirectUrl = "/posts/" + post.getId();
+
             return "redirect:" + redirectUrl;
 
         } catch (EntityNotFoundException e) {
@@ -181,10 +184,12 @@ public class PostMvcController {
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
+
             return "redirect:/auth/login";
         }
         post=postService.get(id);
         postService.delete(post, user);
+
         return "redirect:/forum";
     }
 }

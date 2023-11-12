@@ -59,7 +59,6 @@ public class CommentMvcController {
         return false;
     }
 
-
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
@@ -87,7 +86,6 @@ public class CommentMvcController {
                                    BindingResult bindingResult,
                                    Model model,
                                    HttpSession httpSession) {
-
         User user;
         Comment comment;
         Post post;
@@ -98,9 +96,11 @@ public class CommentMvcController {
         try {
             user = authenticationHelper.tryGetCurrentUser(httpSession);
         } catch (AuthorizationException e) {
+
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
+
             return "redirect:/posts/{id}/comments";
         }
         try {
@@ -112,13 +112,16 @@ public class CommentMvcController {
             model.addAttribute("comment", commentDto);
 
             String redirectUrl = "/posts/" + post.getId() + "/comments";
+
             return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
+
             return "Error_Page";
         } catch (AuthorizationException e){
             model.addAttribute("errorBanned", e.getMessage());
+
             return "redirect:/forum";
         }
     }

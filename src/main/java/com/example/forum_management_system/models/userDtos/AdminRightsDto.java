@@ -9,7 +9,6 @@ public class AdminRightsDto {
     private boolean isBanned;
 
 
-
     public AdminRightsDto() {
     }
 

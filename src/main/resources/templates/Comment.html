@@ -30,7 +30,7 @@
         <div class="post-page-optional-attributes">
             <p th:text="${comment.getAuthor().getUsername()}">Author</p>
             <!--<a href="#" th:href="@{'/posts/' + ${post.getId()} + '/update' + ${commentModel.getId()}}">Update Post</a>-->
-            <a th:if="${comment.getAuthor().getUsername().equals(currentUserName)}" th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>
+            <a th:if="${comment.getAuthor().getUsername().equals(currentUserName) or isAdmin}" th:href="@{'/posts/' + ${post.getId()} + '/comments/' + ${comment.getId()}}">Edit Comment</a>
         </div>
     </div>
 </section>

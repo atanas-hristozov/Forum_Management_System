@@ -66,7 +66,7 @@ public class EditComment {
 
     @ModelAttribute("isAdmin")
     public boolean populateIsAdmin(HttpSession session) {
-        if(session.getAttribute("currentUser") != null){
+        if (session.getAttribute("currentUser") != null) {
             Object currentUser = session.getAttribute("currentUser");
             User user = userService.getByName(currentUser.toString());
             return user.isAdmin();
@@ -87,17 +87,18 @@ public class EditComment {
     @GetMapping()
     public String getComment(@PathVariable int postId,
                              @PathVariable int commentId,
-                             Model model){
+                             Model model) {
         Post post = postService.get(postId);
         Comment comment = commentService.get(commentId);
         model.addAttribute("comment", comment);
         model.addAttribute("post", post);
         return "CommentOptions";
     }
+
     @GetMapping("/update")
     public String getCommentUpdate(@PathVariable int postId,
-                             @PathVariable int commentId,
-                             Model model){
+                                   @PathVariable int commentId,
+                                   Model model) {
         Post post = postService.get(postId);
         Comment comment = commentService.get(commentId);
         model.addAttribute("comment", comment);
@@ -136,9 +137,14 @@ public class EditComment {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error_Page";
+
         } catch (TextLengthException e) {
             bindingResult.rejectValue("text", "invalid_length", e.getMessage());
             return "Error_Page";
+
+        } catch (AuthorizationException e) {
+            model.addAttribute("authorizationError", e.getMessage());
+            return "EditComment";
         }
     }
 
@@ -158,15 +164,19 @@ public class EditComment {
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
-
-
         try {
             commentService.delete(commentId, user);
             return "redirect:/posts/" + postId + "/comments";
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
+
             return "Error_Page";
+
+        } catch (AuthorizationException e) {
+            model.addAttribute("authorizationError", e.getMessage());
+            return "EditComment";
         }
     }
 }

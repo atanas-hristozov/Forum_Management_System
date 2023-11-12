@@ -65,9 +65,10 @@ public class UserMvcController {
         try {
             User user = authenticationHelper.tryGetCurrentUser(session);
             model.addAttribute("currentUser", user);
-            return "UserUpdate";
-        } catch (AuthorizationException e) {
 
+            return "UserUpdate";
+
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
     }
@@ -93,16 +94,20 @@ public class UserMvcController {
             user = userMapper.fromUserUpdateDto(user.getId(), userUpdateDto);
             userService.update(user);
             model.addAttribute("currentUser", user);
+
             return "redirect:/user";
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
 
             return "Error_Page";
+
         } catch (EntityDuplicateException e) {
             bindingResult.rejectValue("email", "duplicate_email", e.getMessage());
 
             return "UserUpdate";
+
         } catch (TextLengthException e) {
             bindingResult.rejectValue("firstName", "invalid_length", e.getMessage());
 
@@ -116,11 +121,11 @@ public class UserMvcController {
         if (bindingResult.hasErrors()) {
             return "redirect:/user";
         }
-
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
             userService.delete(user);
             session.removeAttribute("currentUser");
+
             return "redirect:/";
 
         } catch (AuthorizationException e) {

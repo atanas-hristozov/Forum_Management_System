@@ -33,19 +33,14 @@ public class AdminMvcController {
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
     private final UserService userService;
-    private final PostService postService;
-    private final CommentService commentService;
+
 
     public AdminMvcController(AuthenticationHelper authenticationHelper,
                               UserMapper userMapper,
-                              UserService userService,
-                              PostService postService,
-                              CommentService commentService) {
+                              UserService userService) {
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
         this.userService = userService;
-        this.postService = postService;
-        this.commentService = commentService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -81,8 +76,9 @@ public class AdminMvcController {
                         userFilterDto.getFirstName());
                 List<User> users = userService.getAll(filterOptions);
                 model.addAttribute("user", user);
-                model.addAttribute("filterUsers", filterOptions);
+                model.addAttribute("filterUsers", userFilterDto);
                 model.addAttribute("users", users);
+
                 return "UserAdmin";
             }
             return "User";
@@ -120,19 +116,17 @@ public class AdminMvcController {
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
-
         if (bindingResult.hasErrors()) {
             return "redirect:/auth/login";
         }
-
         try {
            User userToUpdate = userService.getById(id);
             user = userMapper.fromAdminRightsDto(id, adminRightsDto);
             userService.update(user);
             model.addAttribute("user", user);
             String redirectUrl = "/user/admin/" + user.getId();
-            return "redirect:" + redirectUrl;
 
+            return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -143,11 +137,14 @@ public class AdminMvcController {
 
     @GetMapping("/update")
     public String showEditUserPage(Model model, HttpSession session) {
+
         try {
             User user = authenticationHelper.tryGetCurrentUser(session);
             model.addAttribute("currentUser", user);
+
             return "AdminUpdateOwnInfo";
         } catch (AuthorizationException e) {
+
             return "redirect:/auth/login";
         }
     }
@@ -163,18 +160,15 @@ public class AdminMvcController {
         } catch (AuthorizationException e) {
             return "UserAdmin";
         }
-
-
         if (bindingResult.hasErrors()) {
             return "UserAdmin";
         }
-
         try {
             user = userMapper.fromAdminUpdateDto(user.getId(), adminUpdateDto);
             userService.update(user);
             model.addAttribute("currentUser", user);
-            return "redirect:/user/admin";
 
+            return "redirect:/user/admin";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -190,6 +184,4 @@ public class AdminMvcController {
             return "AdminUpdateOwnInfo";
         }
     }
-
-
 }

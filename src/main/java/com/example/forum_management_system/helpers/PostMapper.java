@@ -11,13 +11,11 @@ import org.springframework.stereotype.Component;
 public class PostMapper {
     private final PostService postService;
 
-    private final UserService userService;
-
 
     @Autowired
-    public PostMapper(PostService postService, UserService userService) {
+    public PostMapper(PostService postService) {
         this.postService = postService;
-        this.userService = userService;
+
     }
 
     public Post fromDto(int id, PostDto dto) {

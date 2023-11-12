@@ -19,12 +19,11 @@ import java.util.Map;
 public class CommentRepositoryImpl implements CommentRepository{
     private final SessionFactory sessionFactory;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+
     @Autowired
-    public CommentRepositoryImpl(SessionFactory sessionFactory, PostRepository postRepository, UserRepository userRepository) {
+    public CommentRepositoryImpl(SessionFactory sessionFactory, PostRepository postRepository) {
         this.sessionFactory = sessionFactory;
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -101,18 +100,4 @@ public class CommentRepositoryImpl implements CommentRepository{
             return result;
         }
     }
-    /*
-    @Override
-    public List<Comment> getAllCommentsFromPost(int postId){
-        try(Session session = sessionFactory.openSession()){
-            Post post = postRepository.getById(postId);
-            Query<Comment> query = session.createQuery("from Comment WHERE post_id = :post", Comment.class);
-            query.setParameter("post", post);
-            List<Comment> result = query.list();
-            if (result.isEmpty()) {
-                throw new EntityNotFoundException("Comment", postId);
-            }
-            return result;
-        }
-    }*/
 }

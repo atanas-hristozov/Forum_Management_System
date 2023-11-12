@@ -15,6 +15,10 @@
       <input class="forum-create-post-button" type="submit" value="Update">
       <div class="error-login-message" th:errors="*{text}">Title error placeholder</div>
     </form>
+    <div th:if="${authorizationError}" class="error-message">
+      <p th:text="${authorizationError}" class="error-login-message"></p>
+    </div>
+
   </section>
 </section>
 

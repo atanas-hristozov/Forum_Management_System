@@ -58,19 +58,20 @@ public class RegisterMvcController {
             User user = userMapper.fromUserCreateDto(userCreateDto);
             userService.create(user);
             return "redirect:/auth/login";
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
+
         } catch (EntityDuplicateException e) {
             result.rejectValue("username", "duplicate_username", e.getMessage());
             return "Register";
+
         } catch (TextLengthException e) {
             result.rejectValue("firstName", "invalid_length", e.getMessage());
             return "Register";
         }
-
-
     }
 
 }
