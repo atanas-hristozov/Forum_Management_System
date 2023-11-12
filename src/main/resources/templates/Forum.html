@@ -14,6 +14,18 @@
             <input type="text" id="username" placeholder="Title" th:field="*{postTitle}" class="filter-input"/>
             <label>Post Author</label>
             <input type="text" id="email" placeholder="Post Author" th:field="*{postAuthor}" class="filter-input"/>
+
+            <select th:field="*{sortPostsBy}">
+                <option value="">Sort By</option>
+                <option value="title">Title</option>
+                <option value="Author">Author</option>
+            </select>
+            <select th:field="*{sortOrder}">
+                <option value="">Sort Order</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+
             <input type="submit" value="Search" class="search-btn"/>
         </form>
         <div th:if="${posts.isEmpty()}" class="no-users-message">

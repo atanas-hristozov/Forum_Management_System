@@ -239,25 +239,26 @@ public class PostRepositoryImpl implements PostRepository {
             return "";
         }
 
-        String orderBy = "";
+        StringBuilder orderBy = new StringBuilder(" ORDER BY ");
         switch (filterOptions.getSortPostsBy().get()) {
-            case "postTitle":
-                orderBy = "postTitle";
+            case "title":
+                orderBy.append("post.title");
                 break;
-            case "postAuthor":
-                orderBy = "postAuthor";
+            case "user_id":
+                orderBy.append("user.id");
+                break;
+            case "Author":
+                orderBy.append("user.username");
                 break;
             default:
                 return "";
         }
 
-        orderBy = String.format(" order by %s", orderBy);
-
         if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
-            orderBy = String.format("%s desc", orderBy);
+            orderBy.append(" DESC");
         }
 
-        return orderBy;
+        return orderBy.toString();
     }
 
 

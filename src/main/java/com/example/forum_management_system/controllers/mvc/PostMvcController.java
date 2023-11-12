@@ -121,7 +121,8 @@ public class PostMvcController {
 
             model.addAttribute("post", post);
             model.addAttribute("likes", postService.showPostsLikesCount(id));
-            return "Post";
+            String redirectUrl = "/posts/" + post.getId();
+            return "redirect:" + redirectUrl;
         } catch (EntityNotFoundException e) {
             return "Error_Page";
         }

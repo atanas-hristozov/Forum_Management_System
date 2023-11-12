@@ -5,7 +5,7 @@
 <div th:replace="~{Templates.html :: header}"></div>
 
     <section class="post-page">
-        <form class="post-page-form" th:action="@{/posts/{id} (id=${post.getId()})}" th:object="${post}" action="#" method="get">
+        <form class="post-page-form" th:action="@{__${requestURI}__}" th:object="${post}" action="#" method="post">
             <div class="mainpage-tables-section-comment" id="post-page-comment">
                 <h3 th:text="${post.getTitle()}">Post title</h3>
                 <p th:text="${post.getContent()}">Post text: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure exercitationem in veritatis velit deleniti autem nemo id expedita dolor eligendi qui facilis</p>
@@ -15,12 +15,12 @@
                     <p>Number of comments: </p>
                     <p th:text="${comments.getAllCommentsFromPost(post.getId()).size()}">5</p>
                 </div>
-
+                <form>
                 <button class="mainpage-tables-section-comment-attribute-text" type="submit">
                     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                     <p th:text="${likes}">3</p>
                 </button>
-
+                </form>
                 <div class="mainpage-tables-section-comment-attribute-text">
                     <p th:text="${post.getCreator().getUsername()}">Author</p>
                 </div>
