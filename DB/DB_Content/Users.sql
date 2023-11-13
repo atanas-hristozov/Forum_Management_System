@@ -1,0 +1,10 @@
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (1, 'Ivan', 'Ivanov', 'ivan@abv.bg', 'Ivan92', '123', 1, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (2, 'Atanas', 'Hristozov', 'atanashristozov@abv.bg', 'Nasko', '123', 0, 1);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (3, 'Ivan', 'Mitev', 'ivan_Mitev@abv.bg', 'Ivan96', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (4, 'Georgi', 'Stefanov', 'georgi@abv.bg', 'Georgi97', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (5, 'Rosen', 'Yanev', 'rosen@abv.bg', 'Rosen', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (6, 'Plamen', 'Andonov', 'plamen_andonov@abv.bg', 'Plamen24', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (7, 'Simona', 'Georgieva', 'simona@abv.bg', 'Simona99', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (8, 'Ivaylo', 'Georgiev', 'ivo@abv.bg', 'Ivo96', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (9, 'Maria', 'Ivanova', 'maria@abv.bg', 'Maria94', '123', 0, 0);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `is_admin`, `is_banned`) VALUES (11, 'Alex', 'Georgiev', 'alex@abv.bg', 'Alex98', '123', 0, 0);
